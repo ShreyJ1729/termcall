@@ -3,7 +3,6 @@
 // - right before switching, write the most recent frame to other screen
 // - clear main screen buffer between switches
 // mess with flags in opencv buffer writing to improve performance
-
 use std::io::Write;
 
 use image::ImageBuffer;
@@ -42,6 +41,7 @@ unsafe fn cleanup(
     sixel_allocator_unref(allocator);
 
     print!("\x1B]1337;ClearScrollback\x07");
+    print!("{}", termion::cursor::Show);
 }
 
 unsafe fn create_sixel_objects() -> Option<(
@@ -97,6 +97,7 @@ fn setup_camera(cam_width: f64, cam_height: f64) -> Option<(videoio::VideoCaptur
     let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY).unwrap();
     cam.set(videoio::CAP_PROP_FRAME_WIDTH, cam_width).unwrap();
     cam.set(videoio::CAP_PROP_FRAME_HEIGHT, cam_height).unwrap();
+    cam.set(videoio::CAP_PROP_FPS, 30.0).unwrap();
 
     let opened = videoio::VideoCapture::is_opened(&cam).unwrap();
     if !opened {
@@ -131,6 +132,20 @@ fn goto_terminal_topleft(stdout: &mut RawTerminal<io::Stdout>) -> Result<(), std
     write!(stdout, "{}", termion::cursor::Goto(1, 1))
 }
 
+fn get_memory_usage() -> f64 {
+    // use ps -o rss= -p <pid> to get memory usage. return in MB
+    let pid = std::process::id();
+    let mem_usage = std::process::Command::new("ps")
+        .arg("-o rss=")
+        .arg("-p")
+        .arg(pid.to_string())
+        .output()
+        .expect("failed to execute process");
+    let mem_usage = String::from_utf8(mem_usage.stdout).unwrap();
+    let mem_usage = mem_usage.trim().parse::<f64>().unwrap() / 1000.0;
+    return mem_usage;
+}
+
 unsafe fn sixel_encode_bytes(
     encoder: *mut Encoder,
     dither: *mut Dither,
@@ -140,9 +155,10 @@ unsafe fn sixel_encode_bytes(
     pixelformat: sixel_sys::PixelFormat,
     cam_width: f64,
     cam_height: f64,
-    start: std::time::Instant,
+    begin: std::time::Instant,
     output: *mut Output,
     allocator: *mut Allocator,
+    frame_count: u64,
 ) {
     let status = sixel_encoder_encode_bytes(
         encoder,
@@ -156,15 +172,20 @@ unsafe fn sixel_encode_bytes(
 
     match status {
         sixel_sys::status::OK => {
-            let elapsed = start.elapsed();
-            let fps = 1 as f64 / elapsed.as_secs_f64();
+            let fps = frame_count as f64 / begin.elapsed().as_secs_f64();
             println!(
-                "camera: {}x{} | frame: {}x{} | fps: {:.0}{}",
+                "camera: {}x{} | frame: {}x{} | fps: {:.1}{}",
                 cam_width,
                 cam_height,
                 width,
                 height,
                 fps,
+                termion::cursor::Left(100)
+            );
+
+            println!(
+                "memory usage: {:.2}MB{}",
+                get_memory_usage(),
                 termion::cursor::Left(100)
             );
         }
@@ -192,6 +213,7 @@ fn main() {
         // minimum resolution that can be captured at
         const CAMERA_WIDTH: f64 = 640 as f64;
         const CAMERA_HEIGHT: f64 = 480 as f64;
+        const SCALE_CONSTANT: f64 = 1.0;
 
         let (mut cam, cam_width, cam_height) = match setup_camera(CAMERA_WIDTH, CAMERA_HEIGHT) {
             Some(cam) => cam,
@@ -199,15 +221,16 @@ fn main() {
         };
 
         let begin = std::time::Instant::now();
+        let mut frame_count = 0;
         const CLEAR_BUFFER_INTERVAL: u64 = 5;
         let mut cleared_scrollback = false;
 
         let mut frame = Mat::default();
         let mut buf = Vector::new();
 
-        while begin.elapsed().as_secs() < 20 {
-            let start = std::time::Instant::now();
+        print!("{}", termion::cursor::Hide);
 
+        while begin.elapsed().as_secs() < 20 {
             // clear scrollback buffer every so often
             let at_interval = begin.elapsed().as_secs() % CLEAR_BUFFER_INTERVAL == 0;
 
@@ -223,6 +246,7 @@ fn main() {
                     // if using main, switch to alt and clear main buffer
                     print!("{}", termion::screen::ToAlternateScreen);
                     write!(stdout, "\x1B]1337;ClearScrollback\x07").unwrap();
+                    stdout.flush().unwrap();
                 }
 
                 using_alt_screen = !using_alt_screen;
@@ -235,9 +259,8 @@ fn main() {
             let srcw = width as i32;
             let srch = height as i32;
             let pixelformat = sixel_sys::PixelFormat::RGB888;
-            let scale_constant = 1.5;
-            let dstw = (srcw as f64 * scale_constant) as i32;
-            let dsth = (srch as f64 * scale_constant) as i32;
+            let dstw = (srcw as f64 * SCALE_CONSTANT) as i32;
+            let dsth = (srch as f64 * SCALE_CONSTANT) as i32;
             let method_for_resampling = sixel_sys::ResamplingMethod::Nearest;
 
             let dst_size = (dstw * dsth * 3) as usize;
@@ -282,10 +305,12 @@ fn main() {
                 sixel_sys::PixelFormat::RGB888,
                 cam_width,
                 cam_height,
-                start,
+                begin,
                 output,
                 allocator,
+                frame_count,
             );
+            frame_count += 1;
 
             // Free the memory allocated for the encoder input
             libc::free(dst as *mut c_void);
