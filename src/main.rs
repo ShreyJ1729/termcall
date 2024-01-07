@@ -1,95 +1,212 @@
-// TODO fix memory leak
+// todo when switching from main --> alternate and vv. the screen flickers
+// to fix
+// - hide curosor
+// - right before switching, write the most recent frame to other screen
+// - clear main screen buffer not while switching but between switches
+// mess with flags in opencv buffer writing to improve performance
 
 use std::io::Write;
 
+use image::ImageBuffer;
+use image::Rgb;
+use sixel_sys::sixel_allocator_unref;
+use sixel_sys::Allocator;
 use sixel_sys::{
     sixel_allocator_new, sixel_dither_get, sixel_dither_get_palette, sixel_dither_unref,
     sixel_encoder_create, sixel_encoder_encode_bytes, sixel_encoder_unref,
-    sixel_helper_scale_image, sixel_output_create, sixel_output_unref, Encoder,
+    sixel_helper_scale_image, sixel_output_create, sixel_output_unref, Dither, Encoder, Output,
 };
 
 use libc::c_uchar;
 use opencv::{
-    core::{self, Mat, Vector},
+    core::{Mat, Vector},
     imgcodecs,
     prelude::*,
     videoio,
 };
-
 use std::ffi::CStr;
-use std::io::{self, Read};
+use std::io;
 use std::os::raw::c_void;
 use std::ptr;
-use std::slice;
-use termion::{raw::IntoRawMode, screen::AlternateScreen};
+use termion::raw::IntoRawMode;
+use termion::raw::RawTerminal;
 
 unsafe fn cleanup(
     encoder: *mut Encoder,
-    dither: *mut sixel_sys::Dither,
-    output: *mut sixel_sys::Output,
+    dither: *mut Dither,
+    output: *mut Output,
+    allocator: *mut Allocator,
 ) {
     sixel_encoder_unref(encoder);
     sixel_dither_unref(dither);
     sixel_output_unref(output);
+    sixel_allocator_unref(allocator);
 
-    // clear scrollback buffer so that Iterm2 doesn't use massive amounts of memory
     print!("\x1B]1337;ClearScrollback\x07");
+}
+
+unsafe fn create_sixel_objects() -> Option<(
+    *mut Encoder,
+    *mut Dither,
+    *mut Output,
+    *mut Allocator,
+    *mut *mut Allocator,
+)> {
+    // Create a SIXEL output object that writes to stdout
+    let output = sixel_output_create(None, ptr::null_mut() as *mut c_void);
+    if output.is_null() {
+        eprintln!("Failed to create sixel output");
+        return None;
+    }
+
+    // Create a SIXEL dither object
+    let dither = sixel_dither_get(sixel_sys::BuiltinDither::XTerm256);
+    if dither.is_null() {
+        eprintln!("Failed to create sixel dither");
+        cleanup(ptr::null_mut(), ptr::null_mut(), output, ptr::null_mut());
+        return None;
+    }
+
+    // Create a SIXEL encoder object
+    let encoder = sixel_encoder_create();
+    if encoder.is_null() {
+        eprintln!("Failed to create sixel encoder");
+        cleanup(ptr::null_mut(), dither, output, ptr::null_mut());
+        return None;
+    }
+
+    // Create a SIXEL allocator object
+    let mut allocator = std::ptr::null_mut();
+    let ppallocator = &mut allocator as *mut _;
+    let status = sixel_allocator_new(ppallocator, None, None, None, None);
+    match status {
+        sixel_sys::status::OK => {}
+        _ => {
+            eprintln!("Failed to create sixel allocator");
+            let error_message = sixel_sys::sixel_helper_format_error(status);
+            let message = CStr::from_ptr(error_message);
+            eprintln!("Error: {}", message.to_str().unwrap());
+            cleanup(encoder, dither, output, ptr::null_mut());
+            return None;
+        }
+    }
+
+    return Some((encoder, dither, output, allocator, ppallocator));
+}
+
+fn setup_camera(cam_width: f64, cam_height: f64) -> Option<(videoio::VideoCapture, f64, f64)> {
+    let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY).unwrap();
+    cam.set(videoio::CAP_PROP_FRAME_WIDTH, cam_width).unwrap();
+    cam.set(videoio::CAP_PROP_FRAME_HEIGHT, cam_height).unwrap();
+
+    let opened = videoio::VideoCapture::is_opened(&cam).unwrap();
+    if !opened {
+        eprintln!("Unable to open default camera!");
+        return None;
+    }
+
+    let real_camwidth = cam.get(videoio::CAP_PROP_FRAME_WIDTH).unwrap();
+    let real_camheight = cam.get(videoio::CAP_PROP_FRAME_HEIGHT).unwrap();
+
+    return Some((cam, real_camwidth, real_camheight));
+}
+
+fn get_camera_image(
+    cam: &mut videoio::VideoCapture,
+    mut frame: &mut Mat,
+    mut buf: &mut Vector<u8>,
+) -> (ImageBuffer<Rgb<u8>, Vec<u8>>, u32, u32) {
+    cam.read(&mut frame).unwrap();
+    imgcodecs::imencode(".bmp", frame, &mut buf, &Vector::new()).unwrap();
+    let img = image::load_from_memory(&buf.to_vec()).unwrap();
+
+    // get width, height, and bytes
+    let width = img.width();
+    let height = img.height();
+    let image_bytes = img.into_rgb8();
+
+    return (image_bytes, width, height);
+}
+
+fn goto_terminal_topleft(stdout: &mut RawTerminal<io::Stdout>) -> Result<(), std::io::Error> {
+    write!(stdout, "{}", termion::cursor::Goto(1, 1))
+}
+
+unsafe fn sixel_encode_bytes(
+    encoder: *mut Encoder,
+    dither: *mut Dither,
+    bytes: *mut c_uchar,
+    width: i32,
+    height: i32,
+    pixelformat: sixel_sys::PixelFormat,
+    cam_width: f64,
+    cam_height: f64,
+    start: std::time::Instant,
+    output: *mut Output,
+    allocator: *mut Allocator,
+) {
+    let status = sixel_encoder_encode_bytes(
+        encoder,
+        bytes,
+        width,
+        height,
+        pixelformat,
+        sixel_dither_get_palette(dither),
+        sixel_sys::sixel_dither_get_num_of_palette_colors(dither),
+    );
+
+    match status {
+        sixel_sys::status::OK => {
+            let elapsed = start.elapsed();
+            let fps = 1 as f64 / elapsed.as_secs_f64();
+            println!(
+                "camera: {}x{} | frame: {}x{} | fps: {:.0}{}",
+                cam_width,
+                cam_height,
+                width,
+                height,
+                fps,
+                termion::cursor::Left(100)
+            );
+        }
+        _ => {
+            eprintln!("Failed to encode image");
+            let error_message = sixel_sys::sixel_helper_format_error(status);
+            let message = CStr::from_ptr(error_message);
+            eprintln!("Error: {}", message.to_str().unwrap());
+            cleanup(encoder, dither, output, allocator);
+            return;
+        }
+    }
 }
 
 fn main() {
     unsafe {
-        // Create a SIXEL output object that writes to stdout
-        let output = sixel_output_create(None, ptr::null_mut() as *mut c_void);
-        if output.is_null() {
-            eprintln!("Failed to create sixel output");
-            return;
-        }
-
-        // Create a SIXEL dither object
-        let dither = sixel_dither_get(sixel_sys::BuiltinDither::XTerm256);
-        if dither.is_null() {
-            eprintln!("Failed to create sixel dither");
-            cleanup(ptr::null_mut(), ptr::null_mut(), output);
-            return;
-        }
-
-        // Create a SIXEL encoder object
-        let encoder = sixel_encoder_create();
-        if encoder.is_null() {
-            eprintln!("Failed to create sixel encoder");
-            cleanup(ptr::null_mut(), dither, output);
-            return;
-        }
+        let (encoder, dither, output, allocator, ppallocator) = match create_sixel_objects() {
+            Some(sixel_object) => sixel_object,
+            None => return,
+        };
 
         let mut stdout = io::stdout().into_raw_mode().unwrap();
+        let mut using_alt_screen = false;
 
         // minimum resolution that can be captured at
-        const CAMERA_WIDTH: i32 = 640;
-        const CAMERA_HEIGHT: i32 = 480;
+        const CAMERA_WIDTH: f64 = 1920 as f64;
+        const CAMERA_HEIGHT: f64 = 1080 as f64;
 
-        let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY).unwrap();
-        cam.set(videoio::CAP_PROP_FRAME_WIDTH, CAMERA_WIDTH as f64)
-            .unwrap();
-        cam.set(videoio::CAP_PROP_FRAME_HEIGHT, CAMERA_HEIGHT as f64)
-            .unwrap();
-
-        let opened = videoio::VideoCapture::is_opened(&cam).unwrap();
-        if !opened {
-            eprintln!("Unable to open default camera!");
-            cleanup(encoder, dither, output);
-            return;
-        }
+        let (mut cam, cam_width, cam_height) = match setup_camera(CAMERA_WIDTH, CAMERA_HEIGHT) {
+            Some(cam) => cam,
+            None => return,
+        };
 
         let begin = std::time::Instant::now();
-        const CLEAR_BUFFER_INTERVAL: u64 = 10;
+        const CLEAR_BUFFER_INTERVAL: u64 = 5;
         let mut cleared_scrollback = false;
 
         let mut frame = Mat::default();
         let mut buf = Vector::new();
-        let mut allocator = std::ptr::null_mut();
-        let ppallocator = &mut allocator as *mut _;
 
-        while begin.elapsed().as_secs() < 60 {
+        while begin.elapsed().as_secs() < 20 {
             let start = std::time::Instant::now();
 
             // clear scrollback buffer every so often
@@ -100,50 +217,26 @@ fn main() {
             }
 
             if at_interval && !cleared_scrollback {
-                print!("\x1B]1337;ClearScrollback\x07");
+                // if using alt screen, switch to main (auto-clears alt scrollback)
+                if using_alt_screen {
+                    print!("{}", termion::screen::ToMainScreen);
+                } else {
+                    // if using main, switch to alt and clear main buffer
+                    print!("{}", termion::screen::ToAlternateScreen);
+                    write!(stdout, "\x1B]1337;ClearScrollback\x07").unwrap();
+                }
+
+                using_alt_screen = !using_alt_screen;
                 cleared_scrollback = true;
             }
 
-            match writeln!(stdout, "{}", termion::cursor::Goto(1, 1)) {
-                Err(e) => {
-                    eprintln!("{}stdout error: {}", termion::screen::ToMainScreen, e);
-                    cleanup(encoder, dither, output);
-                    return;
-                }
-                Ok(_) => {}
-            }
-
-            // webcame get image
-            cam.read(&mut frame).unwrap();
-
-            imgcodecs::imencode(".bmp", &frame, &mut buf, &Vector::new()).unwrap();
-
-            let img = image::load_from_memory(&buf.to_vec()).unwrap();
-
-            // get width, height, and bytes
-            let width = img.width();
-            let height = img.height();
-            let image_bytes = img.into_rgb8();
-
-            let status = sixel_allocator_new(ppallocator, None, None, None, None);
-
-            match status {
-                sixel_sys::status::OK => {}
-                _ => {
-                    eprintln!("Failed to create sixel allocator");
-                    let error_message = sixel_sys::sixel_helper_format_error(status);
-                    let message = CStr::from_ptr(error_message);
-                    eprintln!("Error: {}", message.to_str().unwrap());
-                    cleanup(encoder, dither, output);
-                    return;
-                }
-            }
+            let (image_bytes, width, height) = get_camera_image(&mut cam, &mut frame, &mut buf);
 
             let src = image_bytes.as_ptr();
             let srcw = width as i32;
             let srch = height as i32;
             let pixelformat = sixel_sys::PixelFormat::RGB888;
-            let scale_constant = 1.5;
+            let scale_constant = 0.5;
             let dstw = (srcw as f64 * scale_constant) as i32;
             let dsth = (srch as f64 * scale_constant) as i32;
             let method_for_resampling = sixel_sys::ResamplingMethod::Nearest;
@@ -152,7 +245,7 @@ fn main() {
             let dst = libc::malloc(dst_size) as *mut c_uchar;
             if dst.is_null() {
                 eprintln!("Failed to allocate memory for scaled image");
-                cleanup(encoder, dither, output);
+                cleanup(encoder, dither, output, allocator);
                 return;
             };
 
@@ -174,40 +267,31 @@ fn main() {
                     let error_message = sixel_sys::sixel_helper_format_error(status);
                     let message = CStr::from_ptr(error_message);
                     eprintln!("Error: {}", message.to_str().unwrap());
-                    cleanup(encoder, dither, output);
+                    cleanup(encoder, dither, output, allocator);
                     return;
                 }
             }
 
-            // Encode the bytes into a SIXEL image
-            let status = sixel_encoder_encode_bytes(
+            goto_terminal_topleft(&mut stdout).unwrap();
+
+            sixel_encode_bytes(
                 encoder,
+                dither,
                 dst,
                 dstw,
                 dsth,
                 sixel_sys::PixelFormat::RGB888,
-                sixel_dither_get_palette(dither),
-                sixel_sys::sixel_dither_get_num_of_palette_colors(dither),
+                cam_width,
+                cam_height,
+                start,
+                output,
+                allocator,
             );
 
-            // Check for errors
-            match status {
-                sixel_sys::status::OK => {
-                    let elapsed = start.elapsed();
-                    let fps = 1 as f64 / elapsed.as_secs_f64();
-                    println!("width: {}, height: {}, fps: {}", dstw, dsth, fps);
-                }
-                _ => {
-                    eprintln!("Failed to encode image");
-                    let error_message = sixel_sys::sixel_helper_format_error(status);
-                    let message = CStr::from_ptr(error_message);
-                    eprintln!("Error: {}", message.to_str().unwrap());
-                    cleanup(encoder, dither, output);
-                    return;
-                }
-            }
+            // Free the memory allocated for the encoder input
+            libc::free(dst as *mut c_void);
         }
 
-        cleanup(encoder, dither, output);
+        cleanup(encoder, dither, output, allocator);
     }
 }
