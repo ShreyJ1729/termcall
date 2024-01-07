@@ -1,8 +1,7 @@
 // todo when switching from main --> alternate and vv. the screen flickers
 // to fix
-// - hide curosor
 // - right before switching, write the most recent frame to other screen
-// - clear main screen buffer not while switching but between switches
+// - clear main screen buffer between switches
 // mess with flags in opencv buffer writing to improve performance
 
 use std::io::Write;
@@ -182,7 +181,7 @@ unsafe fn sixel_encode_bytes(
 
 fn main() {
     unsafe {
-        let (encoder, dither, output, allocator, ppallocator) = match create_sixel_objects() {
+        let (encoder, dither, output, allocator, _) = match create_sixel_objects() {
             Some(sixel_object) => sixel_object,
             None => return,
         };
@@ -191,8 +190,8 @@ fn main() {
         let mut using_alt_screen = false;
 
         // minimum resolution that can be captured at
-        const CAMERA_WIDTH: f64 = 1920 as f64;
-        const CAMERA_HEIGHT: f64 = 1080 as f64;
+        const CAMERA_WIDTH: f64 = 640 as f64;
+        const CAMERA_HEIGHT: f64 = 480 as f64;
 
         let (mut cam, cam_width, cam_height) = match setup_camera(CAMERA_WIDTH, CAMERA_HEIGHT) {
             Some(cam) => cam,
@@ -236,7 +235,7 @@ fn main() {
             let srcw = width as i32;
             let srch = height as i32;
             let pixelformat = sixel_sys::PixelFormat::RGB888;
-            let scale_constant = 0.5;
+            let scale_constant = 1.5;
             let dstw = (srcw as f64 * scale_constant) as i32;
             let dsth = (srch as f64 * scale_constant) as i32;
             let method_for_resampling = sixel_sys::ResamplingMethod::Nearest;
