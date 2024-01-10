@@ -1,7 +1,7 @@
+// old ascii code
+
 use image::DynamicImage;
 use image::{GenericImageView, ImageBuffer, Luma};
-use imageproc::definitions::Image;
-use imageproc::map::map_colors;
 use opencv::core::{Point3_, Point_};
 use opencv::videoio::CAP_PROP_FPS;
 use opencv::{
@@ -69,17 +69,16 @@ fn get_camera_image(cam: &mut videoio::VideoCapture, mut frame: &mut Mat) -> Str
 
         let (b, g, r) = (pixel.x, pixel.y, pixel.z);
         let gray = (0.299 * r as f32 + 0.587 * g as f32 + 0.114 * b as f32) as u8;
-        let ascii_char = grayscale[(gray as usize) / 26];
+        let ascii_char = ascii_chars[(gray as usize) / 6];
         ascii.push_str(ascii_char);
     }
 
-    // only keep every 4th row since ascii chars are taller than they are wide
+    // only keep every 3th row since ascii chars are taller than they are wide
     let mut ascii_lines = ascii.lines();
     let mut ascii = String::new();
     while let Some(line) = ascii_lines.next() {
         ascii.push_str(line);
         ascii.push_str("\n");
-        ascii_lines.next();
         ascii_lines.next();
         ascii_lines.next();
         ascii_lines.next();

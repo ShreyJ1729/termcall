@@ -6,15 +6,5 @@ default-run = "termcall"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ffmpeg-next = "6.1.1"
-image = "0.24.7"
-sixel-image = "0.1.0"
-sixel-sys = "0.3.1"
 termion = "2.0.3"
 opencv = { version = "0.88.6", features = ["clang-runtime"] }
-libc = "0.2.151"
-imageproc = "0.23.0"
-
-[[bin]]
-name = "ascii"
-path = "src/ascii.rs"
