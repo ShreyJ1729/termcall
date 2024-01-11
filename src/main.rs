@@ -9,6 +9,11 @@ use termion::raw::IntoRawMode;
 use termion::raw::RawTerminal;
 
 const FULLBLOCK: &str = "\u{2588}";
+const GRAYSCALE_10: &[&str] = &[" ", ".", ":", "-", "=", "+", "*", "#", "%", "@"];
+const GRAYSCALE_16: &[&str] = &[
+    " ", "˚", "ꜜ", "⍥", "1", "ɟ", "F", "ƣ", "Щ", "⍫", "₱", "▟", "◚", "▓", "▀", "▉", "▇",
+];
+const GRAYSCALE_128_RAW: &str = &" ،◞⌟ٮᵤﹸﯿ˚ٺ́♡̙ٓ‹໊ꜜᵛᵗ¡♮ι¿♸⍥⌡ʝễểѓᶭ↤1٨?úŭǔȘşɟთ¢ɯʍɗΛƼFd$ṶҢӫຫ≝ƣἉƀWϐϑṂ₳Щ╇ЍƁ0Шф❥⍫Φ⚈⚈▼▅Ж₱₱☻⚑₦▙●₩₩▟▟▟⧫⧫⧫◘◚◚♥♥◙◙◙◙◙▓▊▛▜▆▆▆▆▀▀▀▀▀▀▀▀▉▉▉▉▉▉▇▇";
 
 fn setup_camera(cam_width: f64, cam_height: f64) -> Option<(videoio::VideoCapture, f64, f64)> {
     let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY).unwrap();
@@ -53,6 +58,8 @@ fn get_camera_image(cam: &mut videoio::VideoCapture, mut frame: &mut Mat) -> (St
 
     let mut ascii = String::new();
 
+    let mut prev_color: String = String::from("");
+
     for (i, pixel) in data.iter().enumerate() {
         if i % term_width as usize == 0 {
             ascii.push_str("\n\r");
@@ -60,9 +67,19 @@ fn get_camera_image(cam: &mut videoio::VideoCapture, mut frame: &mut Mat) -> (St
 
         let (b, g, r) = (pixel.x, pixel.y, pixel.z);
 
-        let pixel = termion::color::Rgb(r as u8, g as u8, b as u8).fg_string() + FULLBLOCK;
+        // round each r, g, b to nearest 16 for 4-bit per channel color (to minimize number of chars printed per frame)
+        let r = (((r as f64 / 16.0).round() * 16.0) as u8).clamp(0, 255);
+        let g = (((g as f64 / 16.0).round() * 16.0) as u8).clamp(0, 255);
+        let b = (((b as f64 / 16.0).round() * 16.0) as u8).clamp(0, 255);
 
-        ascii.push_str(pixel.as_str());
+        let color = termion::color::Rgb(r, g, b).fg_string();
+        if color == prev_color {
+            ascii.push_str(FULLBLOCK);
+        } else {
+            ascii.push_str(&color);
+            ascii.push_str(FULLBLOCK);
+            prev_color = color;
+        }
     }
 
     ascii.push_str(termion::color::Reset.fg_str());
@@ -128,7 +145,7 @@ fn main() {
         write!(stdout, "{}", stats).unwrap();
 
         // show fps based on moving frame rate
-        if begin.elapsed().as_secs() > 5 {
+        if begin.elapsed().as_secs() > 1 {
             frame_count = 0;
             begin = std::time::Instant::now();
         }
