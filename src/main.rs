@@ -25,7 +25,7 @@ fn main() {
 
         assert!(camera.read_frame());
         camera.resize_frame(terminal_width as f64, terminal_height as f64, true);
-        camera.change_color_depth(6);
+        camera.change_color_depth(24);
 
         // clear terminal if size changes (to avoid artifacts)
         if size_changed {

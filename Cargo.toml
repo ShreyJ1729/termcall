@@ -8,3 +8,4 @@ default-run = "termcall"
 [dependencies]
 termion = "2.0.3"
 opencv = { version = "0.88.6", features = ["clang-runtime"] }
+cpal = "0.15.2"
