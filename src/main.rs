@@ -9,11 +9,6 @@ use termion::raw::IntoRawMode;
 use termion::raw::RawTerminal;
 
 const FULLBLOCK: &str = "\u{2588}";
-const GRAYSCALE_10: &[&str] = &[" ", ".", ":", "-", "=", "+", "*", "#", "%", "@"];
-const GRAYSCALE_16: &[&str] = &[
-    " ", "˚", "ꜜ", "⍥", "1", "ɟ", "F", "ƣ", "Щ", "⍫", "₱", "▟", "◚", "▓", "▀", "▉", "▇",
-];
-const GRAYSCALE_128_RAW: &str = &" ،◞⌟ٮᵤﹸﯿ˚ٺ́♡̙ٓ‹໊ꜜᵛᵗ¡♮ι¿♸⍥⌡ʝễểѓᶭ↤1٨?úŭǔȘşɟთ¢ɯʍɗΛƼFd$ṶҢӫຫ≝ƣἉƀWϐϑṂ₳Щ╇ЍƁ0Шф❥⍫Φ⚈⚈▼▅Ж₱₱☻⚑₦▙●₩₩▟▟▟⧫⧫⧫◘◚◚♥♥◙◙◙◙◙▓▊▛▜▆▆▆▆▀▀▀▀▀▀▀▀▉▉▉▉▉▉▇▇";
 
 fn setup_camera(cam_width: f64, cam_height: f64) -> Option<(videoio::VideoCapture, f64, f64)> {
     let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY).unwrap();
@@ -35,12 +30,27 @@ fn setup_camera(cam_width: f64, cam_height: f64) -> Option<(videoio::VideoCaptur
 
 fn get_camera_image(cam: &mut videoio::VideoCapture, mut frame: &mut Mat) -> (String, i32, i32) {
     cam.read(&mut frame).unwrap();
+    // double width since ascii chars are ~2.3x as tall as they are wide
+    let (orig_width, orig_height) = (2.5 * frame.cols() as f64, frame.rows());
+    let orig_ratio = orig_width as f64 / orig_height as f64;
 
-    // resample mat to lower resolution
+    // resample mat to terminal frame resolution
     let (term_width, term_height) = termion::terminal_size().unwrap();
-    let (term_width, term_height) = (term_width as i32, term_height as i32 - 5);
+    let (term_width, term_height) = (term_width as i32, term_height as i32 - 6);
+    let term_ratio = term_width as f64 / term_height as f64;
 
-    let new_size: opencv::core::Size_<i32> = Size::new(term_width, term_height);
+    let new_size = match term_ratio > orig_ratio {
+        // if term ratio bigger, term wider so resize to term height
+        true => Size {
+            width: (term_height as f64 * orig_ratio) as i32,
+            height: term_height,
+        },
+        // if term ratio smaller, term taller so resize to term width
+        false => Size {
+            width: term_width,
+            height: (term_width as f64 / orig_ratio) as i32,
+        },
+    };
 
     let mut resized_frame = Mat::default();
 
@@ -54,14 +64,16 @@ fn get_camera_image(cam: &mut videoio::VideoCapture, mut frame: &mut Mat) -> (St
     )
     .unwrap();
 
+    let width = resized_frame.cols();
+    let height = resized_frame.rows();
+
     let data = resized_frame.data_typed::<Point3_<u8>>().unwrap();
 
     let mut ascii = String::new();
-
     let mut prev_color: String = String::from("");
 
     for (i, pixel) in data.iter().enumerate() {
-        if i % term_width as usize == 0 {
+        if i % width as usize == 0 {
             ascii.push_str("\n\r");
         }
 
@@ -84,7 +96,7 @@ fn get_camera_image(cam: &mut videoio::VideoCapture, mut frame: &mut Mat) -> (St
 
     ascii.push_str(termion::color::Reset.fg_str());
 
-    return (ascii, term_width, term_height);
+    return (ascii, width, height);
 }
 
 fn goto_terminal_topleft(stdout: &mut RawTerminal<io::Stdout>) -> Result<(), std::io::Error> {
@@ -123,14 +135,37 @@ fn main() {
     let mut frame_count = 0;
     let mut begin = std::time::Instant::now();
 
-    loop {
-        let (output, frame_width, frame_height) = get_camera_image(&mut cam, &mut frame);
+    let mut frame_width = 0;
+    let mut frame_height = 0;
 
+    loop {
+        // grab new output
+        let (output, new_frame_width, new_frame_height) = get_camera_image(&mut cam, &mut frame);
+
+        // clear terminal if frame size changes (to avoid artifacts)
+        if new_frame_width != frame_width || new_frame_height != frame_height {
+            frame_width = new_frame_width;
+            frame_height = new_frame_height;
+            write!(stdout, "{}", termion::clear::All).unwrap();
+        }
+
+        // move cursor to top left
         goto_terminal_topleft(&mut stdout).unwrap();
 
+        // write frame
+        let start = std::time::Instant::now();
         write!(stdout, "{}", output).unwrap();
+        write!(
+            stdout,
+            " printing buffer of length {:} took {:.0} ms",
+            output.len(),
+            start.elapsed().as_secs_f64() * 1000.0
+        )
+        .unwrap();
+
         frame_count += 1;
 
+        // write stats
         let stats = format!(
             "camera resolution: {}x{}\n\rmemory usage: {:.0} MB\n\rframe resolution: {}x{} ({} pixels) \n\rfps: {:.0}",
             cam_width,
@@ -141,10 +176,9 @@ fn main() {
             frame_width * frame_height,
             frame_count as f64 / begin.elapsed().as_secs_f64()
         );
-
         write!(stdout, "{}", stats).unwrap();
 
-        // show fps based on moving frame rate
+        // calculate fps based on moving frame rate
         if begin.elapsed().as_secs() > 1 {
             frame_count = 0;
             begin = std::time::Instant::now();
