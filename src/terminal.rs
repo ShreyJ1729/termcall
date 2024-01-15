@@ -1,13 +1,13 @@
 use opencv::core::{Mat, Point3_, Size, ToInputArray};
 use opencv::{imgproc, prelude::*, videoio};
 use std::io::{self, Write};
+use termion::input::TermRead;
 use termion::raw::IntoRawMode;
 use termion::raw::RawTerminal;
 
-const FULLBLOCK: &str = "\u{2588}";
-
 pub struct Terminal {
     pub stdout: RawTerminal<io::Stdout>,
+
     pub width: i32,
     pub height: i32,
 }
@@ -87,7 +87,7 @@ impl Terminal {
             }
 
             let (b, g, r) = (pixel.x, pixel.y, pixel.z);
-            let color = termion::color::Rgb(r, g, b).fg_string();
+            let color = termion::color::Rgb(r, g, b).bg_string();
 
             // update color if it changed
             if color != prev_color {
@@ -95,33 +95,10 @@ impl Terminal {
                 prev_color = color;
             }
 
-            write!(self.stdout, "{}", FULLBLOCK).unwrap();
+            write!(self.stdout, "{}", " ").unwrap();
         }
 
         write!(self.stdout, "{}", termion::color::Reset.fg_str()).unwrap();
-    }
-
-    pub fn write_color(&mut self, s: &str, color: termion::color::Rgb) {
-        write!(self.stdout, "{}", color.fg_string()).unwrap();
-        write!(self.stdout, "{}", s).unwrap();
-        write!(self.stdout, "{}", termion::color::Reset.fg_str()).unwrap();
-    }
-
-    pub fn write_color_bg(&mut self, s: &str, color: termion::color::Rgb) {
-        write!(self.stdout, "{}", color.bg_string()).unwrap();
-        write!(self.stdout, "{}", s).unwrap();
-        write!(self.stdout, "{}", termion::color::Reset.bg_str()).unwrap();
-    }
-
-    pub fn write_color_fg_bg(
-        &mut self,
-        s: &str,
-        fg_color: termion::color::Rgb,
-        bg_color: termion::color::Rgb,
-    ) {
-        write!(self.stdout, "{}", fg_color.fg_string()).unwrap();
-        write!(self.stdout, "{}", bg_color.bg_string()).unwrap();
-        write!(self.stdout, "{}", s).unwrap();
     }
 }
 

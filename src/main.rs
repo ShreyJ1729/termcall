@@ -1,10 +1,9 @@
-mod audio_capture;
 mod camera;
+mod microphone;
 mod stats;
 mod terminal;
 
 use camera::Camera;
-use opencv::hub_prelude::MatTraitConst;
 use stats::get_memory_usage;
 use terminal::Terminal;
 
@@ -26,7 +25,7 @@ fn main() {
 
         assert!(camera.read_frame());
         camera.resize_frame(terminal_width as f64, terminal_height as f64, true);
-        camera.change_color_depth(16);
+        camera.change_color_depth(6);
 
         // clear terminal if size changes (to avoid artifacts)
         if size_changed {
@@ -40,9 +39,9 @@ fn main() {
         let stats = format!(
             "mem usage: {:.0}MB | pixels: {} ({}x{}) | fps: {:.0}",
             get_memory_usage(),
-            camera.get_frame().total(),
-            camera.get_frame().cols(),
-            camera.get_frame().rows(),
+            camera.get_frame_num_pixels(),
+            camera.get_frame_width(),
+            camera.get_frame_height(),
             frame_count as f64 / begin.elapsed().as_secs_f64()
         );
 

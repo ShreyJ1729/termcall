@@ -1,7 +1,7 @@
 use opencv::core::{Mat, Point3_, Size, ToInputArray};
 use opencv::{imgproc, prelude::*, videoio};
 
-const ASCII_CHAR_H_OVER_W: f64 = 2.5;
+const ASCII_CHAR_H_OVER_W: f64 = 2.25;
 
 pub struct Camera {
     cam: videoio::VideoCapture,
@@ -99,16 +99,20 @@ impl Camera {
         self.cam.read(&mut self.frame).unwrap()
     }
 
-    pub fn get_width(&self) -> f64 {
-        self.cam.get(videoio::CAP_PROP_FRAME_WIDTH).unwrap()
+    pub fn get_frame_width(&self) -> i32 {
+        self.frame.cols()
     }
 
-    pub fn get_height(&self) -> f64 {
-        self.cam.get(videoio::CAP_PROP_FRAME_HEIGHT).unwrap()
+    pub fn get_frame_height(&self) -> i32 {
+        self.frame.rows()
+    }
+
+    pub fn get_frame_num_pixels(&self) -> i32 {
+        self.frame.total() as i32
     }
 
     pub fn get_fps(&self) -> f64 {
-        self.cam.get(videoio::CAP_PROP_FPS).unwrap()
+        self.get_property(videoio::CAP_PROP_FPS)
     }
 
     pub fn get_property(&self, prop: i32) -> f64 {
