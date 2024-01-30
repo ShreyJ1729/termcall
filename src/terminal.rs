@@ -1,7 +1,6 @@
-use opencv::core::{Mat, Point3_, Size, ToInputArray};
-use opencv::{imgproc, prelude::*, videoio};
+use opencv::core::{Mat, Point3_};
+use opencv::prelude::*;
 use std::io::{self, Write};
-use termion::input::TermRead;
 use termion::raw::IntoRawMode;
 use termion::raw::RawTerminal;
 

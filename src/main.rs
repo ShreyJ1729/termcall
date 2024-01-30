@@ -54,4 +54,6 @@ fn main() {
         }
         frame_count += 1;
     }
+
+    terminal.show_cursor();
 }
