@@ -95,6 +95,14 @@ impl Camera {
         &self.frame
     }
 
+    pub fn get_frame_mirrored(&mut self) -> &Mat {
+        let orig_frame = self.frame.clone();
+
+        opencv::core::flip(&orig_frame, &mut self.frame, 1).unwrap();
+
+        &self.frame
+    }
+
     pub fn read_frame(&mut self) -> bool {
         self.cam.read(&mut self.frame).unwrap()
     }
@@ -109,13 +117,5 @@ impl Camera {
 
     pub fn get_frame_num_pixels(&self) -> i32 {
         self.frame.total() as i32
-    }
-
-    pub fn get_fps(&self) -> f64 {
-        self.get_property(videoio::CAP_PROP_FPS)
-    }
-
-    pub fn get_property(&self, prop: i32) -> f64 {
-        self.cam.get(prop).unwrap()
     }
 }

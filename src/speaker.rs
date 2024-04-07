@@ -1,12 +1,12 @@
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 
-struct Speaker {
+pub struct Speaker {
     device: cpal::Device,
     stream: cpal::Stream,
 }
 
 impl Speaker {
-    fn new() -> Self {
+    pub fn new() -> Self {
         let host = cpal::default_host();
         let device = host
             .default_output_device()
@@ -18,7 +18,7 @@ impl Speaker {
 
         let stream = device
             .build_output_stream(
-                &config,
+                &config.into(),
                 move |data: &mut [f32], _: &_| {
                     // here, write to the mutuable slice `data` to play audio
                     // call some function to get latest audio data from webrtc

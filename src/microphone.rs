@@ -1,12 +1,12 @@
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 
-struct Microphone {
+pub struct Microphone {
     device: cpal::Device,
     stream: cpal::Stream,
 }
 
 impl Microphone {
-    fn new() -> Self {
+    pub fn new() -> Self {
         let host = cpal::default_host();
         let device = host
             .default_input_device()

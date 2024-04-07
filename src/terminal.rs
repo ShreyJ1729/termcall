@@ -97,19 +97,6 @@ impl Terminal {
             write!(self.stdout, "{}", " ").unwrap();
         }
 
-        write!(self.stdout, "{}", termion::color::Reset.fg_str()).unwrap();
+        write!(self.stdout, "{}", termion::color::Reset.bg_str()).unwrap();
     }
 }
-
-// let stats = format!(
-//     "camera resolution: {}x{}\n\rmemory usage: {:.0} MB\n\rframe resolution: {}x{} ({} pixels) \n\rfps: {:.0}",
-//     camera.get_width(),
-//     camera.get_height(),
-//     get_memory_usage(),
-//     camera.get_frame().cols(),
-//     camera.get_frame().rows(),
-//     camera.get_frame().total(),
-//     frame_count as f64 / begin.elapsed().as_secs_f64()
-// );
-
-// terminal.write(&stats);

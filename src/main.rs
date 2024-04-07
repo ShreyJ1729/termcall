@@ -1,17 +1,22 @@
 mod camera;
 mod microphone;
+mod speaker;
 mod stats;
 mod terminal;
 
 use camera::Camera;
+use microphone::Microphone;
+use speaker::Speaker;
 use stats::get_memory_usage;
 use terminal::Terminal;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
-const CAMERA_FPS: f64 = 30 as f64;
+const CAMERA_FPS: f64 = 24 as f64;
 fn main() {
     let mut camera = Camera::new(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS).unwrap();
+    let mut microphone = Microphone::new();
+    let mut speaker = Speaker::new();
     let mut terminal = Terminal::new();
 
     let mut frame_count = 0;
@@ -24,7 +29,7 @@ fn main() {
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
 
         assert!(camera.read_frame());
-        camera.resize_frame(terminal_width as f64, terminal_height as f64, true);
+        camera.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, true);
         camera.change_color_depth(24);
 
         // clear terminal if size changes (to avoid artifacts)
@@ -34,7 +39,7 @@ fn main() {
 
         terminal.goto_topleft();
 
-        terminal.write_frame(camera.get_frame());
+        terminal.write_frame(camera.get_frame_mirrored());
 
         let stats = format!(
             "mem usage: {:.0}MB | pixels: {} ({}x{}) | fps: {:.0}",
