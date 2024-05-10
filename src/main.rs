@@ -3,17 +3,27 @@ mod microphone;
 mod speaker;
 mod stats;
 mod terminal;
+mod webrtc_handler;
 
 use camera::Camera;
+use just_webrtc::{
+    types::{ICECandidate, SessionDescription},
+    DataChannelExt, PeerConnectionExt, SimpleLocalPeerConnection,
+};
 use microphone::Microphone;
 use speaker::Speaker;
 use stats::get_memory_usage;
 use terminal::Terminal;
+use text_io::read;
+use webrtc::peer_connection::sdp::session_description::RTCSessionDescription;
+use webrtc_handler::WebRTC_Handler;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 24 as f64;
-fn main() {
+
+#[tokio::main]
+async fn main() {
     let mut camera = Camera::new(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS).unwrap();
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
@@ -22,8 +32,32 @@ fn main() {
     let mut frame_count = 0;
     let mut begin = std::time::Instant::now();
 
+    // for cleaner display
     terminal.clear();
     terminal.hide_cursor();
+
+    // https://crates.io/crates/just-webrtc
+
+    let mut local_peer_connection = SimpleLocalPeerConnection::build(false).await.unwrap();
+    let offer = local_peer_connection.get_local_description().await.unwrap();
+    let candidates = local_peer_connection
+        .collect_ice_candidates()
+        .await
+        .unwrap();
+
+    println!("Offer: {}", offer.sdp);
+    println!("Candidates: {:?}", candidates);
+
+    // pause for 60 seconds to allow for manual testing
+    tokio::time::sleep(std::time::Duration::from_secs(60)).await;
+
+    // listen for exit signal (ctrl+c) - once pressed, bring back cursor and exit
+    tokio::spawn(async move {
+        tokio::signal::ctrl_c().await.unwrap();
+        Terminal::new().show_cursor();
+        println!("Exiting...");
+        std::process::exit(0);
+    });
 
     loop {
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
@@ -59,6 +93,4 @@ fn main() {
         }
         frame_count += 1;
     }
-
-    terminal.show_cursor();
 }
