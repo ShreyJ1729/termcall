@@ -3,20 +3,13 @@ mod microphone;
 mod speaker;
 mod stats;
 mod terminal;
-mod webrtc_handler;
 
 use camera::Camera;
-use just_webrtc::{
-    types::{ICECandidate, SessionDescription},
-    DataChannelExt, PeerConnectionExt, SimpleLocalPeerConnection,
-};
 use microphone::Microphone;
 use speaker::Speaker;
 use stats::get_memory_usage;
 use terminal::Terminal;
 use text_io::read;
-use webrtc::peer_connection::sdp::session_description::RTCSessionDescription;
-use webrtc_handler::WebRTC_Handler;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
@@ -35,21 +28,6 @@ async fn main() {
     // for cleaner display
     terminal.clear();
     terminal.hide_cursor();
-
-    // https://crates.io/crates/just-webrtc
-
-    let mut local_peer_connection = SimpleLocalPeerConnection::build(false).await.unwrap();
-    let offer = local_peer_connection.get_local_description().await.unwrap();
-    let candidates = local_peer_connection
-        .collect_ice_candidates()
-        .await
-        .unwrap();
-
-    println!("Offer: {}", offer.sdp);
-    println!("Candidates: {:?}", candidates);
-
-    // pause for 60 seconds to allow for manual testing
-    tokio::time::sleep(std::time::Duration::from_secs(60)).await;
 
     // listen for exit signal (ctrl+c) - once pressed, bring back cursor and exit
     tokio::spawn(async move {
