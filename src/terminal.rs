@@ -5,15 +5,14 @@ use termion::raw::IntoRawMode;
 use termion::raw::RawTerminal;
 
 pub struct Terminal {
-    pub stdout: RawTerminal<io::Stdout>,
-
+    pub stdout: io::Stdout,
     pub width: i32,
     pub height: i32,
 }
 
 impl Terminal {
     pub fn new() -> Terminal {
-        let stdout = io::stdout().into_raw_mode().unwrap();
+        let stdout = io::stdout();
         let (width, height) = termion::terminal_size().unwrap();
         Terminal {
             stdout,

@@ -8,15 +8,16 @@ use camera::Camera;
 use microphone::Microphone;
 use speaker::Speaker;
 use stats::get_memory_usage;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
+use std::time::Duration;
 use terminal::Terminal;
-use text_io::read;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 24 as f64;
 
-#[tokio::main]
-async fn main() {
+fn main() {
     let mut camera = Camera::new(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS).unwrap();
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
@@ -25,19 +26,18 @@ async fn main() {
     let mut frame_count = 0;
     let mut begin = std::time::Instant::now();
 
-    // for cleaner display
+    let running = Arc::new(AtomicBool::new(true));
+    let r = running.clone();
+
+    ctrlc::set_handler(move || {
+        r.store(false, Ordering::SeqCst);
+    })
+    .expect("Error setting Ctrl-C handler");
+
     terminal.clear();
     terminal.hide_cursor();
 
-    // listen for exit signal (ctrl+c) - once pressed, bring back cursor and exit
-    tokio::spawn(async move {
-        tokio::signal::ctrl_c().await.unwrap();
-        Terminal::new().show_cursor();
-        println!("Exiting...");
-        std::process::exit(0);
-    });
-
-    loop {
+    while running.load(Ordering::SeqCst) {
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
 
         assert!(camera.read_frame());
@@ -70,5 +70,8 @@ async fn main() {
             begin = std::time::Instant::now();
         }
         frame_count += 1;
+
+        std::thread::sleep(Duration::from_millis(10));
     }
+    terminal.show_cursor();
 }

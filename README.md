@@ -1,7 +1,7 @@
 # TermCall: FaceTime in the terminal
 
-- audio capture
 - webrtc communication system
+- audio capture
 - sixel to render small video in bottomright
 - login and friend system
 - menu ui
