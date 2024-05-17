@@ -5,12 +5,13 @@ mod stats;
 mod terminal;
 
 use camera::Camera;
+use crossterm::{
+    event,
+    terminal::{disable_raw_mode, enable_raw_mode},
+};
 use microphone::Microphone;
 use speaker::Speaker;
 use stats::get_memory_usage;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
-use std::time::Duration;
 use terminal::Terminal;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
@@ -26,18 +27,86 @@ fn main() {
     let mut frame_count = 0;
     let mut begin = std::time::Instant::now();
 
-    let running = Arc::new(AtomicBool::new(true));
-    let r = running.clone();
+    // Home menu
+    terminal.clear();
+    terminal.write("Enter your name: ");
 
-    ctrlc::set_handler(move || {
-        r.store(false, Ordering::SeqCst);
-    })
-    .expect("Error setting Ctrl-C handler");
+    // get input
+    let mut name = String::new();
+    loop {
+        if event::poll(std::time::Duration::from_millis(50)).unwrap() {
+            if let event::Event::Key(event) = event::read().unwrap() {
+                if event.code == event::KeyCode::Enter {
+                    break;
+                } else if event.code == event::KeyCode::Backspace {
+                    if name.len() > 0 {
+                        name.pop();
+                    }
+                } else if let event::KeyCode::Char(c) = event.code {
+                    name.push(c);
+                }
+            }
+        }
 
+        terminal.write(&name);
+        terminal.flush();
+    }
+
+    // add person to list of active users on firebase here
+    // todo
+
+    // Pick who to call loop
+    terminal.clear();
+
+    // these will be pulled from active users from the firebase (exclusing self)
+    let contacts = ["Alice", "Bob", "Charlie"];
+
+    terminal.write(&format!(
+        "Hello, {}! Who would you like to call?\nNames are case sensitive\n",
+        name
+    ));
+    for (i, contact) in contacts.iter().enumerate() {
+        terminal.write(&format!("{}: {}\n", i, contact));
+    }
+    terminal.flush();
+
+    let mut person_to_call = String::new();
+    loop {
+        if event::poll(std::time::Duration::from_millis(50)).unwrap() {
+            if let event::Event::Key(event) = event::read().unwrap() {
+                if event.code == event::KeyCode::Enter {
+                    if contacts.contains(&person_to_call.as_str()) {
+                        break;
+                    }
+                    person_to_call.clear();
+                } else if event.code == event::KeyCode::Backspace {
+                    if person_to_call.len() > 0 {
+                        person_to_call.pop();
+                    }
+                } else if let event::KeyCode::Char(c) = event.code {
+                    person_to_call.push(c);
+                }
+            }
+        }
+
+        terminal.write(&person_to_call);
+    }
+
+    // In call loop
     terminal.clear();
     terminal.hide_cursor();
+    enable_raw_mode().unwrap();
 
-    while running.load(Ordering::SeqCst) {
+    loop {
+        // If q pressed, quit
+        if event::poll(std::time::Duration::from_millis(1)).unwrap() {
+            if let event::Event::Key(event) = event::read().unwrap() {
+                if event.code == event::KeyCode::Char('q') {
+                    break;
+                }
+            }
+        }
+
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
 
         assert!(camera.read_frame());
@@ -70,8 +139,7 @@ fn main() {
             begin = std::time::Instant::now();
         }
         frame_count += 1;
-
-        std::thread::sleep(Duration::from_millis(10));
     }
     terminal.show_cursor();
+    disable_raw_mode().unwrap();
 }

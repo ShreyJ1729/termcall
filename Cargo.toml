@@ -6,14 +6,10 @@ default-run = "termcall"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-termion = "2.0.3"
 opencv = { version = "0.88.6", features = ["clang-runtime"] }
 cpal = "0.15.2"
 libsixel-sys = "0.1.0"
 just-webrtc = "0.1.1"
 ctrlc = "3.4.4"
-
-
-[[bin]]
-name = "is"
-path = "src/is.rs"
+crossterm = "0.27.0"
+firebase-rs = "2.1.1"

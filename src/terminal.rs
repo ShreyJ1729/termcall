@@ -1,8 +1,7 @@
+use crossterm::style::{Color, Print, SetBackgroundColor};
 use opencv::core::{Mat, Point3_};
 use opencv::prelude::*;
 use std::io::{self, Write};
-use termion::raw::IntoRawMode;
-use termion::raw::RawTerminal;
 
 pub struct Terminal {
     pub stdout: io::Stdout,
@@ -13,7 +12,7 @@ pub struct Terminal {
 impl Terminal {
     pub fn new() -> Terminal {
         let stdout = io::stdout();
-        let (width, height) = termion::terminal_size().unwrap();
+        let (width, height) = crossterm::terminal::size().unwrap();
         Terminal {
             stdout,
             width: width as i32,
@@ -22,29 +21,37 @@ impl Terminal {
     }
 
     pub fn goto_topleft(&mut self) {
-        write!(self.stdout, "{}", termion::cursor::Goto(1, 1)).unwrap();
+        write!(self.stdout, "{}", crossterm::cursor::MoveTo(0, 0)).unwrap();
     }
 
     pub fn write_to_bottomright(&mut self, s: &str) {
+        if self.width < s.len() as i32 {
+            return;
+        }
         write!(
             self.stdout,
             "{}{}",
-            termion::cursor::Goto(self.width as u16 - s.len() as u16, self.height as u16),
+            crossterm::cursor::MoveTo(self.width as u16 - s.len() as u16, self.height as u16),
             s
         )
         .unwrap();
     }
 
     pub fn clear(&mut self) {
-        write!(self.stdout, "{}", termion::clear::All).unwrap();
+        write!(
+            self.stdout,
+            "{}",
+            crossterm::terminal::Clear(crossterm::terminal::ClearType::All)
+        )
+        .unwrap();
     }
 
     pub fn hide_cursor(&mut self) {
-        write!(self.stdout, "{}", termion::cursor::Hide).unwrap();
+        write!(self.stdout, "{}", crossterm::cursor::Hide).unwrap();
     }
 
     pub fn show_cursor(&mut self) {
-        write!(self.stdout, "{}", termion::cursor::Show).unwrap();
+        write!(self.stdout, "{}", crossterm::cursor::Show).unwrap();
     }
 
     pub fn flush(&mut self) {
@@ -58,7 +65,7 @@ impl Terminal {
     // Returns the current terminal size as a tuple of (width, height, changed)
     // changed is true if the size changed since the last call to get_size
     pub fn get_size(&mut self) -> (i32, i32, bool) {
-        let (width, height) = termion::terminal_size().unwrap();
+        let (width, height) = crossterm::terminal::size().unwrap();
         let (width, height) = (width as i32, height as i32);
         let mut changed = false;
 
@@ -76,8 +83,7 @@ impl Terminal {
         let data = frame.data_typed::<Point3_<u8>>().unwrap();
         let frame_width = frame.cols();
         let frame_height = frame.rows();
-
-        let mut prev_color: String = String::from("");
+        let prev_color = Color::Rgb { r: 0, g: 0, b: 0 };
 
         for (i, pixel) in data.iter().enumerate() {
             if (i % frame_width as usize == 0) && i != 0 {
@@ -85,17 +91,15 @@ impl Terminal {
             }
 
             let (b, g, r) = (pixel.x, pixel.y, pixel.z);
-            let color = termion::color::Rgb(r, g, b).bg_string();
+            let color = Color::Rgb { r, g, b };
 
-            // update color if it changed
             if color != prev_color {
-                write!(self.stdout, "{}", color).unwrap();
-                prev_color = color;
+                crossterm::execute!(self.stdout, SetBackgroundColor(color)).unwrap();
             }
 
-            write!(self.stdout, "{}", " ").unwrap();
+            crossterm::execute!(self.stdout, Print(" ")).unwrap();
         }
 
-        write!(self.stdout, "{}", termion::color::Reset.bg_str()).unwrap();
+        crossterm::execute!(self.stdout, SetBackgroundColor(Color::Reset)).unwrap();
     }
 }
