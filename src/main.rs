@@ -14,6 +14,7 @@ use just_webrtc::{
     platform::{Channel, PeerConnection},
     DataChannelExt, PeerConnectionExt, SimpleLocalPeerConnection, SimpleRemotePeerConnection,
 };
+use opencv::videoio::{self, VideoCaptureTraitConst};
 use schemas::user::User;
 use stats::get_memory_usage;
 use std::{
@@ -27,7 +28,7 @@ use terminal::Terminal;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
-const CAMERA_FPS: f64 = 60 as f64;
+const CAMERA_FPS: f64 = 30 as f64;
 
 #[tokio::main]
 async fn main() {
@@ -48,7 +49,7 @@ async fn main() {
             .expect("Failed to read line");
         self_name = self_name.trim().to_string();
 
-        let usernames = rtdb::get_usernames(&firebase).await.unwrap_or(vec![]);
+        let usernames = rtdb::get_usernames(&firebase).await;
         if usernames.contains(&self_name) {
             println!("User already exists. Try entering a different name: ");
             self_name.clear();
@@ -73,7 +74,7 @@ async fn main() {
 
     loop {
         // Poll for firebase changes each cycle
-        let contacts = rtdb::get_users(&firebase).await.unwrap_or(HashMap::new());
+        let contacts = rtdb::get_users(&firebase).await;
         let new_usernames = contacts.keys().cloned().collect::<Vec<String>>();
 
         // If any update, rerender the contacts
@@ -220,7 +221,7 @@ async fn main() {
     // Wait for the person we are calling to send us an answer
     let mut answer;
     loop {
-        let contacts = rtdb::get_users(&firebase).await.unwrap();
+        let contacts = rtdb::get_users(&firebase).await;
         answer = contacts.get(&person_to_call).unwrap().answer.clone();
 
         if answer != "" {
@@ -275,12 +276,15 @@ async fn call_loop(
     self_name: &str,
     peer_name: &str,
     rtc_connection: PeerConnection,
-    data_channel: Channel,
+    mut data_channel: Channel,
 ) {
     let mut terminal = Terminal::new();
     let mut camera = Camera::new(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS).unwrap();
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
+
+    // pause for 10 seconds to allow for connection to establish
+    tokio::time::sleep(Duration::from_secs(10)).await;
 
     enable_raw_mode().unwrap();
 
@@ -305,11 +309,30 @@ async fn call_loop(
             }
         }
 
+        // If self or peer no longer exist in firebase, exit (this means peer has hung up)
+        // Since this is somewhat expensive, we only check at most every second
+        if frame_count % 30 == 0 {
+            let users = rtdb::get_users(&firebase).await;
+            if !users.contains_key(self_name) || !users.contains_key(peer_name) {
+                disable_raw_mode().unwrap();
+                terminal.show_cursor();
+                std::process::exit(0);
+            }
+        }
+
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
 
         assert!(camera.read_frame());
         camera.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, true);
         camera.change_color_depth(24);
+
+        // convert mat to bytes and send over data channel
+        let payload = &bytes::Bytes::from(camera.mat_to_bytes());
+        data_channel.send(payload).await.unwrap();
+
+        // receive data from data channel and play it
+        let payload = data_channel.receive().await.unwrap();
+        camera.save_bytes_to_mat(payload.to_vec());
 
         // clear terminal if size changes (to avoid artifacts)
         if size_changed {
@@ -318,7 +341,7 @@ async fn call_loop(
 
         terminal.goto_topleft();
 
-        terminal.write_frame(camera.get_frame_mirrored());
+        terminal.write_frame(camera.get_frame());
 
         let stats = format!(
             "mem usage: {:.0}MB | pixels: {} ({}x{}) | fps: {:.0}",
@@ -331,8 +354,8 @@ async fn call_loop(
 
         terminal.write_to_bottomright(&stats);
 
-        // calculate fps based on moving frame rate every second
-        if begin.elapsed().as_secs() > 1 {
+        // calculate fps based on moving frame rate every 3 seconds
+        if begin.elapsed().as_secs() > 3 {
             frame_count = 0;
             begin = std::time::Instant::now();
         }

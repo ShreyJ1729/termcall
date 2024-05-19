@@ -1,10 +1,10 @@
 use opencv::core::{Mat, Point3_, Size, ToInputArray};
-use opencv::{imgproc, prelude::*, videoio};
+use opencv::{imgcodecs, imgproc, prelude::*, videoio};
 
 const ASCII_CHAR_H_OVER_W: f64 = 2.25;
 
 pub struct Camera {
-    cam: videoio::VideoCapture,
+    pub cam: videoio::VideoCapture,
     frame: Mat,
 }
 
@@ -93,6 +93,22 @@ impl Camera {
 
     pub fn get_frame(&self) -> &Mat {
         &self.frame
+    }
+
+    pub fn mat_to_bytes(&self) -> Vec<u8> {
+        let mut buf = opencv::types::VectorOfu8::new();
+        imgcodecs::imencode(".jpg", &self.frame, &mut buf, &opencv::core::Vector::new()).unwrap();
+        buf.to_vec()
+    }
+
+    pub fn save_bytes_to_mat(&mut self, bytes: Vec<u8>) {
+        let mat = imgcodecs::imdecode(
+            &opencv::types::VectorOfu8::from(bytes),
+            imgcodecs::IMREAD_COLOR,
+        )
+        .unwrap();
+
+        self.frame = mat;
     }
 
     pub fn get_frame_mirrored(&mut self) -> &Mat {
