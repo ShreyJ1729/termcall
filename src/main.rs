@@ -15,33 +15,13 @@ use schemas::user::User;
 use stats::get_memory_usage;
 use std::{
     collections::HashMap,
-    io::{self, Write},
-    sync::mpsc,
-    thread,
+    io::{self, stdin},
 };
 use terminal::Terminal;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 60 as f64;
-
-async fn check_username_exists(name: &str, firebase: &Firebase) -> bool {
-    let usernames = rtdb::get_usernames(firebase)
-        .await
-        .unwrap_or_else(|_| vec![]);
-    usernames.contains(&name.to_string())
-}
-
-fn read_input(prompt: &str, tx: mpsc::Sender<String>) {
-    let mut input = String::new();
-    print!("{}", prompt);
-    io::stdout().flush().unwrap();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
-    let input = input.trim().to_string();
-    tx.send(input).unwrap();
-}
 
 #[tokio::main]
 async fn main() {
@@ -52,25 +32,24 @@ async fn main() {
     let mut terminal = Terminal::new();
 
     // ---------- Entering Name ----------
-    let mut name;
+    println!("Enter your name: ");
+
+    let mut name = String::new();
 
     loop {
-        let (tx, rx) = mpsc::channel();
+        stdin().read_line(&mut name).expect("Failed to read line");
+        name = name.trim().to_string();
 
-        // Spawn a sync thread to read input
-        thread::spawn(move || {
-            read_input("Enter your name: ", tx);
-        });
-
-        // Receive the input in the async context
-        name = rx.recv().unwrap();
-
-        if check_username_exists(&name, &firebase).await {
-            println!("User already exists. Try entering a different name.");
-            continue; // Prompt user again if name exists
+        let usernames = rtdb::get_usernames(&firebase).await.unwrap_or(vec![]);
+        if usernames.contains(&name) {
+            println!("User already exists. Try entering a different name: ");
+            name.clear();
+            continue;
         }
         break;
     }
+
+    // adding user to firebase
 
     let data = User::new(name.to_string());
     rtdb::add_or_update_user(&firebase, &name, data)
@@ -79,7 +58,6 @@ async fn main() {
 
     // ---------- Home Page ----------
 
-    // thread to continually poll for firebase changes
     let mut contacts: Vec<String> = vec![];
 
     terminal.clear();
@@ -106,7 +84,9 @@ async fn main() {
                     println!("{}: {}", i, contact);
                 });
         }
-        tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
+
+        // sleep for 1000 ms
+        std::thread::sleep(std::time::Duration::from_millis(1000));
     }
 }
 
