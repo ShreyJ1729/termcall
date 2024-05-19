@@ -13,3 +13,19 @@ just-webrtc = "0.1.1"
 ctrlc = "3.4.4"
 crossterm = "0.27.0"
 firebase-rs = "2.1.1"
+bincode = "1.3.3"
+bytes = "1.6.0"
+tokio = "1.37.0"
+
+
+[[bin]]
+name = "termcall"
+path = "src/main.rs"
+
+[[bin]]
+name = "local"
+path = "src/webrtc/local.rs"
+
+[[bin]]
+name = "remote"
+path = "src/webrtc/remote.rs"
