@@ -286,12 +286,14 @@ async fn call_loop(
     let camera_index = camera_index_str.trim().parse().unwrap();
 
     let mut terminal = Terminal::new();
-    let mut camera = Camera::new(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, camera_index).unwrap();
+    let mut camera_read = Camera::new().unwrap();
+    let mut camera_math = Camera::new().unwrap();
+    camera_read.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, camera_index);
+
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
 
     let data_channel = Arc::new(Mutex::new(data_channel));
-    let camera = Arc::new(Mutex::new(camera));
 
     enable_raw_mode().unwrap();
 
@@ -303,92 +305,41 @@ async fn call_loop(
 
     // frame capturing and sending loop
     let data_channel_clone = Arc::clone(&data_channel);
-    let camera_clone = Arc::clone(&camera);
 
-    let nclone = self_name.to_string();
+    let n = self_name.to_string();
 
     tokio::spawn(async move {
-        let mut logging_file = File::create(format!("send_log_{}.txt", nclone)).unwrap();
         loop {
-            let start = std::time::Instant::now();
-            let mut camera = camera_clone.lock().await;
-            logging_file
-                .write_all(
-                    format!(
-                        "Acquired camera lock in {}ms\n",
-                        start.elapsed().as_millis()
-                    )
-                    .as_bytes(),
-                )
-                .unwrap();
-            let start = std::time::Instant::now();
-            let data_channel = data_channel_clone.lock().await;
-            logging_file
-                .write_all(
-                    format!(
-                        "Acquired data channel lock in {}ms\n",
-                        start.elapsed().as_millis()
-                    )
-                    .as_bytes(),
-                )
-                .unwrap();
             let timestamp = SystemTime::now()
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
                 .as_millis() as u64;
 
-            let mut start = std::time::Instant::now();
-            assert!(camera.read_frame());
-            logging_file
-                .write_all(format!("Frame read in {}ms\n", start.elapsed().as_millis()).as_bytes())
-                .unwrap();
+            assert!(camera_read.read_frame());
 
-            let w = camera.get_frame_width();
-            let h = camera.get_frame_height();
+            let w = camera_read.get_frame_width();
+            let h = camera_read.get_frame_height();
 
             // downsample frame for easier transmission
-            start = std::time::Instant::now();
-            camera.resize_frame(w as f64 * 0.25, h as f64 * 0.25, false);
-            logging_file
-                .write_all(
-                    format!("Frame resized in {}ms\n", start.elapsed().as_millis()).as_bytes(),
-                )
-                .unwrap();
+            camera_read.resize_frame(w as f64 * 0.25, h as f64 * 0.25, false);
 
             // convert mat to bytes and send over data channel
-            start = std::time::Instant::now();
-            let payload = &bytes::Bytes::from(camera.mat_to_bytes());
+            let payload = &bytes::Bytes::from(camera_read.mat_to_bytes());
             let timestamp_bytes = timestamp.to_be_bytes();
-            logging_file
-                .write_all(
-                    format!(
-                        "Frame converted to bytes in {}ms\n",
-                        start.elapsed().as_millis()
-                    )
-                    .as_bytes(),
-                )
-                .unwrap();
 
-            start = std::time::Instant::now();
             let mut combined = BytesMut::with_capacity(payload.len() + timestamp_bytes.len());
             combined.extend_from_slice(&payload);
             combined.extend_from_slice(&timestamp_bytes);
-            logging_file
-                .write_all(
-                    format!("Frame combined in {}ms\n", start.elapsed().as_millis()).as_bytes(),
-                )
-                .unwrap();
+
+            let data_channel = data_channel_clone.lock().await;
 
             if data_channel.send(&combined.freeze()).await.is_err() {
                 break;
             }
-
-            tokio::time::sleep(Duration::from_millis(41)).await;
         }
     });
 
     // frame receiving and rendering loop
-    let mut logging_file = File::create(format!("rec_log_{}.txt", self_name)).unwrap();
     loop {
         // If q pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(1)).unwrap() {
@@ -415,38 +366,10 @@ async fn call_loop(
             }
         }
 
-        // read frame from camera
-        let start = std::time::Instant::now();
-        let mut camera = camera.lock().await;
-        logging_file
-            .write_all(
-                format!(
-                    "Acquired camera lock in {}ms\n",
-                    start.elapsed().as_millis()
-                )
-                .as_bytes(),
-            )
-            .unwrap();
-        let (terminal_width, terminal_height, size_changed) = terminal.get_size();
-
         // receive data from data channel and play it
-        let start = std::time::Instant::now();
         let mut data_channel = data_channel.lock().await;
-        logging_file
-            .write_all(
-                format!(
-                    "Acquired data channel lock in {}ms\n",
-                    start.elapsed().as_millis()
-                )
-                .as_bytes(),
-            )
-            .unwrap();
 
-        let start = std::time::Instant::now();
         let combined = data_channel.receive().await;
-        logging_file
-            .write_all(format!("Frame received in {}ms\n", start.elapsed().as_millis()).as_bytes())
-            .unwrap();
         if combined.is_err() {
             break;
         }
@@ -460,42 +383,17 @@ async fn call_loop(
             .as_millis() as u64
             - timestamp;
 
-        let start = std::time::Instant::now();
-        camera.save_bytes_to_mat(payload.to_vec());
-        logging_file
-            .write_all(
-                format!(
-                    "Frame converted from bytes in {}ms\n",
-                    start.elapsed().as_millis()
-                )
-                .as_bytes(),
-            )
-            .unwrap();
+        camera_math.save_bytes_to_mat(payload.to_vec());
 
         // some processing before showing the frame
-        let start = std::time::Instant::now();
-        camera.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, false);
-        camera.change_color_depth(24);
-        logging_file
-            .write_all(
-                format!(
-                    "Frame resized and color depth changed in {}ms\n",
-                    start.elapsed().as_millis()
-                )
-                .as_bytes(),
-            )
-            .unwrap();
+        let (terminal_width, terminal_height, size_changed) = terminal.get_size();
+        camera_math.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, false);
+        camera_math.change_color_depth(24);
 
         // during size changes, don't render (to avoid artifacts)
         if !size_changed {
-            let start = std::time::Instant::now();
             terminal.goto_topleft();
-            terminal.write_frame(camera.get_frame());
-            logging_file
-                .write_all(
-                    format!("Frame rendered in {}ms\n", start.elapsed().as_millis()).as_bytes(),
-                )
-                .unwrap();
+            terminal.write_frame(camera_math.get_frame());
         } else {
             terminal.clear();
         }
@@ -504,9 +402,9 @@ async fn call_loop(
             "latency (s): {:.1} | mem usage: {:.0}MB | pixels: {} ({}x{}) | fps: {:.0}",
             latency as f64 / 1000.0,
             get_memory_usage(),
-            camera.get_frame_num_pixels(),
-            camera.get_frame_width(),
-            camera.get_frame_height(),
+            camera_math.get_frame_num_pixels(),
+            camera_math.get_frame_width(),
+            camera_math.get_frame_height(),
             frame_count as f64 / begin.elapsed().as_secs_f64()
         );
 

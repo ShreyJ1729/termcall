@@ -7,3 +7,7 @@ e.x. force lower resolution even on high res terminal screens if latency is too 
 
 todo - stream events to keep download data low on firebase
 todo - separate the camera struct into framereader and framewriter. this allows us to bypass acquiring the camera lock which is the main bottleneck in the program.
+
+bottlenecks
+
+- reading frame (occassionaly on send side)

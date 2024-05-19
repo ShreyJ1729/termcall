@@ -1,31 +1,35 @@
 use opencv::core::{Mat, Point3_, Size, ToInputArray};
+use opencv::videoio::VideoCapture;
 use opencv::{imgcodecs, imgproc, prelude::*, videoio};
 
 const ASCII_CHAR_H_OVER_W: f64 = 2.25;
 
 pub struct Camera {
-    pub cam: videoio::VideoCapture,
+    cam: videoio::VideoCapture,
     frame: Mat,
 }
 
 impl Camera {
-    // Constructs a new Camera object
-    pub fn new(cam_width: f64, cam_height: f64, cam_fps: f64, cam_index: i32) -> Option<Camera> {
-        let mut cam = videoio::VideoCapture::new(cam_index, videoio::CAP_ANY).unwrap();
+    // Purposefully lightweight to allow for multiple struct instances
+    pub fn new() -> Option<Camera> {
+        let cam: VideoCapture = VideoCapture::default().unwrap();
         let frame = Mat::default();
-
-        cam.set(videoio::CAP_PROP_FRAME_WIDTH, cam_width).unwrap();
-        cam.set(videoio::CAP_PROP_FRAME_HEIGHT, cam_height).unwrap();
-        cam.set(videoio::CAP_PROP_FPS, cam_fps).unwrap();
-
-        let opened = videoio::VideoCapture::is_opened(&cam).unwrap();
-
-        if !opened {
-            eprintln!("Unable to open default camera!");
-            return None;
-        }
-
         Some(Camera { cam, frame })
+    }
+
+    pub fn init(&mut self, cam_width: f64, cam_height: f64, cam_fps: f64, cam_index: i32) {
+        self.cam = videoio::VideoCapture::new(cam_index, videoio::CAP_ANY).unwrap();
+        self.cam
+            .set(videoio::CAP_PROP_FRAME_WIDTH, cam_width)
+            .unwrap();
+        self.cam
+            .set(videoio::CAP_PROP_FRAME_HEIGHT, cam_height)
+            .unwrap();
+        self.cam.set(videoio::CAP_PROP_FPS, cam_fps).unwrap();
+
+        if !videoio::VideoCapture::is_opened(&self.cam).unwrap() {
+            eprintln!("Unable to open default camera!");
+        }
     }
 
     // Resizes a Mat to the specified width and height
