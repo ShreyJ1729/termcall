@@ -21,3 +21,8 @@ pub async fn add_or_update_user(firebase: &Firebase, username: &str, new_data: U
     firebase.at("users").at(username).update(&new_data).await?;
     Ok(())
 }
+
+pub async fn remove_user(firebase: &Firebase, username: &str) -> Result<()> {
+    firebase.at("users").at(username).delete().await?;
+    Ok(())
+}
