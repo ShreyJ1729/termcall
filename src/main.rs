@@ -4,6 +4,7 @@ mod schemas;
 mod stats;
 mod terminal;
 
+use bytes::BytesMut;
 use crossterm::{
     event,
     terminal::{disable_raw_mode, enable_raw_mode},
@@ -14,17 +15,16 @@ use just_webrtc::{
     platform::{Channel, PeerConnection},
     DataChannelExt, PeerConnectionExt, SimpleLocalPeerConnection, SimpleRemotePeerConnection,
 };
-use opencv::videoio::{self, VideoCaptureTraitConst};
 use schemas::user::User;
 use stats::get_memory_usage;
 use std::{
-    collections::HashMap,
-    io::{self, stdin, Read, Write},
-    sync::mpsc,
-    thread,
-    time::Duration,
+    fs::File,
+    io::{self, stdin, Write},
+    sync::Arc,
+    time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use terminal::Terminal;
+use tokio::sync::Mutex;
 
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
@@ -33,7 +33,6 @@ const CAMERA_FPS: f64 = 30 as f64;
 #[tokio::main]
 async fn main() {
     let firebase = Firebase::new(rtdb::DATABASE_URL).unwrap();
-    let rtdb_stream = firebase.with_realtime_events().unwrap();
 
     let mut local_peer_connection = SimpleLocalPeerConnection::build(false).await.unwrap();
     let mut terminal = Terminal::new();
@@ -116,7 +115,7 @@ async fn main() {
         }
 
         // Check if anyone is calling us (someone else's sending_call is our name)
-        let potential_caller = contacts.iter().find(|(k, v)| v.sending_call == self_name);
+        let potential_caller = contacts.iter().find(|(_k, v)| v.sending_call == self_name);
 
         // If they are, send an answer back
 
@@ -162,7 +161,7 @@ async fn main() {
 
             // and now just wait for connection/data channels to establish
             remote_peer_connection.wait_peer_connected().await;
-            let mut remote_channel = remote_peer_connection.receive_channel().await.unwrap();
+            let remote_channel = remote_peer_connection.receive_channel().await.unwrap();
             remote_channel.wait_ready().await;
 
             // We are now in call with the caller. Update our user object to reflect this
@@ -194,6 +193,7 @@ async fn main() {
     // ---------- Call Sending ----------
 
     // Generate offer
+    println!("Generating offer...");
     let sdp = local_peer_connection.get_local_description().await.unwrap();
     let candidates = local_peer_connection
         .collect_ice_candidates()
@@ -246,7 +246,7 @@ async fn main() {
 
     // Wait for connection to establish
     local_peer_connection.wait_peer_connected().await;
-    let mut local_channel = local_peer_connection.receive_channel().await.unwrap();
+    let local_channel = local_peer_connection.receive_channel().await.unwrap();
     local_channel.wait_ready().await;
 
     // Update our user object with the in_call field
@@ -276,7 +276,7 @@ async fn call_loop(
     self_name: &str,
     peer_name: &str,
     rtc_connection: PeerConnection,
-    mut data_channel: Channel,
+    data_channel: Channel,
 ) {
     // prompt for what index camera to use
     print!("Enter camera index: ");
@@ -290,8 +290,8 @@ async fn call_loop(
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
 
-    // pause for 10 seconds to allow for connection to establish
-    tokio::time::sleep(Duration::from_secs(10)).await;
+    let data_channel = Arc::new(Mutex::new(data_channel));
+    let camera = Arc::new(Mutex::new(camera));
 
     enable_raw_mode().unwrap();
 
@@ -301,6 +301,94 @@ async fn call_loop(
     let mut frame_count = 0;
     let mut begin = std::time::Instant::now();
 
+    // frame capturing and sending loop
+    let data_channel_clone = Arc::clone(&data_channel);
+    let camera_clone = Arc::clone(&camera);
+
+    let nclone = self_name.to_string();
+
+    tokio::spawn(async move {
+        let mut logging_file = File::create(format!("send_log_{}.txt", nclone)).unwrap();
+        loop {
+            let start = std::time::Instant::now();
+            let mut camera = camera_clone.lock().await;
+            logging_file
+                .write_all(
+                    format!(
+                        "Acquired camera lock in {}ms\n",
+                        start.elapsed().as_millis()
+                    )
+                    .as_bytes(),
+                )
+                .unwrap();
+            let start = std::time::Instant::now();
+            let data_channel = data_channel_clone.lock().await;
+            logging_file
+                .write_all(
+                    format!(
+                        "Acquired data channel lock in {}ms\n",
+                        start.elapsed().as_millis()
+                    )
+                    .as_bytes(),
+                )
+                .unwrap();
+            let timestamp = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_millis() as u64;
+
+            let mut start = std::time::Instant::now();
+            assert!(camera.read_frame());
+            logging_file
+                .write_all(format!("Frame read in {}ms\n", start.elapsed().as_millis()).as_bytes())
+                .unwrap();
+
+            let w = camera.get_frame_width();
+            let h = camera.get_frame_height();
+
+            // downsample frame for easier transmission
+            start = std::time::Instant::now();
+            camera.resize_frame(w as f64 * 0.25, h as f64 * 0.25, false);
+            logging_file
+                .write_all(
+                    format!("Frame resized in {}ms\n", start.elapsed().as_millis()).as_bytes(),
+                )
+                .unwrap();
+
+            // convert mat to bytes and send over data channel
+            start = std::time::Instant::now();
+            let payload = &bytes::Bytes::from(camera.mat_to_bytes());
+            let timestamp_bytes = timestamp.to_be_bytes();
+            logging_file
+                .write_all(
+                    format!(
+                        "Frame converted to bytes in {}ms\n",
+                        start.elapsed().as_millis()
+                    )
+                    .as_bytes(),
+                )
+                .unwrap();
+
+            start = std::time::Instant::now();
+            let mut combined = BytesMut::with_capacity(payload.len() + timestamp_bytes.len());
+            combined.extend_from_slice(&payload);
+            combined.extend_from_slice(&timestamp_bytes);
+            logging_file
+                .write_all(
+                    format!("Frame combined in {}ms\n", start.elapsed().as_millis()).as_bytes(),
+                )
+                .unwrap();
+
+            if data_channel.send(&combined.freeze()).await.is_err() {
+                break;
+            }
+
+            tokio::time::sleep(Duration::from_millis(41)).await;
+        }
+    });
+
+    // frame receiving and rendering loop
+    let mut logging_file = File::create(format!("rec_log_{}.txt", self_name)).unwrap();
     loop {
         // If q pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(1)).unwrap() {
@@ -328,38 +416,93 @@ async fn call_loop(
         }
 
         // read frame from camera
+        let start = std::time::Instant::now();
+        let mut camera = camera.lock().await;
+        logging_file
+            .write_all(
+                format!(
+                    "Acquired camera lock in {}ms\n",
+                    start.elapsed().as_millis()
+                )
+                .as_bytes(),
+            )
+            .unwrap();
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
-        assert!(camera.read_frame());
-
-        // downsample frame for easier transmission
-        camera.resize_frame(
-            (camera.get_frame_width() / 2) as f64,
-            ((camera.get_frame_height() / 2) - 1) as f64,
-            false,
-        );
-
-        // convert mat to bytes and send over data channel
-        let payload = &bytes::Bytes::from(camera.mat_to_bytes());
-        data_channel.send(payload).await.unwrap();
 
         // receive data from data channel and play it
-        let payload = data_channel.receive().await.unwrap();
+        let start = std::time::Instant::now();
+        let mut data_channel = data_channel.lock().await;
+        logging_file
+            .write_all(
+                format!(
+                    "Acquired data channel lock in {}ms\n",
+                    start.elapsed().as_millis()
+                )
+                .as_bytes(),
+            )
+            .unwrap();
+
+        let start = std::time::Instant::now();
+        let combined = data_channel.receive().await;
+        logging_file
+            .write_all(format!("Frame received in {}ms\n", start.elapsed().as_millis()).as_bytes())
+            .unwrap();
+        if combined.is_err() {
+            break;
+        }
+        let combined = combined.unwrap();
+        let (payload, timestamp_bytes) = combined.split_at(combined.len() - 8);
+
+        let timestamp = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
+        let latency = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_millis() as u64
+            - timestamp;
+
+        let start = std::time::Instant::now();
         camera.save_bytes_to_mat(payload.to_vec());
+        logging_file
+            .write_all(
+                format!(
+                    "Frame converted from bytes in {}ms\n",
+                    start.elapsed().as_millis()
+                )
+                .as_bytes(),
+            )
+            .unwrap();
 
         // some processing before showing the frame
+        let start = std::time::Instant::now();
         camera.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, false);
         camera.change_color_depth(24);
+        logging_file
+            .write_all(
+                format!(
+                    "Frame resized and color depth changed in {}ms\n",
+                    start.elapsed().as_millis()
+                )
+                .as_bytes(),
+            )
+            .unwrap();
 
         // during size changes, don't render (to avoid artifacts)
         if !size_changed {
+            let start = std::time::Instant::now();
             terminal.goto_topleft();
             terminal.write_frame(camera.get_frame());
+            logging_file
+                .write_all(
+                    format!("Frame rendered in {}ms\n", start.elapsed().as_millis()).as_bytes(),
+                )
+                .unwrap();
         } else {
             terminal.clear();
         }
 
         let stats = format!(
-            "mem usage: {:.0}MB | pixels: {} ({}x{}) | fps: {:.0}",
+            "latency (s): {:.1} | mem usage: {:.0}MB | pixels: {} ({}x{}) | fps: {:.0}",
+            latency as f64 / 1000.0,
             get_memory_usage(),
             camera.get_frame_num_pixels(),
             camera.get_frame_width(),

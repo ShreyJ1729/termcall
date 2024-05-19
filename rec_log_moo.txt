@@ -1,0 +1,5898 @@
+Acquired camera lock in 14ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 14ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 42ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 65ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 65ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 27ms
+Acquired camera lock in 72ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 13ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 24ms
+Acquired camera lock in 45ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 68ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 10ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 65ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 14ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 21ms
+Acquired camera lock in 72ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 1ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 45ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 2ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 17ms
+Acquired camera lock in 43ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 12ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 43ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 65ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 13ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 65ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 14ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 19ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 68ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 68ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 11ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 38ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 13ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 42ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 19ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 3ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 22ms
+Acquired camera lock in 75ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 14ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 4ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 1ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 2ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Acquired camera lock in 14ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Acquired camera lock in 73ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 122ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Acquired camera lock in 66ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 43ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 12ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 42ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 4ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 27ms
+Acquired camera lock in 70ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 29ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 72ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 12ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 16ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 24ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 44ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 15ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 15ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 13ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 45ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 20ms
+Acquired camera lock in 44ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 38ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 120ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 25ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 44ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 31ms
+Acquired camera lock in 75ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 45ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 41ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 15ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 42ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 13ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 44ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 13ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 14ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 62ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 17ms
+Acquired camera lock in 73ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 21ms
+Acquired camera lock in 73ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 46ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 12ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 64ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 41ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 35ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 21ms
+Acquired camera lock in 72ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 68ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 63ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 43ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 12ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 61ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 42ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 5ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 49ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 59ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 73ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 16ms
+Acquired camera lock in 45ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 17ms
+Acquired camera lock in 42ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 17ms
+Acquired camera lock in 42ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 21ms
+Acquired camera lock in 67ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 60ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 12ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 10ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 11ms
+Acquired camera lock in 47ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 55ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 64ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 58ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 53ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 70ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 50ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
+Acquired camera lock in 51ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 48ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 8ms
+Acquired camera lock in 52ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 54ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 6ms
+Acquired camera lock in 57ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 9ms
+Acquired camera lock in 56ms
+Acquired data channel lock in 0ms
+Frame received in 0ms
+Frame converted from bytes in 0ms
+Frame resized and color depth changed in 0ms
+Frame rendered in 7ms
