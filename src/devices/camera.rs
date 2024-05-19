@@ -10,8 +10,8 @@ pub struct Camera {
 
 impl Camera {
     // Constructs a new Camera object
-    pub fn new(cam_width: f64, cam_height: f64, cam_fps: f64) -> Option<Camera> {
-        let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY).unwrap();
+    pub fn new(cam_width: f64, cam_height: f64, cam_fps: f64, cam_index: i32) -> Option<Camera> {
+        let mut cam = videoio::VideoCapture::new(cam_index, videoio::CAP_ANY).unwrap();
         let frame = Mat::default();
 
         cam.set(videoio::CAP_PROP_FRAME_WIDTH, cam_width).unwrap();
