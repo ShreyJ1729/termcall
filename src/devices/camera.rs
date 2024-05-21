@@ -61,8 +61,10 @@ impl Camera {
             },
         };
 
+        let frame_read = self.frame.clone();
+
         imgproc::resize(
-            &self.frame.input_array().unwrap(),
+            &frame_read,
             &mut self.frame,
             new_size,
             0.0,

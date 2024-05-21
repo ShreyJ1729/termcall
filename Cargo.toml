@@ -3,10 +3,9 @@ name = "termcall"
 version = "0.1.0"
 edition = "2021"
 default-run = "termcall"
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-opencv = { version = "0.88.6", features = ["clang-runtime"] }
+opencv = { version = "0.91.3", features = ["clang-runtime"] }
 cpal = "0.15.2"
 libsixel-sys = "0.1.0"
 just-webrtc = "0.1.1"
