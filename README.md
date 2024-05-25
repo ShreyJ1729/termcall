@@ -1,13 +1,12 @@
 # TermCall: FaceTime in the terminal
 
-todo - in order to fix problem of force exit not removing name from database, create background process that monitors heartbeat from main program every second. If heartbeat is not received, remove name from database and exit.
+problems to fix
 
-todo - since high resolution causes high latency, have some way to auto balance latency once it gets too bad.
-e.x. force lower resolution even on high res terminal screens if latency is too high.
+- force exit not removing name from database, create background process (daemon) that monitors heartbeat from main program every second. If heartbeat is not received, remove name from database and exit.
 
-todo - stream events to keep download data low on firebase
-todo - separate the camera struct into framereader and framewriter. this allows us to bypass acquiring the camera lock which is the main bottleneck in the program.
+- high latency issue is caused by two reasons
+- - mutex on data channel takes too much time to lock/unlock, causing delays in transmitting/recieving loop. high output rate causes lag also. for 1, figure out different data channels. for two,
+    have some way to auto balance latency once it gets too bad.
+    e.x. force lower resolution even on high res terminal screens if latency is too high.
 
-bottlenecks
-
-- reading frame (occassionaly on send side)
+- firebase download rate is way too high. subscribe to receive events from stream instead of polling every second.
