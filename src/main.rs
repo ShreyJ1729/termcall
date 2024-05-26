@@ -292,7 +292,6 @@ async fn call_loop(
 
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
-
     let data_channel = Arc::new(Mutex::new(data_channel));
 
     enable_raw_mode().unwrap();
@@ -305,8 +304,6 @@ async fn call_loop(
 
     // frame capturing and sending loop
     let data_channel_clone = Arc::clone(&data_channel);
-
-    let n = self_name.to_string();
 
     tokio::spawn(async move {
         loop {
@@ -399,9 +396,8 @@ async fn call_loop(
         }
 
         let stats = format!(
-            "latency (s): {:.1} | mem usage: {:.0}MB | pixels: {} ({}x{}) | fps: {:.0}",
+            "latency (s): {:.1} | pixels: {} ({}x{}) | fps: {:.0}",
             latency as f64 / 1000.0,
-            get_memory_usage(),
             camera_math.get_frame_num_pixels(),
             camera_math.get_frame_width(),
             camera_math.get_frame_height(),

@@ -1,4 +1,4 @@
-use opencv::core::{Mat, Point3_, Size, ToInputArray};
+use opencv::core::{Mat, Point3_, Size};
 use opencv::videoio::VideoCapture;
 use opencv::{imgcodecs, imgproc, prelude::*, videoio};
 
