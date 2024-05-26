@@ -2,19 +2,19 @@ use opencv::core::Mat;
 use opencv::videoio::VideoCapture;
 use opencv::{imgcodecs, prelude::*, videoio};
 
+use crate::frame::Frame;
+
 const ASCII_CHAR_H_OVER_W: f64 = 2.25;
 
 pub struct Camera {
     cam: videoio::VideoCapture,
-    frame: Mat,
 }
 
 impl Camera {
     // Purposefully lightweight to allow for multiple struct instances
     pub fn new() -> Camera {
         let cam: VideoCapture = VideoCapture::default().unwrap();
-        let frame = Mat::default();
-        Camera { cam, frame }
+        Camera { cam }
     }
 
     pub fn init(&mut self, cam_width: f64, cam_height: f64, cam_fps: f64, cam_index: i32) {
@@ -32,17 +32,11 @@ impl Camera {
         }
     }
 
-    pub fn get_frame(&self) -> &Mat {
-        &self.frame
-    }
-
-    pub fn mat_to_bytes(&self) -> Vec<u8> {
-        let mut buf = opencv::types::VectorOfu8::new();
-        imgcodecs::imencode(".jpg", &self.frame, &mut buf, &opencv::core::Vector::new()).unwrap();
-        buf.to_vec()
-    }
-
-    pub fn read_frame(&mut self) -> bool {
-        self.cam.read(&mut self.frame).unwrap()
+    // For efficiency, read camera data directly into Frame object Mat
+    pub fn read_frame(&mut self, frame_ref: &mut Mat) -> bool {
+        match self.cam.read(frame_ref) {
+            Ok(true) => true,
+            _ => false,
+        }
     }
 }

@@ -1,25 +1,38 @@
 use opencv::core::{Mat, Point3_, Size};
-use opencv::videoio::VideoCapture;
-use opencv::{imgcodecs, imgproc, prelude::*, videoio};
+use opencv::{imgcodecs, imgproc, prelude::*};
 
 const ASCII_CHAR_H_OVER_W: f64 = 2.25;
 
-pub struct FrameWriter {
-    frame: Mat,
+pub struct Frame {
+    data: Mat,
 }
 
-impl FrameWriter {
+impl Frame {
     // Purposefully lightweight to allow for multiple struct instances
-    pub fn new() -> FrameWriter {
-        let frame = Mat::default();
-        FrameWriter { frame }
+    pub fn new() -> Frame {
+        let data = Mat::default();
+        Frame { data }
+    }
+
+    pub fn get_ref(&self) -> &Mat {
+        &self.data
+    }
+
+    pub fn get_mut_ref(&mut self) -> &mut Mat {
+        &mut self.data
+    }
+
+    pub fn get_bytes(&self) -> Vec<u8> {
+        let mut buf = opencv::types::VectorOfu8::new();
+        imgcodecs::imencode(".jpg", &self.data, &mut buf, &opencv::core::Vector::new()).unwrap();
+        buf.to_vec()
     }
 
     // Resizes a Mat to the specified width and height
     pub fn resize_frame(&mut self, new_width: f64, new_height: f64, preserve_aspect_ratio: bool) {
         let (orig_width, orig_height) = (
-            self.frame.cols() as f64 * ASCII_CHAR_H_OVER_W,
-            self.frame.rows() as f64,
+            self.data.cols() as f64 * ASCII_CHAR_H_OVER_W,
+            self.data.rows() as f64,
         );
         let orig_ratio = orig_width / orig_height;
 
@@ -44,11 +57,11 @@ impl FrameWriter {
             },
         };
 
-        let frame_read = self.frame.clone();
+        let frame_read = self.data.clone();
 
         imgproc::resize(
             &frame_read,
-            &mut self.frame,
+            &mut self.data,
             new_size,
             0.0,
             0.0,
@@ -60,7 +73,7 @@ impl FrameWriter {
     // changes color depth by rounding each color channel to the nearest multiple of 255/new_colors_per_channel
     // CHaing color depth helps reduce latency since less bytes must be written to terminal per cycle
     pub fn change_color_depth(&mut self, colors_per_channel: u8) {
-        let data = self.frame.data_typed_mut::<Point3_<u8>>().unwrap();
+        let data = self.data.data_typed_mut::<Point3_<u8>>().unwrap();
 
         let multiple = 255 / colors_per_channel;
 
@@ -78,11 +91,11 @@ impl FrameWriter {
 
         // set data back to frame
         let data_ptr: *const u8 = data.as_ptr() as *const u8;
-        unsafe { self.frame.set_data(data_ptr) }
+        unsafe { self.data.set_data(data_ptr) }
     }
 
     pub fn get_frame(&self) -> &Mat {
-        &self.frame
+        &self.data
     }
 
     pub fn load_bytes(&mut self, bytes: Vec<u8>) {
@@ -92,24 +105,28 @@ impl FrameWriter {
         )
         .unwrap();
 
-        self.frame = mat;
+        self.data = mat;
+    }
+
+    pub fn load_mat(&mut self, mat: &Mat) {
+        self.data = mat.clone();
     }
 
     pub fn get_frame_mirrored(&mut self) -> &Mat {
-        let orig_frame = self.frame.clone();
-        opencv::core::flip(&orig_frame, &mut self.frame, 1).unwrap();
-        &self.frame
+        let orig_frame = self.data.clone();
+        opencv::core::flip(&orig_frame, &mut self.data, 1).unwrap();
+        &self.data
     }
 
-    pub fn get_frame_width(&self) -> i32 {
-        self.frame.cols()
+    pub fn width(&self) -> i32 {
+        self.data.cols()
     }
 
-    pub fn get_frame_height(&self) -> i32 {
-        self.frame.rows()
+    pub fn height(&self) -> i32 {
+        self.data.rows()
     }
 
-    pub fn get_frame_num_pixels(&self) -> i32 {
-        self.frame.total() as i32
+    pub fn num_pixels(&self) -> i32 {
+        self.data.total() as i32
     }
 }

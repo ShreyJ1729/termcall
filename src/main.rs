@@ -1,5 +1,5 @@
 mod devices;
-mod frame_writer;
+mod frame;
 mod rtdb;
 mod schemas;
 mod stats;
@@ -12,7 +12,7 @@ use crossterm::{
 };
 use devices::{camera::Camera, microphone::Microphone, speaker::Speaker};
 use firebase_rs::Firebase;
-use frame_writer::FrameWriter;
+use frame::Frame;
 use just_webrtc::{
     platform::{Channel, PeerConnection},
     DataChannelExt, PeerConnectionExt, SimpleLocalPeerConnection, SimpleRemotePeerConnection,
@@ -30,6 +30,7 @@ use tokio::sync::Mutex;
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 30 as f64;
+const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
 #[tokio::main]
 async fn main() {
@@ -288,7 +289,9 @@ async fn call_loop(
 
     let mut terminal = Terminal::new();
     let mut camera = Camera::new();
-    let mut frame_writer = FrameWriter::new();
+    let mut frame = Frame::new();
+    let mut display_frame = Frame::new();
+
     camera.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, camera_index);
 
     let mut microphone = Microphone::new();
@@ -315,10 +318,14 @@ async fn call_loop(
                 .unwrap()
                 .as_millis() as u64;
 
-            assert!(camera.read_frame());
+            assert!(camera.read_frame(frame.get_mut_ref()));
+            frame.resize_frame(
+                CAMERA_WIDTH * FRAME_COMPRESSION_FACTOR,
+                CAMERA_HEIGHT * FRAME_COMPRESSION_FACTOR,
+                true,
+            );
 
-            // convert mat to bytes and send over data channel
-            let frame = &bytes::Bytes::from(camera.mat_to_bytes());
+            let frame = &bytes::Bytes::from(frame.get_bytes());
             let timestamp_bytes = timestamp.to_be_bytes();
 
             let mut payload = BytesMut::with_capacity(frame.len() + timestamp_bytes.len());
@@ -380,29 +387,29 @@ async fn call_loop(
             .as_millis() as u64
             - timestamp;
 
-        frame_writer.load_bytes(frame.to_vec());
+        display_frame.load_bytes(frame.to_vec());
 
         // some processing before showing the frame
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
-        frame_writer.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, false);
-        frame_writer.change_color_depth(24);
+        display_frame.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, false);
+        display_frame.change_color_depth(32);
 
         // during size changes, don't render (to avoid artifacts)
         if !size_changed {
             terminal.goto_topleft();
-            terminal.write_frame(frame_writer.get_frame());
+            terminal.write_frame(display_frame.get_frame());
         } else {
             terminal.clear();
         }
 
         let stats = format!(
-            "latency (s): {:.1} | send/receiving {}/{} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
+            "latency (s): {:.1} | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
             latency as f64 / 1000.0,
             sending_bytes_read.load(atomic::Ordering::SeqCst) as f64 / 1000.0,
             receiving_bytes as f64 / 1000.0,
-            frame_writer.get_frame_num_pixels(),
-            frame_writer.get_frame_width(),
-            frame_writer.get_frame_height(),
+            display_frame.num_pixels(),
+            display_frame.width(),
+            display_frame.height(),
             frame_count as f64 / begin.elapsed().as_secs_f64()
         );
 
