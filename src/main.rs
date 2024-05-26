@@ -1,4 +1,5 @@
 mod devices;
+mod frame_writer;
 mod rtdb;
 mod schemas;
 mod stats;
@@ -11,21 +12,21 @@ use crossterm::{
 };
 use devices::{camera::Camera, microphone::Microphone, speaker::Speaker};
 use firebase_rs::Firebase;
+use frame_writer::FrameWriter;
 use just_webrtc::{
     platform::{Channel, PeerConnection},
     DataChannelExt, PeerConnectionExt, SimpleLocalPeerConnection, SimpleRemotePeerConnection,
 };
 use schemas::user::User;
-use stats::get_memory_usage;
 use std::{
-    fs::File,
     io::{self, stdin, Write},
-    sync::Arc,
+    sync::{atomic, Arc},
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use terminal::Terminal;
 use tokio::sync::Mutex;
 
+// Minimum settings for camera
 const CAMERA_WIDTH: f64 = 640 as f64;
 const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 30 as f64;
@@ -286,9 +287,9 @@ async fn call_loop(
     let camera_index = camera_index_str.trim().parse().unwrap();
 
     let mut terminal = Terminal::new();
-    let mut camera_read = Camera::new().unwrap();
-    let mut camera_math = Camera::new().unwrap();
-    camera_read.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, camera_index);
+    let mut camera = Camera::new();
+    let mut frame_writer = FrameWriter::new();
+    camera.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, camera_index);
 
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
@@ -304,6 +305,8 @@ async fn call_loop(
 
     // frame capturing and sending loop
     let data_channel_clone = Arc::clone(&data_channel);
+    let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
+    let sending_bytes_read = Arc::clone(&sending_bytes);
 
     tokio::spawn(async move {
         loop {
@@ -312,31 +315,27 @@ async fn call_loop(
                 .unwrap()
                 .as_millis() as u64;
 
-            assert!(camera_read.read_frame());
-
-            let w = camera_read.get_frame_width();
-            let h = camera_read.get_frame_height();
-
-            // downsample frame for easier transmission
-            camera_read.resize_frame(w as f64 * 0.25, h as f64 * 0.25, false);
+            assert!(camera.read_frame());
 
             // convert mat to bytes and send over data channel
-            let payload = &bytes::Bytes::from(camera_read.mat_to_bytes());
+            let frame = &bytes::Bytes::from(camera.mat_to_bytes());
             let timestamp_bytes = timestamp.to_be_bytes();
 
-            let mut combined = BytesMut::with_capacity(payload.len() + timestamp_bytes.len());
-            combined.extend_from_slice(&payload);
-            combined.extend_from_slice(&timestamp_bytes);
+            let mut payload = BytesMut::with_capacity(frame.len() + timestamp_bytes.len());
+            payload.extend_from_slice(&frame);
+            payload.extend_from_slice(&timestamp_bytes);
+            sending_bytes.store(payload.len(), atomic::Ordering::SeqCst);
 
             let data_channel = data_channel_clone.lock().await;
 
-            if data_channel.send(&combined.freeze()).await.is_err() {
+            if data_channel.send(&payload.freeze()).await.is_err() {
                 break;
             }
         }
     });
 
     // frame receiving and rendering loop
+    let mut receiving_bytes;
     loop {
         // If q pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(1)).unwrap() {
@@ -366,12 +365,13 @@ async fn call_loop(
         // receive data from data channel and play it
         let mut data_channel = data_channel.lock().await;
 
-        let combined = data_channel.receive().await;
-        if combined.is_err() {
+        let payload = data_channel.receive().await;
+        if payload.is_err() {
             break;
         }
-        let combined = combined.unwrap();
-        let (payload, timestamp_bytes) = combined.split_at(combined.len() - 8);
+        let payload = payload.unwrap();
+        receiving_bytes = payload.len();
+        let (frame, timestamp_bytes) = payload.split_at(payload.len() - 8);
 
         let timestamp = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
         let latency = SystemTime::now()
@@ -380,27 +380,29 @@ async fn call_loop(
             .as_millis() as u64
             - timestamp;
 
-        camera_math.save_bytes_to_mat(payload.to_vec());
+        frame_writer.load_bytes(frame.to_vec());
 
         // some processing before showing the frame
         let (terminal_width, terminal_height, size_changed) = terminal.get_size();
-        camera_math.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, false);
-        camera_math.change_color_depth(24);
+        frame_writer.resize_frame(terminal_width as f64, (terminal_height - 1) as f64, false);
+        frame_writer.change_color_depth(24);
 
         // during size changes, don't render (to avoid artifacts)
         if !size_changed {
             terminal.goto_topleft();
-            terminal.write_frame(camera_math.get_frame());
+            terminal.write_frame(frame_writer.get_frame());
         } else {
             terminal.clear();
         }
 
         let stats = format!(
-            "latency (s): {:.1} | pixels: {} ({}x{}) | fps: {:.0}",
+            "latency (s): {:.1} | send/receiving {}/{} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
             latency as f64 / 1000.0,
-            camera_math.get_frame_num_pixels(),
-            camera_math.get_frame_width(),
-            camera_math.get_frame_height(),
+            sending_bytes_read.load(atomic::Ordering::SeqCst) as f64 / 1000.0,
+            receiving_bytes as f64 / 1000.0,
+            frame_writer.get_frame_num_pixels(),
+            frame_writer.get_frame_width(),
+            frame_writer.get_frame_height(),
             frame_count as f64 / begin.elapsed().as_secs_f64()
         );
 

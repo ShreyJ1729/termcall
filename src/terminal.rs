@@ -5,8 +5,8 @@ use std::io::{self, Write};
 
 pub struct Terminal {
     pub stdout: io::Stdout,
-    pub width: i32,
-    pub height: i32,
+    pub width: u16,
+    pub height: u16,
 }
 
 impl Terminal {
@@ -15,8 +15,8 @@ impl Terminal {
         let (width, height) = crossterm::terminal::size().unwrap();
         Terminal {
             stdout,
-            width: width as i32,
-            height: height as i32,
+            width: width,
+            height: height,
         }
     }
 
@@ -25,7 +25,7 @@ impl Terminal {
     }
 
     pub fn write_to_bottomright(&mut self, s: &str) {
-        if self.width < s.len() as i32 {
+        if self.width < s.len() as u16 {
             return;
         }
         write!(
@@ -64,9 +64,8 @@ impl Terminal {
 
     // Returns the current terminal size as a tuple of (width, height, changed)
     // changed is true if the size changed since the last call to get_size
-    pub fn get_size(&mut self) -> (i32, i32, bool) {
+    pub fn get_size(&mut self) -> (u16, u16, bool) {
         let (width, height) = crossterm::terminal::size().unwrap();
-        let (width, height) = (width as i32, height as i32);
         let mut changed = false;
 
         if width != self.width || height != self.height {
