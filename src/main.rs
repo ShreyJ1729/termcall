@@ -14,10 +14,7 @@ use crossterm::{
 use devices::{camera::Camera, microphone::Microphone, speaker::Speaker};
 use firebase_rs::Firebase;
 use frame::Frame;
-use just_webrtc::{
-    platform::{Channel, PeerConnection},
-    DataChannelExt, PeerConnectionExt, SimpleLocalPeerConnection, SimpleRemotePeerConnection,
-};
+use rtc::{RTCAnswererConnection, RTCOffererConnection};
 use schemas::user::User;
 use std::{
     io::{self, stdin, Write},
@@ -25,7 +22,6 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use terminal::Terminal;
-use tokio::sync::Mutex;
 
 // Minimum settings for camera
 const CAMERA_WIDTH: f64 = 640 as f64;
@@ -35,9 +31,12 @@ const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
 #[tokio::main]
 async fn main() {
+    let rtc_offerer_connection = RTCOffererConnection::new().await.unwrap();
+    let rtc_answerer_connection = RTCAnswererConnection::new().await.unwrap();
+
     let firebase = Firebase::new(rtdb::DATABASE_URL).unwrap();
 
-    let mut local_peer_connection = SimpleLocalPeerConnection::build(false).await.unwrap();
+    // let mut local_peer_connection = SimpleLocalPeerConnection::build(false).await.unwrap();
     let mut terminal = Terminal::new();
 
     // ---------- Entering Name ----------
@@ -128,27 +127,36 @@ async fn main() {
             let remote_offer = caller_data.offer.clone();
             let (remote_sdp, remote_candidates) = serde_json::from_str(&remote_offer).unwrap();
 
-            let mut remote_peer_connection =
-                SimpleRemotePeerConnection::build(remote_sdp).await.unwrap();
+            rtc_answerer_connection
+                .set_remote_description(remote_sdp)
+                .await
+                .unwrap();
 
-            remote_peer_connection
+            rtc_answerer_connection
                 .add_ice_candidates(remote_candidates)
                 .await
                 .unwrap();
 
-            // output answer and candidates for local peer
-            let sdp = remote_peer_connection
-                .get_local_description()
-                .await
-                .unwrap();
-            let candidates = remote_peer_connection
-                .collect_ice_candidates()
-                .await
-                .unwrap();
+            println!("Remote SDP and Candidates set!");
 
+            // output answer and candidates for local peer
+            let sdp = rtc_answerer_connection.create_answer().await.unwrap();
+            rtc_answerer_connection
+                .set_local_description(sdp.clone())
+                .await
+                .unwrap();
+            while !rtc_answerer_connection
+                .all_candidates_gathered
+                .load(atomic::Ordering::SeqCst)
+            {
+                tokio::time::sleep(Duration::from_millis(100)).await;
+            }
+
+            println!("Answer Created and Candidates gathered!");
+
+            let candidates = rtc_answerer_connection.candidates.lock().unwrap().clone();
             // ... send the answer and the candidates back to Peer A via external signalling implementation ...
-            let answer = (sdp, candidates);
-            let answer = serde_json::to_string(&answer).unwrap();
+            let answer = serde_json::to_string(&(sdp, candidates)).unwrap();
 
             // update our user object with the answer
             let user = User {
@@ -163,9 +171,8 @@ async fn main() {
             println!("Answer sent! Waiting for connection...");
 
             // and now just wait for connection/data channels to establish
-            remote_peer_connection.wait_peer_connected().await;
-            let remote_channel = remote_peer_connection.receive_channel().await.unwrap();
-            remote_channel.wait_ready().await;
+            rtc_answerer_connection.wait_peer_connected().await;
+            rtc_answerer_connection.wait_data_channels_open().await;
 
             // We are now in call with the caller. Update our user object to reflect this
             rtdb::add_or_update_user(
@@ -184,8 +191,9 @@ async fn main() {
                 &firebase,
                 &self_name,
                 caller_name,
-                remote_peer_connection,
-                remote_channel,
+                &rtc_offerer_connection,
+                &rtc_answerer_connection,
+                false,
             )
             .await;
         }
@@ -197,11 +205,21 @@ async fn main() {
 
     // Generate offer
     println!("Generating offer...");
-    let sdp = local_peer_connection.get_local_description().await.unwrap();
-    let candidates = local_peer_connection
-        .collect_ice_candidates()
+    let sdp = rtc_offerer_connection.create_offer().await.unwrap();
+    rtc_offerer_connection
+        .set_local_description(sdp.clone())
         .await
         .unwrap();
+
+    while !rtc_offerer_connection
+        .all_candidates_gathered
+        .load(atomic::Ordering::SeqCst)
+    {
+        tokio::time::sleep(Duration::from_millis(100)).await;
+    }
+    println!("SDP Created and Candidates gathered! Passed the loop!");
+
+    let candidates = rtc_offerer_connection.candidates.lock().unwrap().clone();
 
     // Serialize offer and candidates
     let offer = serde_json::to_string(&(sdp, candidates)).unwrap();
@@ -238,19 +256,20 @@ async fn main() {
     // We have received an answer
     println!("Received answer from {}! Connecting...", person_to_call);
     let (remote_sdp, remote_candidates) = serde_json::from_str(&answer).unwrap();
-    local_peer_connection
+    rtc_offerer_connection
         .set_remote_description(remote_sdp)
         .await
         .unwrap();
-    local_peer_connection
+    rtc_offerer_connection
         .add_ice_candidates(remote_candidates)
         .await
         .unwrap();
 
+    println!("Remote SDP and Candidates set! Waiting for connection...");
+
     // Wait for connection to establish
-    local_peer_connection.wait_peer_connected().await;
-    let local_channel = local_peer_connection.receive_channel().await.unwrap();
-    local_channel.wait_ready().await;
+    rtc_offerer_connection.wait_peer_connected().await;
+    rtc_offerer_connection.wait_data_channels_open().await;
 
     // Update our user object with the in_call field
     rtdb::add_or_update_user(
@@ -268,8 +287,9 @@ async fn main() {
         &firebase,
         &self_name,
         &person_to_call,
-        local_peer_connection,
-        local_channel,
+        &rtc_offerer_connection,
+        &rtc_answerer_connection,
+        true,
     )
     .await;
 }
@@ -278,8 +298,9 @@ async fn call_loop(
     firebase: &Firebase,
     self_name: &str,
     peer_name: &str,
-    rtc_connection: PeerConnection,
-    data_channel: Channel,
+    rtc_offerer_connection: &RTCOffererConnection,
+    rtc_answerer_connection: &RTCAnswererConnection,
+    is_offerer: bool,
 ) {
     // prompt for what index camera to use
     print!("Enter camera index: ");
@@ -297,7 +318,6 @@ async fn call_loop(
 
     let mut microphone = Microphone::new();
     let mut speaker = Speaker::new();
-    let data_channel = Arc::new(Mutex::new(data_channel));
 
     enable_raw_mode().unwrap();
 
@@ -308,10 +328,13 @@ async fn call_loop(
     let mut begin = std::time::Instant::now();
 
     // frame capturing and sending loop
-    let data_channel_clone = Arc::clone(&data_channel);
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
     let sending_bytes_read = Arc::clone(&sending_bytes);
-
+    let data_channel = if is_offerer {
+        rtc_offerer_connection.get_data_channel(0).await.unwrap()
+    } else {
+        rtc_answerer_connection.get_data_channel(0).await.unwrap()
+    };
     tokio::spawn(async move {
         loop {
             let timestamp = SystemTime::now()
@@ -334,8 +357,6 @@ async fn call_loop(
             payload.extend_from_slice(&timestamp_bytes);
             sending_bytes.store(payload.len(), atomic::Ordering::SeqCst);
 
-            let data_channel = data_channel_clone.lock().await;
-
             if data_channel.send(&payload.freeze()).await.is_err() {
                 break;
             }
@@ -345,6 +366,7 @@ async fn call_loop(
     // frame receiving and rendering loop
     let mut receiving_bytes;
     loop {
+        let start1 = std::time::Instant::now();
         // If q pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(1)).unwrap() {
             if let event::Event::Key(event) = event::read().unwrap() {
@@ -371,13 +393,20 @@ async fn call_loop(
         }
 
         // receive data from data channel and play it
-        let mut data_channel = data_channel.lock().await;
-
-        let payload = data_channel.receive().await;
-        if payload.is_err() {
+        let start = std::time::Instant::now();
+        let on_message_rx = if is_offerer {
+            rtc_offerer_connection.on_message_rx.clone()
+        } else {
+            rtc_answerer_connection.on_message_rx.clone()
+        }
+        .clone();
+        let mut on_message_rx = on_message_rx.lock().unwrap();
+        let payload = on_message_rx.recv().await;
+        // println!("Time taken to receive: {:?}", start.elapsed());
+        if payload.is_none() {
             break;
         }
-        let payload = payload.unwrap();
+        let payload = payload.unwrap().data;
         receiving_bytes = payload.len();
         let (frame, timestamp_bytes) = payload.split_at(payload.len() - 8);
 
@@ -403,6 +432,11 @@ async fn call_loop(
             terminal.clear();
         }
 
+        let frame_time = start.elapsed().as_millis();
+        if frame_time < 25 {
+            tokio::time::sleep(Duration::from_millis(25 - frame_time as u64)).await;
+        }
+
         let stats = format!(
             "latency (s): {:.1} | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
             latency as f64 / 1000.0,
@@ -411,7 +445,7 @@ async fn call_loop(
             display_frame.num_pixels(),
             display_frame.width(),
             display_frame.height(),
-            frame_count as f64 / begin.elapsed().as_secs_f64()
+            1f64 / start1.elapsed().as_secs_f64()
         );
 
         terminal.write_to_bottomright(&stats);

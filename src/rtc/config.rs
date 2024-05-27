@@ -17,15 +17,3 @@ pub fn get_default_config() -> RTCConfiguration {
         ..Default::default()
     }
 }
-
-pub fn build_api() -> Result<()> {
-    let mut m = MediaEngine::default();
-    m.register_default_codecs()?;
-    let mut registry = Registry::new();
-    registry = register_default_interceptors(registry, &mut m)?;
-    let api = APIBuilder::new()
-        .with_media_engine(m)
-        .with_interceptor_registry(registry)
-        .build();
-    Ok(())
-}
