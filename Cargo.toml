@@ -16,9 +16,6 @@ bytes = "1.6.0"
 tokio = "1.37.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0.117"
-<<<<<<< Updated upstream
-anyhow = "1.0.86"
-=======
 webrtc = "0.11.0"
 anyhow = "1.0.86"
 
@@ -33,4 +30,3 @@ path = "src/webrtc/offer.rs"
 [[bin]]
 name = "answer"
 path = "src/webrtc/answer.rs"
->>>>>>> Stashed changes

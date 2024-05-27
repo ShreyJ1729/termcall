@@ -60,6 +60,11 @@ async fn main() -> Result<()> {
 
     peer_connection.on_peer_connection_state_change(Box::new(move |s: RTCPeerConnectionState| {
         println!("Peer Connection State has changed: {s}");
+        if s == RTCPeerConnectionState::Connected {
+            // delete offer and candidates files
+            std::fs::remove_file("offer").unwrap();
+            std::fs::remove_file("offer_candidates").unwrap();
+        }
         Box::pin(async {})
     }));
 
@@ -111,6 +116,12 @@ async fn main() -> Result<()> {
                 ..Default::default()
             })
             .await?;
+    }
+
+    // block forever
+    while tokio::signal::ctrl_c().await.is_err() {
+        tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+        data_channel.send_text("Hello, World!").await?;
     }
 
     Ok(())
