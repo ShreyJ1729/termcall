@@ -73,9 +73,16 @@ async fn main() {
 
     terminal.clear();
 
+    let begin = std::time::Instant::now();
+    let mut contacts = rtdb::get_users(&firebase).await;
+
     loop {
-        // Poll for firebase changes each cycle
-        let contacts = rtdb::get_users(&firebase).await;
+        // Poll for firebase changes each second
+        if begin.elapsed().as_secs() > 1 {
+            begin = std::time::Instant::now();
+            contacts = rtdb::get_users(&firebase).await;
+        }
+
         let new_usernames = contacts.keys().cloned().collect::<Vec<String>>();
 
         // If any update, rerender the contacts
