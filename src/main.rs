@@ -1,5 +1,6 @@
 mod devices;
 mod frame;
+mod rtc;
 mod rtdb;
 mod schemas;
 mod stats;
