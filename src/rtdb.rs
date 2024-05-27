@@ -19,7 +19,10 @@ pub async fn get_usernames(firebase: &Firebase) -> Vec<String> {
     let users = get_users(firebase).await;
     users.keys().cloned().collect()
 }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 pub async fn add_or_update_user(firebase: &Firebase, username: &str, new_data: User) -> Result<()> {
     firebase.at("users").at(username).update(&new_data).await?;
     Ok(())
