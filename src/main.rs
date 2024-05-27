@@ -35,7 +35,6 @@ const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 #[tokio::main]
 async fn main() {
     let firebase = Firebase::new(rtdb::DATABASE_URL).unwrap();
-
     let mut local_peer_connection = SimpleLocalPeerConnection::build(false).await.unwrap();
     let mut terminal = Terminal::new();
 
@@ -73,7 +72,7 @@ async fn main() {
 
     terminal.clear();
 
-    let begin = std::time::Instant::now();
+    let mut begin = std::time::Instant::now();
     let mut contacts = rtdb::get_users(&firebase).await;
 
     loop {
@@ -223,7 +222,7 @@ async fn main() {
         .unwrap();
 
     println!(
-        "Calling {} (send offer)... Waiting for response...",
+        "Calling {} (sent offer)... Waiting for response...",
         person_to_call
     );
 
