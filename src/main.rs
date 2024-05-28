@@ -347,8 +347,8 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
         }
 
         let stats = format!(
-            "latency (s): {:.1} | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
-            latency as f64 / 1000.0,
+            "latency: {:.0} ms | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
+            latency,
             sending_bytes_read.load(atomic::Ordering::SeqCst) as f64 / 1000.0,
             receiving_bytes as f64 / 1000.0,
             display_frame.num_pixels(),
