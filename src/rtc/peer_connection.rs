@@ -16,7 +16,7 @@ use webrtc::{
         ice_server::RTCIceServer,
     },
     peer_connection::{
-        self, configuration::RTCConfiguration, peer_connection_state::RTCPeerConnectionState,
+        configuration::RTCConfiguration, peer_connection_state::RTCPeerConnectionState,
         sdp::session_description::RTCSessionDescription, RTCPeerConnection,
     },
 };
@@ -29,10 +29,11 @@ pub struct PeerConnection {
     pub data_channels: Arc<Mutex<Vec<Arc<RTCDataChannel>>>>,
     pub on_message_tx: Arc<Mutex<mpsc::Sender<DataChannelMessage>>>,
     pub on_message_rx: Arc<Mutex<mpsc::Receiver<DataChannelMessage>>>,
+    pub is_offerer: bool,
 }
 
 impl PeerConnection {
-    pub async fn new() -> Result<Self> {
+    pub async fn new(is_offerer: bool) -> Result<Self> {
         let api = APIBuilder::default().build();
         let config = RTCConfiguration {
             ice_servers: vec![RTCIceServer {
@@ -45,7 +46,7 @@ impl PeerConnection {
         let peer_connection = api.new_peer_connection(config).await?;
         let peer_connection = Arc::new(Mutex::new(peer_connection));
 
-        let (on_message_tx, on_message_rx) = mpsc::channel(100);
+        let (on_message_tx, on_message_rx) = mpsc::channel(30);
         let on_message_tx = Arc::new(Mutex::new(on_message_tx));
         let on_message_rx = Arc::new(Mutex::new(on_message_rx));
 
@@ -57,6 +58,7 @@ impl PeerConnection {
             data_channels: Arc::new(Mutex::new(Vec::new())),
             on_message_tx,
             on_message_rx,
+            is_offerer,
         };
 
         // Peer connection event handlers
@@ -64,11 +66,14 @@ impl PeerConnection {
         peer_connection.register_pc_connection_state_change();
         peer_connection.register_pc_on_data_channel();
 
-        peer_connection.create_data_channel("video").await?;
+        if is_offerer {
+            peer_connection.create_data_channel("offerer-send").await?;
+            peer_connection.create_data_channel("answerer-send").await?;
 
-        // Data channel event handlers
-        peer_connection.register_dc_on_open();
-        peer_connection.register_dc_on_message();
+            // Data channel event handlers
+            peer_connection.register_dc_on_open();
+            peer_connection.register_dc_on_message();
+        }
 
         Ok(peer_connection)
     }
@@ -142,6 +147,7 @@ impl PeerConnection {
         let dcs = dcs.lock().unwrap();
         for dc in dcs.iter() {
             let dc = dc.clone();
+            let dc_label = dc.label().to_owned();
             let on_message_tx = self.on_message_tx.clone();
             dc.on_message(Box::new(move |msg: DataChannelMessage| {
                 let msg = msg.clone();
@@ -194,6 +200,7 @@ impl PeerConnection {
             dcs.push(dc.clone());
 
             let dc_label = dc.label().to_owned();
+            let dc_label2 = dc_label.clone();
             let on_message_tx = on_message_tx.clone();
 
             dc.on_open(Box::new(move || {
@@ -230,13 +237,14 @@ impl PeerConnection {
         }
     }
 
-    pub async fn get_data_channel(&self, index: usize) -> Option<Arc<RTCDataChannel>> {
+    pub async fn get_data_channel(&self, label: String) -> Option<Arc<RTCDataChannel>> {
         let dcs = self.data_channels.clone();
         let dcs = dcs.lock().unwrap();
-
-        if index >= dcs.len() {
-            return None;
+        for dc in dcs.iter() {
+            if dc.label() == label {
+                return Some(dc.clone());
+            }
         }
-        Some(dcs[index].clone())
+        None
     }
 }

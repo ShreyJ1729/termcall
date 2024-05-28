@@ -8,7 +8,6 @@ pub struct Frame {
 }
 
 impl Frame {
-    // Purposefully lightweight to allow for multiple struct instances
     pub fn new() -> Frame {
         let data = Mat::default();
         Frame { data }
