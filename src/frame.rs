@@ -1,5 +1,6 @@
 use opencv::core::{Mat, Point3_, Size};
 use opencv::{imgcodecs, imgproc, prelude::*};
+use simple_log::error;
 
 const ASCII_CHAR_H_OVER_W: f64 = 2.25;
 
@@ -58,15 +59,19 @@ impl Frame {
 
         let frame_read = self.data.clone();
 
-        imgproc::resize(
+        match imgproc::resize(
             &frame_read,
             &mut self.data,
             new_size,
             0.0,
             0.0,
             opencv::imgproc::INTER_LINEAR,
-        )
-        .unwrap();
+        ) {
+            Ok(_) => {}
+            Err(e) => {
+                error!("Error resizing frame: {}", e);
+            }
+        }
     }
 
     // changes color depth by rounding each color channel to the nearest multiple of 255/new_colors_per_channel

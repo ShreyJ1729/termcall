@@ -7,7 +7,6 @@ mod stats;
 mod terminal;
 mod ui;
 
-use anyhow::Result;
 use bytes::BytesMut;
 use crossterm::{
     event,
@@ -32,15 +31,22 @@ const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 30 as f64;
 const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
+fn timstamp() -> u64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_secs()
+}
+
 #[tokio::main]
 async fn main() {
     // Initialize logging
     let config = LogConfigBuilder::builder()
-        .path("./log")
+        .path(&format!("./logs/{}.log", timstamp()))
         .size(1 * 100)
         .roll_count(10)
-        .time_format("%Y-%m-%d %H:%M:%S.%f")
-        .level("debug")
+        .time_format("%Y-%m-%d %H:%M:%S")
+        .level("warning")
         .output_file()
         .build();
 
@@ -53,17 +59,10 @@ async fn main() {
     }
 
     // Initialize PeerConnections
-    let rtc_offerer_connection = match PeerConnection::new(true).await {
+    let rtc_connection = match PeerConnection::new().await {
         Ok(connection) => connection,
         Err(e) => {
-            error!("Error creating offerer PeerConnection: {:?}", e);
-            return;
-        }
-    };
-    let rtc_answerer_connection = match PeerConnection::new(false).await {
-        Ok(connection) => connection,
-        Err(e) => {
-            error!("Error creating answerer PeerConnection: {:?}", e);
+            error!("Error creating PeerConnection: {:?}", e);
             return;
         }
     };
@@ -129,28 +128,28 @@ async fn main() {
             let (remote_sd, remote_candidates) =
                 serde_json::from_str(&remote_offer).expect("Remote offer should be valid JSON");
 
-            rtc_answerer_connection
+            rtc_connection
                 .set_remote_description(remote_sd)
                 .await
                 .expect("Remote session description should be valid");
 
-            rtc_answerer_connection
+            rtc_connection
                 .add_remote_ice_candidates(remote_candidates)
                 .await
                 .expect("Remote ice candidates should be valid");
 
-            let sd = rtc_answerer_connection
+            let sd = rtc_connection
                 .create_answer()
                 .await
                 .expect("peer connection offer should be set");
 
-            rtc_answerer_connection
+            rtc_connection
                 .set_local_description(sd.clone())
                 .await
                 .expect("Local session description should be valid");
 
-            rtc_answerer_connection.wait_ice_candidates_gathered().await;
-            let candidates = rtc_answerer_connection.get_ice_candidates().await;
+            rtc_connection.wait_ice_candidates_gathered().await;
+            let candidates = rtc_connection.get_ice_candidates().await;
 
             let answer = serde_json::to_string(&(sd, candidates))
                 .expect("Components should be serializable");
@@ -168,8 +167,8 @@ async fn main() {
 
             println!("Answer sent! Waiting for connection...");
 
-            rtc_answerer_connection.wait_peer_connected().await;
-            rtc_answerer_connection.wait_data_channels_open().await;
+            rtc_connection.wait_peer_connected().await;
+            rtc_connection.wait_data_channels_open().await;
 
             rtdb.add_or_update_user(
                 &self_name,
@@ -181,7 +180,7 @@ async fn main() {
             .await
             .unwrap();
 
-            call_loop(&rtdb, &self_name, &rtc_answerer_connection).await;
+            call_loop(&rtdb, &self_name, &rtc_connection).await;
         }
 
         tokio::time::sleep(Duration::from_millis(1000)).await;
@@ -190,15 +189,15 @@ async fn main() {
     // ---------- Call Sending ----------
 
     println!("Calling {}...", person_to_call);
-    let sdp = rtc_offerer_connection.create_offer().await.unwrap();
+    let sdp = rtc_connection.create_offer().await.unwrap();
 
-    rtc_offerer_connection
+    rtc_connection
         .set_local_description(sdp.clone())
         .await
         .expect("Local sd should be valid");
 
-    rtc_offerer_connection.wait_ice_candidates_gathered().await;
-    let candidates = rtc_offerer_connection.get_ice_candidates().await;
+    rtc_connection.wait_ice_candidates_gathered().await;
+    let candidates = rtc_connection.get_ice_candidates().await;
 
     let offer =
         serde_json::to_string(&(sdp, candidates)).expect("Components should be serializable");
@@ -229,17 +228,17 @@ async fn main() {
     let (remote_sd, remote_candidates) =
         serde_json::from_str(&answer).expect("Answer should be valid JSON");
 
-    rtc_offerer_connection
+    rtc_connection
         .set_remote_description(remote_sd)
         .await
         .expect("Remote session description should be valid");
-    rtc_offerer_connection
+    rtc_connection
         .add_remote_ice_candidates(remote_candidates)
         .await
         .expect("Remote ice candidates should be valid");
 
-    rtc_offerer_connection.wait_peer_connected().await;
-    rtc_offerer_connection.wait_data_channels_open().await;
+    rtc_connection.wait_peer_connected().await;
+    rtc_connection.wait_data_channels_open().await;
 
     rtdb.add_or_update_user(
         &self_name,
@@ -251,11 +250,11 @@ async fn main() {
     .await
     .unwrap();
 
-    call_loop(&rtdb, &self_name, &rtc_offerer_connection).await;
+    call_loop(&rtdb, &self_name, &rtc_connection).await;
 }
 
 // ---------- Call Loop ----------
-async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnection) {
+async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection) {
     let mut terminal = Terminal::new();
     let mut display_frame = Frame::new();
 
@@ -270,13 +269,9 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
     let sending_bytes_read = Arc::clone(&sending_bytes);
 
-    let send_dc_label = if peer_connection.is_offerer {
-        "offerer-send"
-    } else {
-        "answerer-send"
-    };
+    let send_dc_label = &format!("{}-send", rtc_connection.id);
 
-    let send_dc = peer_connection
+    let send_dc = rtc_connection
         .get_data_channel(send_dc_label)
         .await
         .expect(format!("Data channel {} should exist", send_dc_label).as_str());
@@ -286,7 +281,13 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
         let mut camera = Camera::new();
         let mut frame = Frame::new();
 
-        camera.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, 0);
+        match camera.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, 0) {
+            Ok(_) => {}
+            Err(e) => {
+                error!("Failed initializing camera. Ending loop: {:?}", e);
+                return;
+            }
+        }
 
         loop {
             let start = std::time::Instant::now();
@@ -306,7 +307,7 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
             frame.resize_frame(
                 CAMERA_WIDTH * FRAME_COMPRESSION_FACTOR,
                 CAMERA_HEIGHT * FRAME_COMPRESSION_FACTOR,
-                true,
+                false,
             );
 
             let frame = frame.get_bytes();
@@ -344,7 +345,7 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
         }
 
         // receive data from data channel and play it
-        let on_message_rx = peer_connection.on_message_rx.clone();
+        let on_message_rx = rtc_connection.on_message_rx.clone();
         let mut on_message_rx = on_message_rx.lock().unwrap();
 
         let payload = on_message_rx.recv().await;
@@ -382,8 +383,8 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
         }
 
         let stats = format!(
-            "latency: {:.0} ms | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
-            latency,
+            "latency: {:.2} s | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
+            latency as f64 / 1000.0,
             sending_bytes_read.load(atomic::Ordering::SeqCst) as f64 / 1000.0,
             receiving_bytes as f64 / 1000.0,
             display_frame.num_pixels(),

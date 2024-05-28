@@ -2,30 +2,40 @@ use anyhow::Result;
 use opencv::core::Mat;
 use opencv::videoio::VideoCapture;
 use opencv::{prelude::*, videoio};
+use simple_log::error;
 
 pub struct Camera {
     cam: videoio::VideoCapture,
 }
 
 impl Camera {
-    // Purposefully lightweight to allow for multiple struct instances
     pub fn new() -> Camera {
         let cam: VideoCapture = VideoCapture::default().unwrap();
         Camera { cam }
     }
 
-    pub fn init(&mut self, cam_width: f64, cam_height: f64, cam_fps: f64, cam_index: i32) {
-        self.cam = videoio::VideoCapture::new(cam_index, videoio::CAP_ANY).unwrap();
-        self.cam
-            .set(videoio::CAP_PROP_FRAME_WIDTH, cam_width)
-            .unwrap();
-        self.cam
-            .set(videoio::CAP_PROP_FRAME_HEIGHT, cam_height)
-            .unwrap();
-        self.cam.set(videoio::CAP_PROP_FPS, cam_fps).unwrap();
+    pub fn init(
+        &mut self,
+        cam_width: f64,
+        cam_height: f64,
+        cam_fps: f64,
+        cam_index: i32,
+    ) -> Result<()> {
+        self.cam = videoio::VideoCapture::new(cam_index, videoio::CAP_ANY)?;
+        self.cam.set(videoio::CAP_PROP_FRAME_WIDTH, cam_width)?;
+        self.cam.set(videoio::CAP_PROP_FRAME_HEIGHT, cam_height)?;
+        self.cam.set(videoio::CAP_PROP_FPS, cam_fps)?;
 
-        if !videoio::VideoCapture::is_opened(&self.cam).unwrap() {
-            eprintln!("Unable to open default camera!");
+        match videoio::VideoCapture::is_opened(&self.cam) {
+            Ok(true) => Ok(()),
+            Ok(false) => {
+                error!("Camera is not opened");
+                Err(anyhow::anyhow!("Camera is not opened"))
+            }
+            Err(e) => {
+                error!("Error opening camera: {}", e);
+                Err(anyhow::anyhow!("Error opening camera: {}", e))
+            }
         }
     }
 
