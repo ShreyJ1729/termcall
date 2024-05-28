@@ -1,6 +1,3 @@
-mod answerer;
-pub mod config;
-mod offerer;
+mod peer_connection;
 
-pub use answerer::RTCAnswererConnection;
-pub use offerer::RTCOffererConnection;
+pub use peer_connection::PeerConnection;

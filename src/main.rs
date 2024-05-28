@@ -14,7 +14,7 @@ use crossterm::{
 use devices::{camera::Camera, microphone::Microphone, speaker::Speaker};
 use firebase_rs::Firebase;
 use frame::Frame;
-use rtc::{RTCAnswererConnection, RTCOffererConnection};
+use rtc::PeerConnection;
 use schemas::user::User;
 use std::{
     io::{self, stdin, Write},
@@ -31,8 +31,8 @@ const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
 #[tokio::main]
 async fn main() {
-    let rtc_offerer_connection = RTCOffererConnection::new().await.unwrap();
-    let rtc_answerer_connection = RTCAnswererConnection::new().await.unwrap();
+    let rtc_offerer_connection = PeerConnection::new().await.unwrap();
+    let rtc_answerer_connection = PeerConnection::new().await.unwrap();
 
     let firebase = Firebase::new(rtdb::DATABASE_URL).unwrap();
 
@@ -133,7 +133,7 @@ async fn main() {
                 .unwrap();
 
             rtc_answerer_connection
-                .add_ice_candidates(remote_candidates)
+                .add_remote_ice_candidates(remote_candidates)
                 .await
                 .unwrap();
 
@@ -187,15 +187,7 @@ async fn main() {
             .unwrap();
 
             // Once ready, we can start sending data
-            call_loop(
-                &firebase,
-                &self_name,
-                caller_name,
-                &rtc_offerer_connection,
-                &rtc_answerer_connection,
-                false,
-            )
-            .await;
+            call_loop(&firebase, &self_name, caller_name, &rtc_answerer_connection).await;
         }
 
         tokio::time::sleep(Duration::from_millis(1000)).await;
@@ -261,7 +253,7 @@ async fn main() {
         .await
         .unwrap();
     rtc_offerer_connection
-        .add_ice_candidates(remote_candidates)
+        .add_remote_ice_candidates(remote_candidates)
         .await
         .unwrap();
 
@@ -288,8 +280,6 @@ async fn main() {
         &self_name,
         &person_to_call,
         &rtc_offerer_connection,
-        &rtc_answerer_connection,
-        true,
     )
     .await;
 }
@@ -298,9 +288,7 @@ async fn call_loop(
     firebase: &Firebase,
     self_name: &str,
     peer_name: &str,
-    rtc_offerer_connection: &RTCOffererConnection,
-    rtc_answerer_connection: &RTCAnswererConnection,
-    is_offerer: bool,
+    peer_connection: &PeerConnection,
 ) {
     // prompt for what index camera to use
     print!("Enter camera index: ");
@@ -330,12 +318,11 @@ async fn call_loop(
     // frame capturing and sending loop
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
     let sending_bytes_read = Arc::clone(&sending_bytes);
-    let data_channel = if is_offerer {
-        rtc_offerer_connection.get_data_channel(0).await.unwrap()
-    } else {
-        rtc_answerer_connection.get_data_channel(0).await.unwrap()
-    };
+    let data_channels = peer_connection.data_channels.clone();
+    let data_channels = data_channels.lock().unwrap().clone();
+
     tokio::spawn(async move {
+        let dc = data_channels.get(0).unwrap();
         loop {
             let timestamp = SystemTime::now()
                 .duration_since(UNIX_EPOCH)
@@ -357,7 +344,7 @@ async fn call_loop(
             payload.extend_from_slice(&timestamp_bytes);
             sending_bytes.store(payload.len(), atomic::Ordering::SeqCst);
 
-            if data_channel.send(&payload.freeze()).await.is_err() {
+            if dc.send(&payload.freeze()).await.is_err() {
                 break;
             }
         }
@@ -394,12 +381,7 @@ async fn call_loop(
 
         // receive data from data channel and play it
         let start = std::time::Instant::now();
-        let on_message_rx = if is_offerer {
-            rtc_offerer_connection.on_message_rx.clone()
-        } else {
-            rtc_answerer_connection.on_message_rx.clone()
-        }
-        .clone();
+        let on_message_rx = peer_connection.on_message_rx.clone();
         let mut on_message_rx = on_message_rx.lock().unwrap();
         let payload = on_message_rx.recv().await;
         // println!("Time taken to receive: {:?}", start.elapsed());
