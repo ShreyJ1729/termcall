@@ -268,6 +268,7 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
 
     tokio::spawn(async move {
         loop {
+            let start = std::time::Instant::now();
             let timestamp = SystemTime::now()
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
@@ -291,11 +292,18 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
             if send_dc.send(&payload.freeze()).await.is_err() {
                 break;
             }
+
+            // at most, send at 30fps
+            let elapsed = start.elapsed();
+            if elapsed < Duration::from_millis(1000 / 30) {
+                tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
+            }
         }
     });
 
     // frame receiving and rendering loop
     loop {
+        let loop_start = std::time::Instant::now();
         // If q pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(1)).unwrap() {
             if let event::Event::Key(event) = event::read().unwrap() {
@@ -346,7 +354,7 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
             display_frame.num_pixels(),
             display_frame.width(),
             display_frame.height(),
-            frame_count * 1000 / begin.elapsed().as_millis()
+            frame_count * 1000 / (begin.elapsed().as_millis() + 1)
         );
 
         terminal.write_to_bottomright(&stats);
@@ -357,6 +365,12 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnectio
             begin = std::time::Instant::now();
         }
         frame_count += 1;
+
+        // at most, render at 30fps
+        let elapsed = loop_start.elapsed();
+        if elapsed < Duration::from_millis(1000 / 30) {
+            tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
+        }
     }
 }
 

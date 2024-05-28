@@ -46,7 +46,7 @@ impl PeerConnection {
         let peer_connection = api.new_peer_connection(config).await?;
         let peer_connection = Arc::new(Mutex::new(peer_connection));
 
-        let (on_message_tx, on_message_rx) = mpsc::channel(30);
+        let (on_message_tx, on_message_rx) = mpsc::channel(1);
         let on_message_tx = Arc::new(Mutex::new(on_message_tx));
         let on_message_rx = Arc::new(Mutex::new(on_message_rx));
 
@@ -152,7 +152,10 @@ impl PeerConnection {
             dc.on_message(Box::new(move |msg: DataChannelMessage| {
                 let msg = msg.clone();
                 let on_message_tx = on_message_tx.lock().unwrap();
-                on_message_tx.try_send(msg).unwrap();
+                match on_message_tx.try_send(msg) {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
                 Box::pin(async move {})
             }));
         }
@@ -210,7 +213,10 @@ impl PeerConnection {
 
             dc.on_message(Box::new(move |msg: DataChannelMessage| {
                 let on_message_tx = on_message_tx.lock().unwrap();
-                on_message_tx.try_send(msg).unwrap();
+                match on_message_tx.try_send(msg) {
+                    Ok(_) => {}
+                    Err(e) => {}
+                }
                 Box::pin(async move {})
             }));
 
