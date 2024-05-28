@@ -12,14 +12,13 @@ use crossterm::{
     event,
     terminal::{disable_raw_mode, enable_raw_mode},
 };
-use devices::{camera::Camera, microphone::Microphone, speaker::Speaker};
-use firebase_rs::Firebase;
+use devices::camera::Camera;
 use frame::Frame;
 use rtc::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
 use std::{
-    io::{self, stdin, Write},
+    io::{self, Write},
     sync::{atomic, Arc},
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
@@ -34,8 +33,8 @@ const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
 #[tokio::main]
 async fn main() {
-    let rtc_offerer_connection = PeerConnection::new().await.unwrap();
-    let rtc_answerer_connection = PeerConnection::new().await.unwrap();
+    let rtc_offerer_connection = PeerConnection::new(true).await.unwrap();
+    let rtc_answerer_connection = PeerConnection::new(false).await.unwrap();
 
     let rtdb = RTDB::new();
     let mut terminal = Terminal::new();
@@ -72,15 +71,13 @@ async fn main() {
             render_contacts(&mut usernames, &self_name)
         }
 
-        let should_break = handle_input_home_screen(&usernames, &mut person_to_call);
-        if should_break {
+        // returns true if we have a valid person to call
+        if handle_input_home_screen(&usernames, &mut person_to_call) {
             break;
         }
 
         // Check if anyone is calling us (someone else's sending_call is our name)
         let potential_caller = contacts.iter().find(|(_k, v)| v.sending_call == self_name);
-
-        // If they are, send an answer back
 
         // ---------- Call Handling ----------
         if let Some((caller_name, caller_data)) = potential_caller {
@@ -116,7 +113,6 @@ async fn main() {
             println!("Answer Created and Candidates gathered!");
 
             let candidates = rtc_answerer_connection.candidates.lock().unwrap().clone();
-            // ... send the answer and the candidates back to Peer A via external signalling implementation ...
             let answer = serde_json::to_string(&(sdp, candidates)).unwrap();
 
             // update our user object with the answer
@@ -145,7 +141,7 @@ async fn main() {
             .unwrap();
 
             // Once ready, we can start sending data
-            call_loop(&rtdb, &self_name, caller_name, &rtc_answerer_connection).await;
+            call_loop(&rtdb, &self_name, &rtc_answerer_connection).await;
         }
 
         tokio::time::sleep(Duration::from_millis(1000)).await;
@@ -232,15 +228,10 @@ async fn main() {
     .await
     .unwrap();
 
-    call_loop(&rtdb, &self_name, &person_to_call, &rtc_offerer_connection).await;
+    call_loop(&rtdb, &self_name, &rtc_offerer_connection).await;
 }
 
-async fn call_loop(
-    rtdb: &RTDB,
-    self_name: &str,
-    peer_name: &str,
-    peer_connection: &PeerConnection,
-) {
+async fn call_loop(rtdb: &RTDB, self_name: &str, peer_connection: &PeerConnection) {
     // prompt for what index camera to use
     print!("Enter camera index: ");
     io::stdout().flush().unwrap();
@@ -267,10 +258,17 @@ async fn call_loop(
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
     let sending_bytes_read = Arc::clone(&sending_bytes);
 
-    let dc = peer_connection.get_data_channel(0).await.unwrap();
+    let label = if peer_connection.is_offerer {
+        "offerer-send"
+    } else {
+        "answerer-send"
+    }
+    .to_string();
+    let send_dc = peer_connection.get_data_channel(label).await.unwrap();
 
     tokio::spawn(async move {
         loop {
+            let start = std::time::Instant::now();
             let timestamp = SystemTime::now()
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
@@ -291,15 +289,21 @@ async fn call_loop(
             payload.extend_from_slice(&timestamp_bytes);
             sending_bytes.store(payload.len(), atomic::Ordering::SeqCst);
 
-            if dc.send(&payload.freeze()).await.is_err() {
+            if send_dc.send(&payload.freeze()).await.is_err() {
                 break;
+            }
+
+            // at most, send at 30fps
+            let elapsed = start.elapsed();
+            if elapsed < Duration::from_millis(1000 / 30) {
+                tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
             }
         }
     });
 
     // frame receiving and rendering loop
     loop {
-        let start1 = std::time::Instant::now();
+        let loop_start = std::time::Instant::now();
         // If q pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(1)).unwrap() {
             if let event::Event::Key(event) = event::read().unwrap() {
@@ -310,7 +314,6 @@ async fn call_loop(
         }
 
         // receive data from data channel and play it
-        let start = std::time::Instant::now();
         let on_message_rx = peer_connection.on_message_rx.clone();
         let mut on_message_rx = on_message_rx.lock().unwrap();
         let payload = on_message_rx.recv().await;
@@ -343,20 +346,15 @@ async fn call_loop(
             terminal.clear();
         }
 
-        let frame_time = start.elapsed().as_millis();
-        if frame_time < 25 {
-            tokio::time::sleep(Duration::from_millis(25 - frame_time as u64)).await;
-        }
-
         let stats = format!(
-            "latency (s): {:.1} | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
-            latency as f64 / 1000.0,
+            "latency: {:.0} ms | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
+            latency,
             sending_bytes_read.load(atomic::Ordering::SeqCst) as f64 / 1000.0,
             receiving_bytes as f64 / 1000.0,
             display_frame.num_pixels(),
             display_frame.width(),
             display_frame.height(),
-            1f64 / start1.elapsed().as_secs_f64()
+            frame_count * 1000 / (begin.elapsed().as_millis() + 1)
         );
 
         terminal.write_to_bottomright(&stats);
@@ -367,6 +365,12 @@ async fn call_loop(
             begin = std::time::Instant::now();
         }
         frame_count += 1;
+
+        // at most, render at 30fps
+        let elapsed = loop_start.elapsed();
+        if elapsed < Duration::from_millis(1000 / 30) {
+            tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
+        }
     }
 }
 
