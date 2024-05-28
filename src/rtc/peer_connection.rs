@@ -25,7 +25,7 @@ pub struct PeerConnection {
     pub peer_connection: Arc<Mutex<RTCPeerConnection>>,
     pub candidates: Arc<Mutex<Vec<RTCIceCandidate>>>,
     pub all_candidates_gathered: Arc<AtomicBool>,
-    pub peer_connected: Arc<AtomicBool>,
+    pub state: Arc<Mutex<RTCPeerConnectionState>>,
     pub data_channels: Arc<Mutex<Vec<Arc<RTCDataChannel>>>>,
     pub on_message_tx: Arc<Mutex<mpsc::Sender<DataChannelMessage>>>,
     pub on_message_rx: Arc<Mutex<mpsc::Receiver<DataChannelMessage>>>,
@@ -53,7 +53,7 @@ impl PeerConnection {
             peer_connection,
             candidates: Arc::new(Mutex::new(Vec::new())),
             all_candidates_gathered: Arc::new(AtomicBool::new(false)),
-            peer_connected: Arc::new(AtomicBool::new(false)),
+            state: Arc::new(Mutex::new(RTCPeerConnectionState::New)),
             data_channels: Arc::new(Mutex::new(Vec::new())),
             on_message_tx,
             on_message_rx,
@@ -174,12 +174,11 @@ impl PeerConnection {
 
     pub fn register_pc_connection_state_change(&self) {
         let pc = self.peer_connection.lock().unwrap();
-        let peer_connected = self.peer_connected.clone();
+        let pc_state = self.state.clone();
         pc.on_peer_connection_state_change(Box::new(move |state: RTCPeerConnectionState| {
             println!("Peer Connection State has changed: {state}");
-            if state == RTCPeerConnectionState::Connected {
-                peer_connected.store(true, atomic::Ordering::SeqCst);
-            }
+            let mut pc_state = pc_state.lock().unwrap();
+            *pc_state = state;
             Box::pin(async move {})
         }));
     }
@@ -198,9 +197,8 @@ impl PeerConnection {
             let on_message_tx = on_message_tx.clone();
 
             dc.on_open(Box::new(move || {
-                Box::pin(async move {
-                    println!("Data channel {} is now open", dc_label);
-                })
+                println!("Data channel {} is now open", dc_label);
+                Box::pin(async move {})
             }));
 
             dc.on_message(Box::new(move |msg: DataChannelMessage| {
@@ -214,7 +212,8 @@ impl PeerConnection {
     }
 
     pub async fn wait_peer_connected(&self) {
-        while !self.peer_connected.load(atomic::Ordering::SeqCst) {
+        let pc_state = self.state.clone();
+        while *pc_state.lock().unwrap() != RTCPeerConnectionState::Connected {
             tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
         }
         println!("Peer connected");

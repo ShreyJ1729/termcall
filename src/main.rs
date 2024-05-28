@@ -5,6 +5,7 @@ mod rtdb;
 mod schemas;
 mod stats;
 mod terminal;
+mod ui;
 
 use bytes::BytesMut;
 use crossterm::{
@@ -15,6 +16,7 @@ use devices::{camera::Camera, microphone::Microphone, speaker::Speaker};
 use firebase_rs::Firebase;
 use frame::Frame;
 use rtc::PeerConnection;
+use rtdb::RTDB;
 use schemas::user::User;
 use std::{
     io::{self, stdin, Write},
@@ -22,6 +24,7 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use terminal::Terminal;
+use ui::{handle_input_home_screen, render_contacts, wait_get_name};
 
 // Minimum settings for camera
 const CAMERA_WIDTH: f64 = 640 as f64;
@@ -34,51 +37,29 @@ async fn main() {
     let rtc_offerer_connection = PeerConnection::new().await.unwrap();
     let rtc_answerer_connection = PeerConnection::new().await.unwrap();
 
-    let firebase = Firebase::new(rtdb::DATABASE_URL).unwrap();
+    let rtdb = RTDB::new();
     let mut terminal = Terminal::new();
 
     // ---------- Entering Name ----------
     println!("Enter your name: ");
-
-    let mut self_name = String::new();
-
-    loop {
-        stdin()
-            .read_line(&mut self_name)
-            .expect("Failed to read line");
-        self_name = self_name.trim().to_string();
-
-        let usernames = rtdb::get_usernames(&firebase).await;
-        if usernames.contains(&self_name) {
-            println!("User already exists. Try entering a different name: ");
-            self_name.clear();
-            continue;
-        }
-        break;
-    }
-
-    // adding user to firebase
-
-    let data = User::new(self_name.to_string());
-    rtdb::add_or_update_user(&firebase, &self_name, data)
-        .await
-        .unwrap();
+    let self_name = wait_get_name(&rtdb).await;
+    let user = User::new(self_name.clone());
+    rtdb.add_or_update_user(&self_name, user).await.unwrap();
 
     // ---------- Home Page ----------
 
     let mut usernames: Vec<String> = vec![];
     let mut person_to_call = String::new();
 
-    terminal.clear();
-
     let mut begin = std::time::Instant::now();
-    let mut contacts = rtdb::get_users(&firebase).await;
+    let mut contacts = rtdb.get_users().await;
 
+    terminal.clear();
     loop {
         // Poll for firebase changes each second
         if begin.elapsed().as_secs() > 1 {
             begin = std::time::Instant::now();
-            contacts = rtdb::get_users(&firebase).await;
+            contacts = rtdb.get_users().await;
         }
 
         let new_usernames = contacts.keys().cloned().collect::<Vec<String>>();
@@ -88,37 +69,12 @@ async fn main() {
             usernames = new_usernames;
             terminal.clear();
             person_to_call.clear();
-            println!(
-                    "Welcome, {}! This is your dashboard. If anyone calls you, you'll get a notification here. If you want to call someone, enter their name below.\nNames are case sensitive\n",
-                    self_name
-                );
-            usernames.sort();
-            usernames
-                .iter()
-                .filter(|username| username != &&self_name)
-                .enumerate()
-                .for_each(|(i, contact)| {
-                    println!("{}: {}", i, contact);
-                });
+            render_contacts(&mut usernames, &self_name)
         }
 
-        // Poll for user input
-        if event::poll(std::time::Duration::from_millis(50)).unwrap() {
-            if let event::Event::Key(event) = event::read().unwrap() {
-                if event.code == event::KeyCode::Enter {
-                    if usernames.contains(&person_to_call) {
-                        break;
-                    }
-                    println!("That person is not in your contacts. Try again.");
-                    person_to_call.clear();
-                } else if event.code == event::KeyCode::Backspace {
-                    if person_to_call.len() > 0 {
-                        person_to_call.pop();
-                    }
-                } else if let event::KeyCode::Char(c) = event.code {
-                    person_to_call.push(c);
-                }
-            }
+        let should_break = handle_input_home_screen(&usernames, &mut person_to_call);
+        if should_break {
+            break;
         }
 
         // Check if anyone is calling us (someone else's sending_call is our name)
@@ -169,9 +125,7 @@ async fn main() {
                 receiving_call: caller_name.to_string(),
                 ..User::new(self_name.clone())
             };
-            rtdb::add_or_update_user(&firebase, &self_name, user)
-                .await
-                .unwrap();
+            rtdb.add_or_update_user(&self_name, user).await.unwrap();
 
             println!("Answer sent! Waiting for connection...");
 
@@ -180,8 +134,7 @@ async fn main() {
             rtc_answerer_connection.wait_data_channels_open().await;
 
             // We are now in call with the caller. Update our user object to reflect this
-            rtdb::add_or_update_user(
-                &firebase,
+            rtdb.add_or_update_user(
                 &self_name,
                 User {
                     in_call: caller_name.to_string(),
@@ -192,7 +145,7 @@ async fn main() {
             .unwrap();
 
             // Once ready, we can start sending data
-            call_loop(&firebase, &self_name, caller_name, &rtc_answerer_connection).await;
+            call_loop(&rtdb, &self_name, caller_name, &rtc_answerer_connection).await;
         }
 
         tokio::time::sleep(Duration::from_millis(1000)).await;
@@ -227,7 +180,7 @@ async fn main() {
         sending_call: person_to_call.clone(),
         ..User::new(self_name.clone())
     };
-    rtdb::add_or_update_user(&firebase, &self_name, self_data)
+    rtdb.add_or_update_user(&self_name, self_data)
         .await
         .unwrap();
 
@@ -239,7 +192,7 @@ async fn main() {
     // Wait for the person we are calling to send us an answer
     let mut answer;
     loop {
-        let contacts = rtdb::get_users(&firebase).await;
+        let contacts = rtdb.get_users().await;
         answer = contacts.get(&person_to_call).unwrap().answer.clone();
 
         if answer != "" {
@@ -269,8 +222,7 @@ async fn main() {
     rtc_offerer_connection.wait_data_channels_open().await;
 
     // Update our user object with the in_call field
-    rtdb::add_or_update_user(
-        &firebase,
+    rtdb.add_or_update_user(
         &self_name,
         User {
             in_call: person_to_call.clone(),
@@ -280,17 +232,11 @@ async fn main() {
     .await
     .unwrap();
 
-    call_loop(
-        &firebase,
-        &self_name,
-        &person_to_call,
-        &rtc_offerer_connection,
-    )
-    .await;
+    call_loop(&rtdb, &self_name, &person_to_call, &rtc_offerer_connection).await;
 }
 
 async fn call_loop(
-    firebase: &Firebase,
+    rtdb: &RTDB,
     self_name: &str,
     peer_name: &str,
     peer_connection: &PeerConnection,
@@ -309,9 +255,6 @@ async fn call_loop(
 
     camera.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, camera_index);
 
-    let mut microphone = Microphone::new();
-    let mut speaker = Speaker::new();
-
     enable_raw_mode().unwrap();
 
     terminal.clear();
@@ -323,11 +266,10 @@ async fn call_loop(
     // frame capturing and sending loop
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
     let sending_bytes_read = Arc::clone(&sending_bytes);
-    let data_channels = peer_connection.data_channels.clone();
-    let data_channels = data_channels.lock().unwrap().clone();
+
+    let dc = peer_connection.get_data_channel(0).await.unwrap();
 
     tokio::spawn(async move {
-        let dc = data_channels.get(0).unwrap();
         loop {
             let timestamp = SystemTime::now()
                 .duration_since(UNIX_EPOCH)
@@ -356,31 +298,14 @@ async fn call_loop(
     });
 
     // frame receiving and rendering loop
-    let mut receiving_bytes;
     loop {
         let start1 = std::time::Instant::now();
         // If q pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(1)).unwrap() {
             if let event::Event::Key(event) = event::read().unwrap() {
                 if event.code == event::KeyCode::Char('q') {
-                    // remove self from firebase db, restore terminal and exit
-                    rtdb::remove_user(&firebase, self_name).await.unwrap();
-                    rtdb::remove_user(&firebase, peer_name).await.unwrap();
-                    disable_raw_mode().unwrap();
-                    terminal.show_cursor();
-                    std::process::exit(0);
+                    graceful_exit(&rtdb, self_name, &mut terminal).await;
                 }
-            }
-        }
-
-        // If self or peer no longer exist in firebase, exit (this means peer has hung up)
-        // Since this is somewhat expensive, we only check at most every second
-        if frame_count % 30 == 0 {
-            let users = rtdb::get_users(&firebase).await;
-            if !users.contains_key(self_name) || !users.contains_key(peer_name) {
-                disable_raw_mode().unwrap();
-                terminal.show_cursor();
-                std::process::exit(0);
             }
         }
 
@@ -389,12 +314,11 @@ async fn call_loop(
         let on_message_rx = peer_connection.on_message_rx.clone();
         let mut on_message_rx = on_message_rx.lock().unwrap();
         let payload = on_message_rx.recv().await;
-        // println!("Time taken to receive: {:?}", start.elapsed());
         if payload.is_none() {
-            break;
+            graceful_exit(&rtdb, self_name, &mut terminal).await;
         }
         let payload = payload.unwrap().data;
-        receiving_bytes = payload.len();
+        let receiving_bytes = payload.len();
         let (frame, timestamp_bytes) = payload.split_at(payload.len() - 8);
 
         let timestamp = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
@@ -444,4 +368,11 @@ async fn call_loop(
         }
         frame_count += 1;
     }
+}
+
+async fn graceful_exit(rtdb: &RTDB, self_name: &str, terminal: &mut Terminal) {
+    rtdb.remove_user(self_name).await.unwrap();
+    disable_raw_mode().unwrap();
+    terminal.show_cursor();
+    std::process::exit(0);
 }
