@@ -5,8 +5,9 @@ mod rtdb;
 mod schemas;
 mod stats;
 mod terminal;
-mod ui;
+mod tui;
 
+use anyhow::anyhow;
 use bytes::BytesMut;
 use crossterm::{
     event,
@@ -23,7 +24,7 @@ use std::{
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 use terminal::Terminal;
-use ui::{handle_homescreen_input, render_homescreen, wait_get_name};
+use tui::{handle_homescreen_input, render_homescreen, wait_get_name};
 
 // Minimum settings for camera
 const CAMERA_WIDTH: f64 = 640 as f64;
@@ -31,7 +32,7 @@ const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 30 as f64;
 const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
-fn timstamp() -> u64 {
+fn timestamp() -> u64 {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap()
@@ -39,10 +40,10 @@ fn timstamp() -> u64 {
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> anyhow::Result<()> {
     // Initialize logging
     let config = LogConfigBuilder::builder()
-        .path(&format!("./logs/{}.log", timstamp()))
+        .path(&format!("./logs/{}.log", timestamp()))
         .size(1 * 100)
         .roll_count(10)
         .time_format("%Y-%m-%d %H:%M:%S")
@@ -54,18 +55,12 @@ async fn main() {
         Ok(_) => {}
         Err(e) => {
             eprintln!("Error initializing logging: {:?}", e);
-            return;
+            return Err(anyhow!(e));
         }
     }
 
     // Initialize PeerConnections
-    let rtc_connection = match PeerConnection::new().await {
-        Ok(connection) => connection,
-        Err(e) => {
-            error!("Error creating PeerConnection: {:?}", e);
-            return;
-        }
-    };
+    let rtc_connection = PeerConnection::new().await?;
 
     // Initialize Firebase RTDB connection and Terminal
     let rtdb = RTDB::new();
@@ -73,17 +68,11 @@ async fn main() {
 
     // ---------- Entering Name Screen ----------
     println!("Enter your name: ");
-    let self_name = match wait_get_name(&rtdb).await {
-        Ok(name) => name,
-        Err(e) => {
-            error!("Error getting name: {:?}", e);
-            return;
-        }
-    };
+    let self_name = wait_get_name(&rtdb).await?;
 
     let user = User::new(self_name.clone());
 
-    rtdb.add_or_update_user(&self_name, user).await.unwrap();
+    rtdb.add_or_update_user(&self_name, user).await?;
     terminal.clear();
 
     // ---------- Home Screen ----------
@@ -102,7 +91,7 @@ async fn main() {
         }
 
         // Poll for user input
-        if event::poll(std::time::Duration::from_millis(50)).unwrap() {
+        if event::poll(std::time::Duration::from_millis(50))? {
             if handle_homescreen_input(&usernames, &mut person_to_call) {
                 break;
             }
@@ -162,8 +151,7 @@ async fn main() {
                     ..User::new(self_name.clone())
                 },
             )
-            .await
-            .unwrap();
+            .await?;
 
             println!("Answer sent! Waiting for connection...");
 
@@ -177,8 +165,7 @@ async fn main() {
                     ..User::new(self_name.clone())
                 },
             )
-            .await
-            .unwrap();
+            .await?;
 
             call_loop(&rtdb, &self_name, &rtc_connection).await;
         }
@@ -189,7 +176,7 @@ async fn main() {
     // ---------- Call Sending ----------
 
     println!("Calling {}...", person_to_call);
-    let sdp = rtc_connection.create_offer().await.unwrap();
+    let sdp = rtc_connection.create_offer().await?;
 
     rtc_connection
         .set_local_description(sdp.clone())
@@ -210,8 +197,7 @@ async fn main() {
             ..User::new(self_name.clone())
         },
     )
-    .await
-    .unwrap();
+    .await?;
 
     let mut answer = String::new();
     while answer == "" {
@@ -247,10 +233,11 @@ async fn main() {
             ..User::new(self_name.clone())
         },
     )
-    .await
-    .unwrap();
+    .await?;
 
     call_loop(&rtdb, &self_name, &rtc_connection).await;
+
+    Ok(())
 }
 
 // ---------- Call Loop ----------
@@ -291,10 +278,7 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
 
         loop {
             let start = std::time::Instant::now();
-            let timestamp = SystemTime::now()
-                .duration_since(UNIX_EPOCH)
-                .unwrap()
-                .as_millis() as u64;
+            let timestamp = timestamp();
 
             match camera.read_frame(frame.get_mut_ref()) {
                 Ok(_) => {}
@@ -357,12 +341,8 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
         let receiving_bytes = payload.len();
         let (frame, timestamp_bytes) = payload.split_at(payload.len() - 8);
 
-        let timestamp = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
-        let latency = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap()
-            .as_millis() as u64
-            - timestamp;
+        let timestamp_ = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
+        let latency = timestamp() - timestamp_;
 
         display_frame.load_bytes(frame.to_vec());
 

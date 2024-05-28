@@ -4,7 +4,7 @@ use std::sync::{
 };
 
 use anyhow::Result;
-use simple_log::{info, warn};
+use simple_log::{error, info, warn};
 use tokio::sync::mpsc;
 use webrtc::{
     api::APIBuilder,
@@ -70,9 +70,15 @@ impl PeerConnection {
         peer_connection.register_pc_connection_state_change();
         peer_connection.register_pc_on_data_channel();
 
-        peer_connection
+        match peer_connection
             .create_data_channel(format!("{}-send", peer_connection.id).as_str())
-            .await?;
+            .await
+        {
+            Ok(_) => {}
+            Err(e) => {
+                error!("Failed to create data channel: {}", e);
+            }
+        }
 
         peer_connection.register_dcs_on_open();
         peer_connection.register_dcs_on_message();
