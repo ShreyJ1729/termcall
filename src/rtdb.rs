@@ -1,4 +1,5 @@
 use crate::schemas::user::User;
+use anyhow::Result;
 use firebase_rs::Firebase;
 use std::collections::HashMap;
 
