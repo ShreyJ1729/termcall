@@ -3233,7 +3233,11 @@ dependencies = [
  "ring 0.17.8",
  "rtcp 0.10.1",
  "rtp 0.10.0",
+<<<<<<< HEAD
+ "rustls 0.21.10",
+=======
  "rustls 0.21.12",
+>>>>>>> origin/main
  "sdp",
  "serde",
  "serde_json",
@@ -3352,7 +3356,11 @@ dependencies = [
  "rand_core",
  "rcgen 0.11.3",
  "ring 0.17.8",
+<<<<<<< HEAD
+ "rustls 0.21.10",
+=======
  "rustls 0.21.12",
+>>>>>>> origin/main
  "sec1",
  "serde",
  "sha1",
