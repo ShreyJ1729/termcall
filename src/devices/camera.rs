@@ -1,10 +1,6 @@
 use opencv::core::Mat;
 use opencv::videoio::VideoCapture;
-use opencv::{imgcodecs, prelude::*, videoio};
-
-use crate::frame::Frame;
-
-const ASCII_CHAR_H_OVER_W: f64 = 2.25;
+use opencv::{prelude::*, videoio};
 
 pub struct Camera {
     cam: videoio::VideoCapture,

@@ -84,12 +84,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "anyhow"
-version = "1.0.86"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b3d1d046238990b9cf5bcde22a3fb3584ee5cf65fb2765f454ed428c7a0063da"
-
-[[package]]
 name = "arc-swap"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1686,9 +1680,9 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 
 [[package]]
 name = "opencv"
-version = "0.91.3"
+version = "0.92.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e64b5a733be752a917aa27981c1100fbc7836cf2cfe3fb06f5cac691339837b7"
+checksum = "5e19ccfa4237826b2213bda6dd30875b9ed184c5318ec64d3c269132d128212c"
 dependencies = [
  "cc",
  "dunce",
@@ -1706,9 +1700,9 @@ dependencies = [
 
 [[package]]
 name = "opencv-binding-generator"
-version = "0.89.1"
+version = "0.90.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "81af1298c489597ffdbadc7710673ec26f8a2440228992681ffa3b8f00233bd9"
+checksum = "86ddd32f38d5cd32c79a38da363528ced3149a48f1e686b7a12913a184a84cd5"
 dependencies = [
  "clang",
  "clang-sys",
@@ -2259,9 +2253,9 @@ dependencies = [
 
 [[package]]
 name = "rustls"
-version = "0.21.10"
+version = "0.21.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f9d5a6813c0759e4609cd494e8e725babae6a2ca7b62a5536a13daaec6fcb7ba"
+checksum = "3f56a14d1f48b391359b22f731fd4bd7e43c97f3c50eee276f3aa09c94784d3e"
 dependencies = [
  "log",
  "ring 0.17.8",
@@ -2758,7 +2752,6 @@ dependencies = [
 name = "termcall"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "bincode",
  "bytes",
  "cpal",
@@ -3240,7 +3233,11 @@ dependencies = [
  "ring 0.17.8",
  "rtcp 0.10.1",
  "rtp 0.10.0",
+<<<<<<< HEAD
  "rustls 0.21.10",
+=======
+ "rustls 0.21.12",
+>>>>>>> origin/main
  "sdp",
  "serde",
  "serde_json",
@@ -3359,7 +3356,11 @@ dependencies = [
  "rand_core",
  "rcgen 0.11.3",
  "ring 0.17.8",
+<<<<<<< HEAD
  "rustls 0.21.10",
+=======
+ "rustls 0.21.12",
+>>>>>>> origin/main
  "sec1",
  "serde",
  "sha1",

@@ -35,8 +35,6 @@ async fn main() {
     let rtc_answerer_connection = PeerConnection::new().await.unwrap();
 
     let firebase = Firebase::new(rtdb::DATABASE_URL).unwrap();
-
-    // let mut local_peer_connection = SimpleLocalPeerConnection::build(false).await.unwrap();
     let mut terminal = Terminal::new();
 
     // ---------- Entering Name ----------
@@ -73,9 +71,16 @@ async fn main() {
 
     terminal.clear();
 
+    let mut begin = std::time::Instant::now();
+    let mut contacts = rtdb::get_users(&firebase).await;
+
     loop {
-        // Poll for firebase changes each cycle
-        let contacts = rtdb::get_users(&firebase).await;
+        // Poll for firebase changes each second
+        if begin.elapsed().as_secs() > 1 {
+            begin = std::time::Instant::now();
+            contacts = rtdb::get_users(&firebase).await;
+        }
+
         let new_usernames = contacts.keys().cloned().collect::<Vec<String>>();
 
         // If any update, rerender the contacts
@@ -227,7 +232,7 @@ async fn main() {
         .unwrap();
 
     println!(
-        "Calling {} (send offer)... Waiting for response...",
+        "Calling {} (sent offer)... Waiting for response...",
         person_to_call
     );
 

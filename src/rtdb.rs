@@ -1,5 +1,4 @@
 use crate::schemas::user::User;
-use anyhow::Result;
 use firebase_rs::Firebase;
 use std::collections::HashMap;
 
@@ -24,7 +23,10 @@ pub async fn add_or_update_user(firebase: &Firebase, username: &str, new_data: U
     Ok(())
 }
 
-pub async fn remove_user(firebase: &Firebase, username: &str) -> Result<()> {
+pub async fn remove_user(
+    firebase: &Firebase,
+    username: &str,
+) -> Result<(()), Box<dyn std::error::Error>> {
     firebase.at("users").at(username).delete().await?;
     Ok(())
 }

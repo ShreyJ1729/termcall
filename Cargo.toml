@@ -5,7 +5,7 @@ edition = "2021"
 default-run = "termcall"
 
 [dependencies]
-opencv = { version = "0.91.3", features = ["clang-runtime"] }
+opencv = { version = "0.92.0", features = ["clang-runtime"] }
 cpal = "0.15.2"
 libsixel-sys = "0.1.0"
 just-webrtc = "0.1.1"
