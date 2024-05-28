@@ -22,7 +22,7 @@ impl Frame {
     }
 
     pub fn get_bytes(&self) -> Vec<u8> {
-        let mut buf = opencv::types::VectorOfu8::new();
+        let mut buf = opencv::core::Vector::new();
         imgcodecs::imencode(".jpg", &self.data, &mut buf, &opencv::core::Vector::new()).unwrap();
         buf.to_vec()
     }

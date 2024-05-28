@@ -1,3 +1,4 @@
+use anyhow::Result;
 use opencv::core::Mat;
 use opencv::videoio::VideoCapture;
 use opencv::{prelude::*, videoio};
@@ -29,10 +30,8 @@ impl Camera {
     }
 
     // For efficiency, read camera data directly into Frame object Mat
-    pub fn read_frame(&mut self, frame_ref: &mut Mat) -> bool {
-        match self.cam.read(frame_ref) {
-            Ok(true) => true,
-            _ => false,
-        }
+    pub fn read_frame(&mut self, frame_ref: &mut Mat) -> Result<()> {
+        self.cam.read(frame_ref)?;
+        Ok(())
     }
 }

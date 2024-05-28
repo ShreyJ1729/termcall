@@ -102,6 +102,12 @@ impl PeerConnection {
         Ok(())
     }
 
+    pub async fn get_ice_candidates(&self) -> Vec<RTCIceCandidate> {
+        let ice_cs = self.candidates.clone();
+        let ice_cs = ice_cs.lock().unwrap();
+        ice_cs.clone()
+    }
+
     pub async fn add_remote_ice_candidates(&self, candidates: Vec<RTCIceCandidate>) -> Result<()> {
         let pc = self.peer_connection.lock().unwrap();
         for candidate in candidates.iter() {
@@ -229,7 +235,12 @@ impl PeerConnection {
         while *pc_state.lock().unwrap() != RTCPeerConnectionState::Connected {
             tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
         }
-        println!("Peer connected");
+    }
+
+    pub async fn wait_ice_candidates_gathered(&self) {
+        while !self.all_candidates_gathered.load(atomic::Ordering::SeqCst) {
+            tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
+        }
     }
 
     pub async fn wait_data_channels_open(&self) {
@@ -243,7 +254,7 @@ impl PeerConnection {
         }
     }
 
-    pub async fn get_data_channel(&self, label: String) -> Option<Arc<RTCDataChannel>> {
+    pub async fn get_data_channel(&self, label: &str) -> Option<Arc<RTCDataChannel>> {
         let dcs = self.data_channels.clone();
         let dcs = dcs.lock().unwrap();
         for dc in dcs.iter() {
