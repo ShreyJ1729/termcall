@@ -3,17 +3,17 @@ use opencv::core::{Mat, Point3_};
 use opencv::prelude::*;
 use std::io::{self, Write};
 
-pub struct Terminal {
+pub struct FrameWriter {
     pub stdout: io::Stdout,
     pub width: u16,
     pub height: u16,
 }
 
-impl Terminal {
-    pub fn new() -> Terminal {
+impl FrameWriter {
+    pub fn new() -> FrameWriter {
         let stdout = io::stdout();
         let (width, height) = crossterm::terminal::size().unwrap();
-        Terminal {
+        FrameWriter {
             stdout,
             width: width,
             height: height,
