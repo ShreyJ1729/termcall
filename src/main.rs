@@ -246,21 +246,18 @@ async fn handle_sending_call(
 async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
     let mut terminal = tui::init()?;
     let mut display_frame = Frame::new();
-
     terminal.clear();
 
-    let mut frame_count = 0;
-    let mut begin = std::time::Instant::now();
+    let mut frame_times = vec![];
 
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
     let sending_bytes_read = Arc::clone(&sending_bytes);
 
     let send_dc_label = &format!("{}-send", rtc_connection.id);
-
     let send_dc = rtc_connection
         .get_data_channel(send_dc_label)
         .await
-        .expect(format!("Data channel {} should exist", send_dc_label).as_str());
+        .expect("Data channel should exist");
 
     // ---------- Frame Sending Loop ----------
     tokio::spawn(async move {
@@ -315,6 +312,7 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
     });
 
     // ---------- Frame Receiving/Rendering Loop ----------
+    let mut tsize = terminal.size()?;
     'frame_rec_loop: loop {
         let loop_start = std::time::Instant::now();
 
@@ -345,22 +343,27 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
         let timestamp_ = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
         let latency = timestamp() - timestamp_;
 
+        // Clear terminal if size changed (to avoid artifacts)
+        if terminal.size()? != tsize {
+            terminal.clear();
+            tsize = terminal.size()?;
+        }
+
         // Render frame to terminal
-        let tsize = terminal.size()?;
         display_frame.load_bytes(frame.to_vec());
         display_frame.resize_frame(tsize.width as f64, (tsize.height - 1) as f64, false);
         display_frame.write_to_terminal();
 
         // Print stats
         let stats = format!(
-            "latency: {:.2} s | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
+            "latency: {:.2} s | send/recv {:.0}/{:.0} kb/s | res: {}x{} ({} pix) | fps: {}",
             latency as f64 / 1000.0,
             sending_bytes_read.load(atomic::Ordering::SeqCst) as f64 / 1000.0,
             receiving_bytes as f64 / 1000.0,
-            display_frame.num_pixels(),
             display_frame.width(),
             display_frame.height(),
-            frame_count * 1000 / (begin.elapsed().as_millis() + 1)
+            display_frame.num_pixels(),
+            frame_times.len(),
         );
 
         // Render stats at bottom right corner if string fits
@@ -375,20 +378,17 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
                 stats
             )?;
             io::stdout().flush()?;
+        };
+
+        // Cap fps to 30
+        if loop_start.elapsed() < Duration::from_millis(1000 / 30) {
+            tokio::time::sleep(Duration::from_millis(1000 / 30) - loop_start.elapsed()).await;
         }
 
         // Calculate fps based on moving frame rate every second
-        if begin.elapsed().as_secs() > 1 {
-            frame_count = 0;
-            begin = std::time::Instant::now();
-        }
-
-        frame_count += 1;
-
-        // Cap fps to 30
-        let elapsed = loop_start.elapsed();
-        if elapsed < Duration::from_millis(1000 / 30) {
-            tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
+        frame_times.push(loop_start.elapsed());
+        while frame_times.iter().sum::<Duration>() >= Duration::from_secs(1) {
+            frame_times.swap_remove(0);
         }
     }
 

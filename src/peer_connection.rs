@@ -287,6 +287,8 @@ impl PeerConnection {
                 return Some(dc.clone());
             }
         }
+
+        error!("Data channel {} not found", label);
         None
     }
 }
