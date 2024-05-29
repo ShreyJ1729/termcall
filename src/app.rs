@@ -11,7 +11,7 @@ use ratatui::{
 };
 
 use crate::{
-    handle_incoming_call, handle_sending_call, rtc::PeerConnection, rtdb::RTDB,
+    handle_incoming_call, handle_sending_call, peer_connection::PeerConnection, rtdb::RTDB,
     schemas::user::User, tui,
 };
 

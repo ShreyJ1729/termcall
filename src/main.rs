@@ -1,13 +1,11 @@
 mod app;
 mod devices;
 mod frame;
-mod frame_writer;
-mod rtc;
+mod peer_connection;
 mod rtdb;
 mod schemas;
 mod stats;
 mod tui;
-mod ui;
 
 use anyhow::anyhow;
 use app::App;
@@ -15,8 +13,7 @@ use bytes::BytesMut;
 use crossterm::event;
 use devices::camera::Camera;
 use frame::Frame;
-use frame_writer::FrameWriter;
-use rtc::PeerConnection;
+use peer_connection::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
 use simple_log::{error, LogConfigBuilder};
@@ -25,7 +22,6 @@ use std::{
     sync::{atomic, Arc},
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
-use ui::wait_get_unique_name;
 
 // Minimum settings for camera
 const CAMERA_WIDTH: f64 = 640 as f64;
@@ -73,6 +69,40 @@ async fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+pub async fn wait_get_unique_name(rtdb: &RTDB) -> anyhow::Result<String> {
+    let mut self_name = String::new();
+    loop {
+        io::stdin().read_line(&mut self_name)?;
+        self_name = self_name.trim().to_string();
+        if self_name == "" {
+            print!("Name cannot be empty. Try entering a different name: ");
+            io::stdout().flush()?;
+            continue;
+        }
+
+        // no numbers as name. This is to avoid confusion with firebase making strings into numbers
+        if self_name.chars().all(char::is_numeric) {
+            print!("Name cannot be all numbers. Try entering a different name: ");
+            io::stdout().flush()?;
+            self_name.clear();
+            continue;
+        }
+
+        let usernames = rtdb.get_usernames().await;
+        match usernames.contains(&self_name) {
+            true => {
+                print!("User already exists. Try entering a different name: ");
+                io::stdout().flush()?;
+                self_name.clear();
+            }
+            false => break,
+        }
+    }
+
+    Ok(self_name)
+}
+
+// ---------- Handle Incoming Call ----------
 async fn handle_incoming_call(
     self_name: &str,
     caller_data: &User,
@@ -140,6 +170,7 @@ async fn handle_incoming_call(
     Ok(())
 }
 
+// ---------- Handle Sending Call ----------
 async fn handle_sending_call(
     self_name: &str,
     person_to_call: &str,
@@ -212,12 +243,11 @@ async fn handle_sending_call(
 }
 
 // ---------- Call Loop ----------
-async fn call_loop(rtc_connection: &PeerConnection) {
-    let mut frame_writer = FrameWriter::new();
+async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
+    let mut terminal = tui::init()?;
     let mut display_frame = Frame::new();
 
-    frame_writer.clear();
-    frame_writer.hide_cursor();
+    terminal.clear();
 
     let mut frame_count = 0;
     let mut begin = std::time::Instant::now();
@@ -285,52 +315,43 @@ async fn call_loop(rtc_connection: &PeerConnection) {
     });
 
     // ---------- Frame Receiving/Rendering Loop ----------
-    loop {
+    'frame_rec_loop: loop {
         let loop_start = std::time::Instant::now();
 
         // If Esc pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(0)).unwrap() {
             if let event::Event::Key(event) = event::read().unwrap() {
                 if event.code == event::KeyCode::Esc {
-                    break;
+                    break 'frame_rec_loop;
                 }
             }
         }
 
-        // receive data from data channel and play it
+        // Receive payload from data channel
         let on_message_rx = rtc_connection.on_message_rx.clone();
         let mut on_message_rx = on_message_rx.lock().unwrap();
+        let payload = match on_message_rx.recv().await {
+            Some(payload) => Some(payload),
+            None => {
+                break 'frame_rec_loop;
+            }
+        };
 
-        let payload = on_message_rx.recv().await;
-        if payload.is_none() {
-            break;
-        }
-
+        // Unpack payload and calculate stats
         let payload = payload.unwrap().data;
-        let receiving_bytes = payload.len();
         let (frame, timestamp_bytes) = payload.split_at(payload.len() - 8);
 
+        let receiving_bytes = payload.len();
         let timestamp_ = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
         let latency = timestamp() - timestamp_;
 
+        // Render frame to terminal
+        let tsize = terminal.size()?;
         display_frame.load_bytes(frame.to_vec());
+        display_frame.resize_frame(tsize.width as f64, (tsize.height - 1) as f64, false);
+        display_frame.write_to_terminal();
 
-        let (terminal_width, terminal_height, size_changed) = frame_writer.get_size();
-        match size_changed {
-            true => {
-                frame_writer.clear();
-            }
-            false => {
-                display_frame.resize_frame(
-                    terminal_width as f64,
-                    (terminal_height - 1) as f64,
-                    false,
-                );
-                frame_writer.goto_topleft();
-                frame_writer.write_frame(display_frame.get_frame());
-            }
-        }
-
+        // Print stats
         let stats = format!(
             "latency: {:.2} s | send/receiving {:.0}/{:.0} kb/s | pixels: {} ({}x{}) | fps: {:.0}",
             latency as f64 / 1000.0,
@@ -342,9 +363,21 @@ async fn call_loop(rtc_connection: &PeerConnection) {
             frame_count * 1000 / (begin.elapsed().as_millis() + 1)
         );
 
-        frame_writer.write_to_bottomright(&stats);
+        // Render stats at bottom right corner if string fits
+        if tsize.width >= stats.len() as u16 {
+            write!(
+                io::stdout(),
+                "{}{}",
+                crossterm::cursor::MoveTo(
+                    tsize.width as u16 - stats.len() as u16,
+                    tsize.height as u16
+                ),
+                stats
+            )?;
+            io::stdout().flush()?;
+        }
 
-        // calculate fps based on moving frame rate every second
+        // Calculate fps based on moving frame rate every second
         if begin.elapsed().as_secs() > 1 {
             frame_count = 0;
             begin = std::time::Instant::now();
@@ -352,10 +385,12 @@ async fn call_loop(rtc_connection: &PeerConnection) {
 
         frame_count += 1;
 
-        // at most, render at 30fps
+        // Cap fps to 30
         let elapsed = loop_start.elapsed();
         if elapsed < Duration::from_millis(1000 / 30) {
             tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
         }
     }
+
+    Ok(())
 }

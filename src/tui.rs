@@ -8,14 +8,19 @@ pub type Tui = Terminal<CrosstermBackend<Stdout>>;
 
 /// Initialize the terminal
 pub fn init() -> io::Result<Tui> {
+    let mut t = Terminal::new(CrosstermBackend::new(stdout()))?;
     execute!(stdout(), EnterAlternateScreen)?;
     enable_raw_mode()?;
-    Terminal::new(CrosstermBackend::new(stdout()))
+    t.hide_cursor()?;
+
+    Ok(t)
 }
 
 /// Restore the terminal to its original state
 pub fn restore() -> io::Result<()> {
+    let mut t = Terminal::new(CrosstermBackend::new(stdout()))?;
     execute!(stdout(), LeaveAlternateScreen)?;
     disable_raw_mode()?;
+    t.show_cursor()?;
     Ok(())
 }

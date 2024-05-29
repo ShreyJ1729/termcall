@@ -1,6 +1,8 @@
+use crossterm::style::{Color, Print, SetBackgroundColor};
 use opencv::core::{Mat, Point3_, Size};
 use opencv::{imgcodecs, imgproc, prelude::*};
 use simple_log::error;
+use std::io::Write;
 
 const ASCII_CHAR_H_OVER_W: f64 = 2.25;
 
@@ -96,6 +98,33 @@ impl Frame {
         // set data back to frame
         let data_ptr: *const u8 = data.as_ptr() as *const u8;
         unsafe { self.data.set_data(data_ptr) }
+    }
+
+    pub fn write_to_terminal(&mut self) {
+        let frame = self.get_frame();
+        let data = frame.data_typed::<Point3_<u8>>().unwrap();
+        let frame_width = frame.cols();
+        let frame_height = frame.rows();
+        let prev_color = Color::Rgb { r: 0, g: 0, b: 0 };
+        let mut out = std::io::stdout();
+
+        write!(out, "{}", crossterm::cursor::MoveTo(0, 0)).unwrap();
+        for (i, pixel) in data.iter().enumerate() {
+            if (i % frame_width as usize == 0) && i != 0 {
+                write!(out, "\n\r").unwrap();
+            }
+
+            let (b, g, r) = (pixel.x, pixel.y, pixel.z);
+            let color = Color::Rgb { r, g, b };
+
+            if color != prev_color {
+                crossterm::execute!(out, SetBackgroundColor(color)).unwrap();
+            }
+
+            crossterm::execute!(out, Print(" ")).unwrap();
+        }
+
+        crossterm::execute!(out, SetBackgroundColor(Color::Reset)).unwrap();
     }
 
     pub fn get_frame(&self) -> &Mat {
