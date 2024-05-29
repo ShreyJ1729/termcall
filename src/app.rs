@@ -5,7 +5,6 @@ use ratatui::{
     buffer::Buffer,
     layout::Rect,
     prelude::*,
-    style::Stylize,
     symbols::border,
     widgets::{block::*, *},
     Frame,
@@ -25,14 +24,15 @@ impl App {
     pub async fn run(&mut self, terminal: &mut tui::Tui, self_name: &str) -> anyhow::Result<()> {
         let rtc_connection = PeerConnection::new().await?;
         let rtdb = RTDB::new();
-        let begin = std::time::Instant::now();
+        let mut begin = std::time::Instant::now();
 
         while !self.exit {
             terminal.draw(|frame| self.render_frame(frame))?;
             self.handle_events()?;
 
-            if begin.elapsed().as_millis() % 500 == 9 {
+            if begin.elapsed().as_millis() > 500 {
                 self.update_contacts(&rtdb).await;
+                begin = std::time::Instant::now();
             }
 
             // Check if anyone is calling us (someone else's sending_call is our name)
@@ -57,16 +57,20 @@ impl App {
     }
 
     fn contact_names(&self) -> Vec<String> {
-        self.contacts.keys().cloned().collect()
+        let mut list = self.contacts.keys().cloned().collect::<Vec<String>>();
+        list.sort();
+        list
     }
 
     fn handle_events(&mut self) -> io::Result<()> {
-        match event::read()? {
-            Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
-                self.handle_key_event(key_event)
+        if event::poll(std::time::Duration::from_millis(100))? {
+            match event::read()? {
+                Event::Key(key_event) if key_event.kind == KeyEventKind::Press => {
+                    self.handle_key_event(key_event)
+                }
+                _ => {}
             }
-            _ => {}
-        }
+        };
         Ok(())
     }
 
@@ -95,6 +99,7 @@ impl Widget for &App {
             " Quit ".into(),
             "<Esc> ".blue().bold(),
         ]));
+
         let block = Block::default()
             .title(title.alignment(Alignment::Center))
             .title(
@@ -103,17 +108,23 @@ impl Widget for &App {
                     .position(Position::Bottom),
             )
             .borders(Borders::ALL)
-            .border_set(border::THICK);
+            .border_set(border::THICK)
+            .padding(Padding::top(2))
+            .padding(Padding::horizontal(4));
 
-        let contacts_text = Text::from(format!(
-            "{} Contacts:\n{}",
-            self.contacts.len(),
-            self.contact_names().join(", ")
-        ));
+        // make the contact at selected index bold
+        let cnames = self.contact_names();
+        let contacts_text = cnames.iter().enumerate().map(|(i, name)| {
+            let name = if i == self.selected {
+                (">".to_owned() + name).yellow()
+            } else {
+                (" ".to_owned() + name).into()
+            };
+            name
+        });
 
-        Paragraph::new(contacts_text)
-            .centered()
-            .block(block)
-            .render(area, buf);
+        let list = List::new(contacts_text).block(block);
+
+        ratatui::widgets::Widget::render(&list, area, buf);
     }
 }

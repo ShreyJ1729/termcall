@@ -150,7 +150,8 @@ async fn main() -> anyhow::Result<()> {
     let app_result = App::default().run(&mut terminal, &self_name).await;
 
     // ---------- Call Sending ----------
-
+    let mut person_to_call = String::new();
+    let rtc_connection = PeerConnection::new().await?;
     println!("Calling {}...", person_to_call);
     let sdp = rtc_connection.create_offer().await?;
 

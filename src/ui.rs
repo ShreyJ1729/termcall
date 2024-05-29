@@ -2,18 +2,24 @@ use crate::rtdb::{self, RTDB};
 use anyhow::Result;
 use crossterm::event::{self, KeyEventKind};
 use firebase_rs::Firebase;
-use std::io::stdin;
+use std::io::{self, stdin, Write};
 
 pub async fn wait_get_unique_name(rtdb: &RTDB) -> Result<String> {
     let mut self_name = String::new();
     loop {
         stdin().read_line(&mut self_name)?;
         self_name = self_name.trim().to_string();
+        if self_name == "" {
+            print!("Name cannot be empty. Try entering a different name: ");
+            io::stdout().flush()?;
+            continue;
+        }
 
         let usernames = rtdb.get_usernames().await;
         match usernames.contains(&self_name) {
             true => {
-                println!("User already exists. Try entering a different name: ");
+                print!("User already exists. Try entering a different name: ");
+                io::stdout().flush()?;
                 self_name.clear();
             }
             false => break,
