@@ -53,7 +53,7 @@ impl App {
             }
 
             if self.send_call {
-                let selected_name = self.contact_names()[self.selected].clone();
+                let selected_name = self.contact_names(false)[self.selected].clone();
                 handle_sending_call(&self_name, &selected_name, &rtdb, &rtc_connection).await?;
                 self.exit();
             }
@@ -61,7 +61,6 @@ impl App {
 
         rtdb.remove_user(self_name).await;
         rtc_connection.close().await;
-        tui::restore().expect("Failed to restore terminal");
         Ok(())
     }
 
@@ -76,9 +75,12 @@ impl App {
         }
     }
 
-    fn contact_names(&self) -> Vec<String> {
+    fn contact_names(&self, include_self: bool) -> Vec<String> {
         let mut list = self.contacts.keys().cloned().collect::<Vec<String>>();
         list.sort();
+        if !include_self {
+            list.retain(|name| name != &self.name);
+        }
         list
     }
 
@@ -98,8 +100,11 @@ impl App {
         match key_event.code {
             KeyCode::Esc => self.exit = true,
             KeyCode::Up => self.selected = self.selected.saturating_sub(1),
-            KeyCode::Down => self.selected = (self.selected + 1).min(self.contacts.len() - 1),
+            KeyCode::Down => self.selected = (self.selected + 1).min(self.contacts.len() - 2),
             KeyCode::Enter => {
+                if self.contacts.is_empty() {
+                    return;
+                }
                 self.send_call = true;
             }
             _ => {}
@@ -135,15 +140,19 @@ impl Widget for &App {
             .padding(Padding::proportional(1));
 
         // make the contact at selected index bold
-        let cnames = self.contact_names();
-        let contacts = cnames.iter().enumerate().map(|(i, name)| {
-            let name = if i == self.selected {
-                ("> ".to_owned() + name).bold()
-            } else {
-                ("  ".to_owned() + name).into()
-            };
-            name
-        });
+        let cnames = self.contact_names(false);
+        let contacts = cnames
+            .iter()
+            .enumerate()
+            .map(|(i, name)| {
+                let name = if i == self.selected {
+                    ("> ".to_owned() + name).bold()
+                } else {
+                    ("  ".to_owned() + name).into()
+                };
+                name
+            })
+            .collect::<Vec<Span>>();
 
         let scrollbar = Scrollbar::new(ScrollbarOrientation::VerticalRight)
             .begin_symbol(Some("↑"))

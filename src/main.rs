@@ -19,7 +19,7 @@ use frame_writer::FrameWriter;
 use rtc::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
-use simple_log::{error, info, LogConfigBuilder};
+use simple_log::{error, LogConfigBuilder};
 use std::{
     io::{self, Write},
     sync::{atomic, Arc},
@@ -67,7 +67,8 @@ async fn main() -> anyhow::Result<()> {
 
     // ---------- Main App Loop ----------
     let mut terminal = tui::init()?;
-    let app_result = App::default().run(&mut terminal, &self_name).await;
+    App::default().run(&mut terminal, &self_name).await?;
+    tui::restore()?;
 
     Ok(())
 }
