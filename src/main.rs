@@ -178,7 +178,7 @@ async fn handle_sending_call(
             .expect("Peer data should be in rtdb")
             .answer
             .clone();
-        tokio::time::sleep(Duration::from_millis(1000)).await;
+        tokio::time::sleep(Duration::from_millis(500)).await;
     }
 
     println!("{} answered! Connecting...", person_to_call);

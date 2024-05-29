@@ -27,10 +27,12 @@ pub struct App {
 impl App {
     /// runs the application's main loop until the user quits
     pub async fn run(&mut self, terminal: &mut tui::Tui, self_name: &str) -> anyhow::Result<()> {
+        let mut begin = std::time::Instant::now();
+        self.name = self_name.to_owned();
+
         let rtc_connection = PeerConnection::new().await?;
         let rtdb = RTDB::new();
-        self.name = self_name.to_owned();
-        let mut begin = std::time::Instant::now();
+        self.update_contacts(&rtdb).await;
 
         while !self.exit {
             terminal.draw(|frame| self.render_frame(frame))?;
@@ -122,13 +124,13 @@ impl Widget for &App {
         let instructions = Title::from(Line::from(vec![
             " ↑/↓ ".into(),
             "<Up/Down>".blue().bold(),
-            " Select ".into(),
+            " Call ".into(),
             "<Enter>".blue().bold(),
             " Quit ".into(),
             "<Esc> ".blue().bold(),
         ]));
 
-        let block = Block::default()
+        let outer_block = Block::default()
             .title(title.alignment(Alignment::Center))
             .title(
                 instructions
@@ -159,12 +161,22 @@ impl Widget for &App {
             .end_symbol(Some("↓"));
         let mut scrollbar_state = ScrollbarState::new(contacts.len()).position(self.selected);
 
-        let list = List::from_iter(contacts).block(block);
+        let inner_block = Block::default()
+            .title(Title::from(
+                format!(" Peers online: {} ", cnames.len()).bold(),
+            ))
+            .borders(Borders::ALL)
+            .padding(Padding::proportional(1));
+
+        let inner_area = outer_block.inner(area);
+
+        let list = List::from_iter(contacts).block(inner_block.clone());
         let mut list_state = ListState::default();
         list_state.select(Some(self.selected));
 
-        ratatui::widgets::StatefulWidget::render(list, area, buf, &mut list_state);
-
+        ratatui::widgets::Widget::render(outer_block, area, buf);
+        ratatui::widgets::Widget::render(inner_block, inner_area, buf);
+        ratatui::widgets::StatefulWidget::render(list, inner_area, buf, &mut list_state);
         ratatui::widgets::StatefulWidget::render(
             scrollbar,
             area.inner(&Margin {

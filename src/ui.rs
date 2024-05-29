@@ -13,6 +13,14 @@ pub async fn wait_get_unique_name(rtdb: &RTDB) -> Result<String> {
             continue;
         }
 
+        // no numbers as name. This is to avoid confusion with firebase making strings into numbers
+        if self_name.chars().all(char::is_numeric) {
+            print!("Name cannot be all numbers. Try entering a different name: ");
+            io::stdout().flush()?;
+            self_name.clear();
+            continue;
+        }
+
         let usernames = rtdb.get_usernames().await;
         match usernames.contains(&self_name) {
             true => {
