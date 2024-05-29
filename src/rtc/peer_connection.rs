@@ -1,10 +1,13 @@
-use std::sync::{
-    atomic::{self, AtomicBool},
-    Arc, Mutex,
+use std::{
+    fmt::Debug,
+    sync::{
+        atomic::{self, AtomicBool},
+        Arc, Mutex,
+    },
 };
 
 use anyhow::Result;
-use simple_log::{info, warn};
+use simple_log::{error, info, warn};
 use tokio::sync::mpsc;
 use webrtc::{
     api::APIBuilder,
@@ -32,6 +35,8 @@ pub struct PeerConnection {
     pub data_channels: Arc<Mutex<Vec<Arc<RTCDataChannel>>>>,
     pub on_message_tx: Arc<Mutex<mpsc::Sender<DataChannelMessage>>>,
     pub on_message_rx: Arc<Mutex<mpsc::Receiver<DataChannelMessage>>>,
+    pub on_close_tx: Arc<Mutex<mpsc::Sender<()>>>,
+    pub on_close_rx: Arc<Mutex<mpsc::Receiver<()>>>,
 }
 
 impl PeerConnection {
@@ -49,8 +54,11 @@ impl PeerConnection {
         let peer_connection = Arc::new(Mutex::new(peer_connection));
 
         let (on_message_tx, on_message_rx) = mpsc::channel(1);
+        let (on_close_tx, on_close_rx) = mpsc::channel(1);
         let on_message_tx = Arc::new(Mutex::new(on_message_tx));
         let on_message_rx = Arc::new(Mutex::new(on_message_rx));
+        let on_close_tx = Arc::new(Mutex::new(on_close_tx));
+        let on_close_rx = Arc::new(Mutex::new(on_close_rx));
 
         let id = math_rand_alpha(5);
 
@@ -63,6 +71,8 @@ impl PeerConnection {
             data_channels: Arc::new(Mutex::new(Vec::new())),
             on_message_tx,
             on_message_rx,
+            on_close_tx,
+            on_close_rx,
         };
 
         // Peer connection event handlers
@@ -70,9 +80,15 @@ impl PeerConnection {
         peer_connection.register_pc_connection_state_change();
         peer_connection.register_pc_on_data_channel();
 
-        peer_connection
+        match peer_connection
             .create_data_channel(format!("{}-send", peer_connection.id).as_str())
-            .await?;
+            .await
+        {
+            Ok(_) => {}
+            Err(e) => {
+                error!("Failed to create data channel: {}", e);
+            }
+        }
 
         peer_connection.register_dcs_on_open();
         peer_connection.register_dcs_on_message();
@@ -189,10 +205,15 @@ impl PeerConnection {
     pub fn register_pc_connection_state_change(&self) {
         let pc = self.rtc_pc.lock().unwrap();
         let pc_state = self.state.clone();
+        let on_close_tx = self.on_close_tx.clone();
         pc.on_peer_connection_state_change(Box::new(move |state: RTCPeerConnectionState| {
             info!("Peer Connection State has changed: {state}");
             let mut pc_state = pc_state.lock().unwrap();
             *pc_state = state;
+
+            if state == RTCPeerConnectionState::Disconnected {
+                on_close_tx.lock().unwrap().try_send(()).unwrap()
+            }
             Box::pin(async move {})
         }));
     }
@@ -251,6 +272,11 @@ impl PeerConnection {
                 tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
             }
         }
+    }
+
+    pub async fn close(&self) {
+        let pc = self.rtc_pc.lock().unwrap();
+        pc.close().await.unwrap();
     }
 
     pub async fn get_data_channel(&self, label: &str) -> Option<Arc<RTCDataChannel>> {

@@ -1,29 +1,31 @@
+mod app;
 mod devices;
 mod frame;
+mod frame_writer;
 mod rtc;
 mod rtdb;
 mod schemas;
 mod stats;
-mod terminal;
+mod tui;
 mod ui;
 
+use anyhow::anyhow;
+use app::App;
 use bytes::BytesMut;
-use crossterm::{
-    event,
-    terminal::{disable_raw_mode, enable_raw_mode},
-};
+use crossterm::event;
 use devices::camera::Camera;
 use frame::Frame;
+use frame_writer::FrameWriter;
 use rtc::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
-use simple_log::{error, LogConfigBuilder};
+use simple_log::{error, info, LogConfigBuilder};
 use std::{
+    io::{self, Write},
     sync::{atomic, Arc},
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
-use terminal::Terminal;
-use ui::{handle_homescreen_input, render_homescreen, wait_get_name};
+use ui::wait_get_unique_name;
 
 // Minimum settings for camera
 const CAMERA_WIDTH: f64 = 640 as f64;
@@ -31,18 +33,16 @@ const CAMERA_HEIGHT: f64 = 480 as f64;
 const CAMERA_FPS: f64 = 30 as f64;
 const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
-fn timstamp() -> u64 {
+fn timestamp() -> u64 {
     SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap()
         .as_secs()
 }
 
-#[tokio::main]
-async fn main() {
-    // Initialize logging
+fn init_logging() -> anyhow::Result<(), String> {
     let config = LogConfigBuilder::builder()
-        .path(&format!("./logs/{}.log", timstamp()))
+        .path(&format!("./logs/{}.log", timestamp()))
         .size(1 * 100)
         .roll_count(10)
         .time_format("%Y-%m-%d %H:%M:%S")
@@ -50,146 +50,103 @@ async fn main() {
         .output_file()
         .build();
 
-    match simple_log::new(config) {
-        Ok(_) => {}
-        Err(e) => {
-            eprintln!("Error initializing logging: {:?}", e);
-            return;
-        }
-    }
+    simple_log::new(config)
+}
 
-    // Initialize PeerConnections
-    let rtc_connection = match PeerConnection::new().await {
-        Ok(connection) => connection,
-        Err(e) => {
-            error!("Error creating PeerConnection: {:?}", e);
-            return;
-        }
-    };
-
-    // Initialize Firebase RTDB connection and Terminal
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    init_logging().map_err(|e| anyhow!(e))?;
     let rtdb = RTDB::new();
-    let mut terminal = Terminal::new();
 
     // ---------- Entering Name Screen ----------
-    println!("Enter your name: ");
-    let self_name = match wait_get_name(&rtdb).await {
-        Ok(name) => name,
-        Err(e) => {
-            error!("Error getting name: {:?}", e);
-            return;
-        }
-    };
-
+    print!("Enter your name: ");
+    io::stdout().flush()?;
+    let self_name = wait_get_unique_name(&rtdb).await?;
     let user = User::new(self_name.clone());
+    rtdb.add_or_update_user(&self_name, user).await?;
 
-    rtdb.add_or_update_user(&self_name, user).await.unwrap();
-    terminal.clear();
+    // ---------- Main App Loop ----------
+    let mut terminal = tui::init()?;
+    let app_result = App::default().run(&mut terminal, &self_name).await;
 
-    // ---------- Home Screen ----------
+    Ok(())
+}
 
-    let mut usernames: Vec<String> = vec![];
-    let mut person_to_call = String::new();
+async fn handle_incoming_call(
+    self_name: &str,
+    caller_data: &User,
+    rtdb: &RTDB,
+    rtc_connection: &PeerConnection,
+) -> anyhow::Result<()> {
+    let caller_name = caller_data.name.clone();
+    println!("Answering call from {}...", caller_name);
+    let remote_offer = caller_data.offer.clone();
+    let (remote_sd, remote_candidates) =
+        serde_json::from_str(&remote_offer).expect("Remote offer should be valid JSON");
 
-    let mut begin = std::time::Instant::now();
-    let mut contacts = rtdb.get_users().await;
+    rtc_connection
+        .set_remote_description(remote_sd)
+        .await
+        .expect("Remote session description should be valid");
 
-    loop {
-        // Poll for firebase changes each second
-        if begin.elapsed().as_secs() > 1 {
-            begin = std::time::Instant::now();
-            contacts = rtdb.get_users().await;
-        }
+    rtc_connection
+        .add_remote_ice_candidates(remote_candidates)
+        .await
+        .expect("Remote ice candidates should be valid");
 
-        // Poll for user input
-        if event::poll(std::time::Duration::from_millis(50)).unwrap() {
-            if handle_homescreen_input(&usernames, &mut person_to_call) {
-                break;
-            }
-        }
+    let sd = rtc_connection
+        .create_answer()
+        .await
+        .expect("peer connection offer should be set");
 
-        let new_usernames = contacts.keys().cloned().collect::<Vec<String>>();
+    rtc_connection
+        .set_local_description(sd.clone())
+        .await
+        .expect("Local session description should be valid");
 
-        // If any update, rerender the contacts
-        if new_usernames.len() != usernames.len() {
-            terminal.clear();
-            person_to_call.clear();
-            usernames = new_usernames;
-            render_homescreen(&mut usernames, &self_name)
-        }
+    rtc_connection.wait_ice_candidates_gathered().await;
+    let candidates = rtc_connection.get_ice_candidates().await;
 
-        // Check if anyone is calling us (someone else's sending_call is our name)
-        let potential_caller = contacts.iter().find(|(_k, v)| v.sending_call == self_name);
+    let answer =
+        serde_json::to_string(&(sd, candidates)).expect("Components should be serializable");
 
-        // ---------- Call Handling ----------
-        if let Some((caller_name, caller_data)) = potential_caller {
-            println!("Answering call from {}...", caller_name);
-            let remote_offer = caller_data.offer.clone();
-            let (remote_sd, remote_candidates) =
-                serde_json::from_str(&remote_offer).expect("Remote offer should be valid JSON");
+    rtdb.add_or_update_user(
+        &self_name,
+        User {
+            answer,
+            receiving_call: caller_name.to_string(),
+            ..User::new(self_name.to_string())
+        },
+    )
+    .await?;
 
-            rtc_connection
-                .set_remote_description(remote_sd)
-                .await
-                .expect("Remote session description should be valid");
+    println!("Answer sent! Waiting for connection...");
 
-            rtc_connection
-                .add_remote_ice_candidates(remote_candidates)
-                .await
-                .expect("Remote ice candidates should be valid");
+    rtc_connection.wait_peer_connected().await;
+    rtc_connection.wait_data_channels_open().await;
 
-            let sd = rtc_connection
-                .create_answer()
-                .await
-                .expect("peer connection offer should be set");
+    rtdb.add_or_update_user(
+        &self_name,
+        User {
+            in_call: caller_name.to_string(),
+            ..User::new(self_name.to_string())
+        },
+    )
+    .await?;
 
-            rtc_connection
-                .set_local_description(sd.clone())
-                .await
-                .expect("Local session description should be valid");
+    call_loop(&rtc_connection).await;
 
-            rtc_connection.wait_ice_candidates_gathered().await;
-            let candidates = rtc_connection.get_ice_candidates().await;
+    Ok(())
+}
 
-            let answer = serde_json::to_string(&(sd, candidates))
-                .expect("Components should be serializable");
-
-            rtdb.add_or_update_user(
-                &self_name,
-                User {
-                    answer,
-                    receiving_call: caller_name.to_string(),
-                    ..User::new(self_name.clone())
-                },
-            )
-            .await
-            .unwrap();
-
-            println!("Answer sent! Waiting for connection...");
-
-            rtc_connection.wait_peer_connected().await;
-            rtc_connection.wait_data_channels_open().await;
-
-            rtdb.add_or_update_user(
-                &self_name,
-                User {
-                    in_call: caller_name.to_string(),
-                    ..User::new(self_name.clone())
-                },
-            )
-            .await
-            .unwrap();
-
-            call_loop(&rtdb, &self_name, &rtc_connection).await;
-        }
-
-        tokio::time::sleep(Duration::from_millis(1000)).await;
-    }
-
-    // ---------- Call Sending ----------
-
+async fn handle_sending_call(
+    self_name: &str,
+    person_to_call: &str,
+    rtdb: &RTDB,
+    rtc_connection: &PeerConnection,
+) -> anyhow::Result<()> {
     println!("Calling {}...", person_to_call);
-    let sdp = rtc_connection.create_offer().await.unwrap();
+    let sdp = rtc_connection.create_offer().await?;
 
     rtc_connection
         .set_local_description(sdp.clone())
@@ -206,18 +163,17 @@ async fn main() {
         &self_name,
         User {
             offer,
-            sending_call: person_to_call.clone(),
-            ..User::new(self_name.clone())
+            sending_call: person_to_call.to_string(),
+            ..User::new(self_name.to_string())
         },
     )
-    .await
-    .unwrap();
+    .await?;
 
     let mut answer = String::new();
     while answer == "" {
         let contacts = rtdb.get_users().await;
         answer = contacts
-            .get(&person_to_call)
+            .get(person_to_call)
             .expect("Peer data should be in rtdb")
             .answer
             .clone();
@@ -243,25 +199,24 @@ async fn main() {
     rtdb.add_or_update_user(
         &self_name,
         User {
-            in_call: person_to_call.clone(),
-            ..User::new(self_name.clone())
+            in_call: person_to_call.to_string(),
+            ..User::new(self_name.to_string())
         },
     )
-    .await
-    .unwrap();
+    .await?;
 
-    call_loop(&rtdb, &self_name, &rtc_connection).await;
+    call_loop(&rtc_connection).await;
+
+    Ok(())
 }
 
 // ---------- Call Loop ----------
-async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection) {
-    let mut terminal = Terminal::new();
+async fn call_loop(rtc_connection: &PeerConnection) {
+    let mut frame_writer = FrameWriter::new();
     let mut display_frame = Frame::new();
 
-    enable_raw_mode().unwrap();
-
-    terminal.clear();
-    terminal.hide_cursor();
+    frame_writer.clear();
+    frame_writer.hide_cursor();
 
     let mut frame_count = 0;
     let mut begin = std::time::Instant::now();
@@ -291,10 +246,7 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
 
         loop {
             let start = std::time::Instant::now();
-            let timestamp = SystemTime::now()
-                .duration_since(UNIX_EPOCH)
-                .unwrap()
-                .as_millis() as u64;
+            let timestamp = timestamp();
 
             match camera.read_frame(frame.get_mut_ref()) {
                 Ok(_) => {}
@@ -335,10 +287,10 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
     loop {
         let loop_start = std::time::Instant::now();
 
-        // If q pressed, gracefully quit
+        // If Esc pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(0)).unwrap() {
             if let event::Event::Key(event) = event::read().unwrap() {
-                if event.code == event::KeyCode::Char('q') {
+                if event.code == event::KeyCode::Esc {
                     break;
                 }
             }
@@ -357,19 +309,15 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
         let receiving_bytes = payload.len();
         let (frame, timestamp_bytes) = payload.split_at(payload.len() - 8);
 
-        let timestamp = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
-        let latency = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap()
-            .as_millis() as u64
-            - timestamp;
+        let timestamp_ = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
+        let latency = timestamp() - timestamp_;
 
         display_frame.load_bytes(frame.to_vec());
 
-        let (terminal_width, terminal_height, size_changed) = terminal.get_size();
+        let (terminal_width, terminal_height, size_changed) = frame_writer.get_size();
         match size_changed {
             true => {
-                terminal.clear();
+                frame_writer.clear();
             }
             false => {
                 display_frame.resize_frame(
@@ -377,8 +325,8 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
                     (terminal_height - 1) as f64,
                     false,
                 );
-                terminal.goto_topleft();
-                terminal.write_frame(display_frame.get_frame());
+                frame_writer.goto_topleft();
+                frame_writer.write_frame(display_frame.get_frame());
             }
         }
 
@@ -393,7 +341,7 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
             frame_count * 1000 / (begin.elapsed().as_millis() + 1)
         );
 
-        terminal.write_to_bottomright(&stats);
+        frame_writer.write_to_bottomright(&stats);
 
         // calculate fps based on moving frame rate every second
         if begin.elapsed().as_secs() > 1 {
@@ -409,13 +357,4 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
             tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
         }
     }
-
-    graceful_exit(&rtdb, self_name, &mut terminal).await;
-}
-
-async fn graceful_exit(rtdb: &RTDB, self_name: &str, terminal: &mut Terminal) {
-    rtdb.remove_user(self_name).await;
-    disable_raw_mode().unwrap();
-    terminal.show_cursor();
-    std::process::exit(0);
 }
