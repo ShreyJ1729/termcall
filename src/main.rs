@@ -134,7 +134,7 @@ async fn handle_incoming_call(
     )
     .await?;
 
-    call_loop(&rtdb, &self_name, &rtc_connection).await;
+    call_loop(&rtc_connection).await;
 
     Ok(())
 }
@@ -205,13 +205,13 @@ async fn handle_sending_call(
     )
     .await?;
 
-    call_loop(&rtdb, &self_name, &rtc_connection).await;
+    call_loop(&rtc_connection).await;
 
     Ok(())
 }
 
 // ---------- Call Loop ----------
-async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection) {
+async fn call_loop(rtc_connection: &PeerConnection) {
     let mut frame_writer = FrameWriter::new();
     let mut display_frame = Frame::new();
 
@@ -357,11 +357,4 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
             tokio::time::sleep(Duration::from_millis(1000 / 30) - elapsed).await;
         }
     }
-
-    let on_close_rx = rtc_connection.on_close_rx.clone();
-    let mut on_close_rx = on_close_rx.lock().unwrap();
-
-    rtdb.remove_user(self_name).await;
-    rtc_connection.close().await;
-    tui::restore().expect("Failed to restore terminal");
 }

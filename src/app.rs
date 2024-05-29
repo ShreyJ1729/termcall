@@ -49,11 +49,13 @@ impl App {
 
             if let Some((_, caller_data)) = potential_caller {
                 handle_incoming_call(&self_name, caller_data, &rtdb, &rtc_connection).await?;
+                self.exit();
             }
 
             if self.send_call {
                 let selected_name = self.contact_names()[self.selected].clone();
                 handle_sending_call(&self_name, &selected_name, &rtdb, &rtc_connection).await?;
+                self.exit();
             }
         }
 
@@ -148,7 +150,7 @@ impl Widget for &App {
             .end_symbol(Some("↓"));
         let mut scrollbar_state = ScrollbarState::new(contacts.len()).position(self.selected);
 
-        let list = List::from_iter(contacts).block(block).scroll_padding(3);
+        let list = List::from_iter(contacts).block(block);
         let mut list_state = ListState::default();
         list_state.select(Some(self.selected));
 
