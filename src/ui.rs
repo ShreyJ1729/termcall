@@ -1,7 +1,5 @@
-use crate::rtdb::{self, RTDB};
+use crate::rtdb::RTDB;
 use anyhow::Result;
-use crossterm::event::{self, KeyEventKind};
-use firebase_rs::Firebase;
 use std::io::{self, stdin, Write};
 
 pub async fn wait_get_unique_name(rtdb: &RTDB) -> Result<String> {

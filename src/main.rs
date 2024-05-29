@@ -12,27 +12,14 @@ mod ui;
 use anyhow::anyhow;
 use app::App;
 use bytes::BytesMut;
-use crossterm::{
-    event::{self, KeyEventKind},
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
-    ExecutableCommand,
-};
+use crossterm::event;
 use devices::camera::Camera;
 use frame::Frame;
 use frame_writer::FrameWriter;
-use ratatui::{
-    backend::CrosstermBackend,
-    prelude::*,
-    style::Stylize,
-    symbols::border,
-    widgets::{self, Paragraph},
-    widgets::{block::*, *},
-    Terminal,
-};
 use rtc::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
-use simple_log::{error, LogConfigBuilder};
+use simple_log::{error, info, LogConfigBuilder};
 use std::{
     io::{self, Write},
     sync::{atomic, Arc},
@@ -64,6 +51,25 @@ fn init_logging() -> anyhow::Result<(), String> {
         .build();
 
     simple_log::new(config)
+}
+
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    init_logging().map_err(|e| anyhow!(e))?;
+    let rtdb = RTDB::new();
+
+    // ---------- Entering Name Screen ----------
+    print!("Enter your name: ");
+    io::stdout().flush()?;
+    let self_name = wait_get_unique_name(&rtdb).await?;
+    let user = User::new(self_name.clone());
+    rtdb.add_or_update_user(&self_name, user).await?;
+
+    // ---------- Main App Loop ----------
+    let mut terminal = tui::init()?;
+    let app_result = App::default().run(&mut terminal, &self_name).await;
+
+    Ok(())
 }
 
 async fn handle_incoming_call(
@@ -133,25 +139,12 @@ async fn handle_incoming_call(
     Ok(())
 }
 
-#[tokio::main]
-async fn main() -> anyhow::Result<()> {
-    init_logging().map_err(|e| anyhow!(e))?;
-    let rtdb = RTDB::new();
-
-    // ---------- Entering Name Screen ----------
-    print!("Enter your name: ");
-    io::stdout().flush()?;
-    let self_name = wait_get_unique_name(&rtdb).await?;
-    let user = User::new(self_name.clone());
-    rtdb.add_or_update_user(&self_name, user).await?;
-
-    // ---------- Home Screen ----------
-    let mut terminal = tui::init()?;
-    let app_result = App::default().run(&mut terminal, &self_name).await;
-
-    // ---------- Call Sending ----------
-    let mut person_to_call = String::new();
-    let rtc_connection = PeerConnection::new().await?;
+async fn handle_sending_call(
+    self_name: &str,
+    person_to_call: &str,
+    rtdb: &RTDB,
+    rtc_connection: &PeerConnection,
+) -> anyhow::Result<()> {
     println!("Calling {}...", person_to_call);
     let sdp = rtc_connection.create_offer().await?;
 
@@ -170,8 +163,8 @@ async fn main() -> anyhow::Result<()> {
         &self_name,
         User {
             offer,
-            sending_call: person_to_call.clone(),
-            ..User::new(self_name.clone())
+            sending_call: person_to_call.to_string(),
+            ..User::new(self_name.to_string())
         },
     )
     .await?;
@@ -180,7 +173,7 @@ async fn main() -> anyhow::Result<()> {
     while answer == "" {
         let contacts = rtdb.get_users().await;
         answer = contacts
-            .get(&person_to_call)
+            .get(person_to_call)
             .expect("Peer data should be in rtdb")
             .answer
             .clone();
@@ -206,8 +199,8 @@ async fn main() -> anyhow::Result<()> {
     rtdb.add_or_update_user(
         &self_name,
         User {
-            in_call: person_to_call.clone(),
-            ..User::new(self_name.clone())
+            in_call: person_to_call.to_string(),
+            ..User::new(self_name.to_string())
         },
     )
     .await?;
@@ -294,10 +287,10 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
     loop {
         let loop_start = std::time::Instant::now();
 
-        // If q pressed, gracefully quit
+        // If Esc pressed, gracefully quit
         if event::poll(std::time::Duration::from_millis(0)).unwrap() {
             if let event::Event::Key(event) = event::read().unwrap() {
-                if event.code == event::KeyCode::Char('q') {
+                if event.code == event::KeyCode::Esc {
                     break;
                 }
             }
@@ -365,11 +358,10 @@ async fn call_loop(rtdb: &RTDB, self_name: &str, rtc_connection: &PeerConnection
         }
     }
 
-    graceful_exit(&rtdb, self_name).await;
-}
+    let on_close_rx = rtc_connection.on_close_rx.clone();
+    let mut on_close_rx = on_close_rx.lock().unwrap();
 
-async fn graceful_exit(rtdb: &RTDB, self_name: &str) {
     rtdb.remove_user(self_name).await;
+    rtc_connection.close().await;
     tui::restore().expect("Failed to restore terminal");
-    std::process::exit(0);
 }
