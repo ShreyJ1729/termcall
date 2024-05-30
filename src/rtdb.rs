@@ -1,7 +1,6 @@
 use crate::schemas::user::User;
 use anyhow::Result;
 use firebase_rs::Firebase;
-use simple_log::{error, warn};
 use std::collections::HashMap;
 
 // The .json at the end allows for receiving changes through a stream
@@ -25,10 +24,7 @@ impl RTDB {
             .await
         {
             Ok(users) => users,
-            Err(_) => {
-                warn!("Could not get users from database. Assuming no users and returning empty hashmap.");
-                HashMap::new()
-            }
+            Err(_) => HashMap::new(),
         }
     }
 
@@ -46,19 +42,14 @@ impl RTDB {
             .await
         {
             Ok(_) => Ok(()),
-            Err(_) => {
-                error!("could not update user {}", username);
-                Err(anyhow::anyhow!("could not update user {}", username))
-            }
+            Err(_) => Err(anyhow::anyhow!("could not update user {}", username)),
         }
     }
 
     pub async fn remove_user(&self, username: &str) {
         match self.firebase.at("users").at(username).delete().await {
             Ok(_) => {}
-            Err(_) => {
-                error!("could not delete user {}", username);
-            }
+            Err(_) => {}
         }
     }
 }

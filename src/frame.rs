@@ -1,7 +1,6 @@
 use crossterm::style::{Color, Print, SetBackgroundColor};
 use opencv::core::{Mat, Point3_, Size};
 use opencv::{imgcodecs, imgproc, prelude::*};
-use simple_log::error;
 use std::io::{self, Write};
 
 const ASCII_CHAR_H_OVER_W: f64 = 2.25;
@@ -70,9 +69,7 @@ impl Frame {
             opencv::imgproc::INTER_LINEAR,
         ) {
             Ok(_) => {}
-            Err(e) => {
-                error!("Error resizing frame: {}", e);
-            }
+            Err(e) => {}
         }
     }
 

@@ -2,7 +2,6 @@ use anyhow::Result;
 use opencv::core::Mat;
 use opencv::videoio::VideoCapture;
 use opencv::{prelude::*, videoio};
-use simple_log::error;
 
 pub struct Camera {
     cam: videoio::VideoCapture,
@@ -28,14 +27,8 @@ impl Camera {
 
         match videoio::VideoCapture::is_opened(&self.cam) {
             Ok(true) => Ok(()),
-            Ok(false) => {
-                error!("Camera is not opened");
-                Err(anyhow::anyhow!("Camera is not opened"))
-            }
-            Err(e) => {
-                error!("Error opening camera: {}", e);
-                Err(anyhow::anyhow!("Error opening camera: {}", e))
-            }
+            Ok(false) => Err(anyhow::anyhow!("Camera is not opened")),
+            Err(e) => Err(anyhow::anyhow!("Error opening camera: {}", e)),
         }
     }
 

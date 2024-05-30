@@ -1,7 +1,6 @@
 use std::sync::Arc;
 
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use simple_log::{error, info};
 use webrtc::data_channel::RTCDataChannel;
 
 pub struct Microphone {
@@ -26,15 +25,8 @@ impl Microphone {
             while let Some(payload) = rx.recv().await {
                 match audio_send_dc.send(&payload).await {
                     Ok(_) => {}
-                    Err(err) => {
-                        error!("error sending audio stream: {}", err);
-                    }
+                    Err(err) => {}
                 }
-                info!(
-                    "sent {} bytes over {}",
-                    payload.len().to_string(),
-                    audio_send_dc.label()
-                );
             }
         });
 
@@ -46,14 +38,10 @@ impl Microphone {
                     let payload = bytes::Bytes::from(data);
                     match tx.try_send(payload) {
                         Ok(_) => {}
-                        Err(err) => {
-                            error!("error sending audio stream: {}", err);
-                        }
+                        Err(err) => {}
                     }
                 },
-                move |err| {
-                    error!("error sending audio stream: {}", err);
-                },
+                move |err| {},
                 None,
             )
             .expect("Failed to build input stream");

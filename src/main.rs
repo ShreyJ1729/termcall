@@ -16,7 +16,6 @@ use frame::Frame;
 use peer_connection::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
-use simple_log::{error, LogConfigBuilder};
 use std::{
     io::{self, Write},
     sync::{atomic, Arc},
@@ -36,22 +35,8 @@ fn timestamp() -> u64 {
         .as_secs()
 }
 
-fn init_logging() -> anyhow::Result<(), String> {
-    let config = LogConfigBuilder::builder()
-        .path(&format!("./logs/{}.log", timestamp()))
-        .size(1 * 100)
-        .roll_count(10)
-        .time_format("%Y-%m-%d %H:%M:%S")
-        .level("warning")
-        .output_file()
-        .build();
-
-    simple_log::new(config)
-}
-
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    init_logging().map_err(|e| anyhow!(e))?;
     let rtdb = RTDB::new();
 
     // ---------- Entering Name Screen ----------
@@ -275,7 +260,6 @@ async fn call_loop(
         match camera.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, 0) {
             Ok(_) => {}
             Err(e) => {
-                error!("Failed initializing camera. Ending loop: {:?}", e);
                 return;
             }
         }
@@ -286,7 +270,6 @@ async fn call_loop(
             match camera.read_frame(frame.get_mut_ref()) {
                 Ok(_) => {}
                 Err(e) => {
-                    error!("Failed reading camera frame. Ending loop: {:?}", e);
                     break;
                 }
             }
@@ -306,7 +289,6 @@ async fn call_loop(
             sending_bytes.store(payload.len(), atomic::Ordering::SeqCst);
 
             if vsend_dc.send(&payload.freeze()).await.is_err() {
-                error!("Failed sending frame on data channel. Ending loop.");
                 break;
             }
 

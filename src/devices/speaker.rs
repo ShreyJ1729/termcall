@@ -1,7 +1,6 @@
 use std::sync::Arc;
 
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use simple_log::error;
 use tokio::sync::Mutex;
 use webrtc::data_channel::data_channel_message::DataChannelMessage;
 
@@ -37,13 +36,10 @@ impl Speaker {
                             for sample in data.iter_mut() {
                                 *sample = 0.0;
                             }
-                            error!("no audio data received");
                         }
                     }
                 },
-                move |err| {
-                    error!("error receiving audio stream: {}", err);
-                },
+                move |err| {},
                 None,
             )
             .expect("Failed to build output stream");
