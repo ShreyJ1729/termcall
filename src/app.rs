@@ -25,7 +25,7 @@ pub struct App {
 }
 
 impl App {
-    /// runs the application's main loop until the user quits
+    // runs the application's main loop until the user quits
     pub async fn run(&mut self, terminal: &mut tui::Tui, self_name: &str) -> anyhow::Result<()> {
         let mut begin = std::time::Instant::now();
         self.name = self_name.to_owned();

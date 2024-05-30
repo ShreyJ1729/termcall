@@ -11,7 +11,7 @@ use anyhow::anyhow;
 use app::App;
 use bytes::BytesMut;
 use crossterm::event;
-use devices::camera::Camera;
+use devices::{camera::Camera, microphone::Microphone};
 use frame::Frame;
 use peer_connection::PeerConnection;
 use rtdb::RTDB;
@@ -165,7 +165,7 @@ async fn handle_incoming_call(
     )
     .await?;
 
-    call_loop(&rtc_connection).await;
+    call_loop(&rtc_connection).await?;
 
     Ok(())
 }
@@ -237,7 +237,7 @@ async fn handle_sending_call(
     )
     .await?;
 
-    call_loop(&rtc_connection).await;
+    call_loop(&rtc_connection).await?;
 
     Ok(())
 }
@@ -246,16 +246,25 @@ async fn handle_sending_call(
 async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
     let mut terminal = tui::init()?;
     let mut display_frame = Frame::new();
-    terminal.clear();
+    terminal.clear()?;
+
+    let asend_dc_label = format!("{}-video-send", rtc_connection.id);
+    let asend_dc = rtc_connection
+        .get_data_channel(&asend_dc_label)
+        .await
+        .expect("Data channel should exist");
+
+    let microphone = Microphone::new(asend_dc);
+    microphone.listen();
 
     let mut frame_times = vec![];
 
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));
     let sending_bytes_read = Arc::clone(&sending_bytes);
 
-    let send_dc_label = &format!("{}-send", rtc_connection.id);
-    let send_dc = rtc_connection
-        .get_data_channel(send_dc_label)
+    let vsend_dc_label = &format!("{}-video-send", rtc_connection.id);
+    let vsend_dc = rtc_connection
+        .get_data_channel(vsend_dc_label)
         .await
         .expect("Data channel should exist");
 
@@ -274,7 +283,6 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
 
         loop {
             let start = std::time::Instant::now();
-            let timestamp = timestamp();
 
             match camera.read_frame(frame.get_mut_ref()) {
                 Ok(_) => {}
@@ -291,14 +299,14 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
             );
 
             let frame = frame.get_bytes();
-            let timestamp_bytes = timestamp.to_be_bytes();
+            let timestamp_bytes = timestamp().to_be_bytes();
 
             let mut payload = BytesMut::with_capacity(frame.len() + timestamp_bytes.len());
             payload.extend_from_slice(&frame);
             payload.extend_from_slice(&timestamp_bytes);
             sending_bytes.store(payload.len(), atomic::Ordering::SeqCst);
 
-            if send_dc.send(&payload.freeze()).await.is_err() {
+            if vsend_dc.send(&payload.freeze()).await.is_err() {
                 error!("Failed sending frame on data channel. Ending loop.");
                 break;
             }
@@ -341,18 +349,18 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
 
         let receiving_bytes = payload.len();
         let timestamp_ = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
-        let latency = timestamp() - timestamp_;
+        let latency = timestamp_ - timestamp();
 
         // Clear terminal if size changed (to avoid artifacts)
         if terminal.size()? != tsize {
-            terminal.clear();
+            terminal.clear()?;
             tsize = terminal.size()?;
         }
 
         // Render frame to terminal
         display_frame.load_bytes(frame.to_vec());
         display_frame.resize_frame(tsize.width as f64, (tsize.height - 1) as f64, false);
-        display_frame.write_to_terminal();
+        display_frame.write_to_terminal(false);
 
         // Print stats
         let stats = format!(

@@ -80,15 +80,13 @@ impl PeerConnection {
         peer_connection.register_pc_connection_state_change();
         peer_connection.register_pc_on_data_channel();
 
-        match peer_connection
-            .create_data_channel(format!("{}-send", peer_connection.id).as_str())
-            .await
-        {
-            Ok(_) => {}
-            Err(e) => {
-                error!("Failed to create data channel: {}", e);
-            }
-        }
+        peer_connection
+            .create_data_channel(format!("{}-video-send", peer_connection.id).as_str())
+            .await?;
+
+        peer_connection
+            .create_data_channel(format!("{}-audio-send", peer_connection.id).as_str())
+            .await?;
 
         peer_connection.register_dcs_on_open();
         peer_connection.register_dcs_on_message();
@@ -138,12 +136,18 @@ impl PeerConnection {
         Ok(())
     }
 
-    pub async fn create_data_channel(&mut self, label: &str) -> Result<()> {
+    pub async fn create_data_channel(&mut self, label: &str) -> Result<(), webrtc::Error> {
         let pc = self.rtc_pc.lock().unwrap();
         let dcs = self.data_channels.clone();
         let mut dcs = dcs.lock().unwrap();
 
-        let dc = pc.create_data_channel(label, None).await?;
+        let dc = match pc.create_data_channel(label, None).await {
+            Ok(dc) => dc,
+            Err(e) => {
+                error!("Failed to create data channel: {}", e);
+                return Err(e);
+            }
+        };
         dcs.push(dc.clone());
         Ok(())
     }
@@ -167,12 +171,19 @@ impl PeerConnection {
         let dcs = dcs.lock().unwrap();
         for dc in dcs.iter() {
             let dc = dc.clone();
+            let dc_label = dc.label().to_owned();
             let on_message_tx = self.on_message_tx.clone();
             dc.on_message(Box::new(move |msg: DataChannelMessage| {
                 let msg = msg.clone();
+                info!("Data channel {} received message: {:?}", dc_label, msg);
+                if dc_label.contains("audio") {
+                    return Box::pin(async move {});
+                }
                 let on_message_tx = on_message_tx.lock().unwrap();
                 match on_message_tx.try_send(msg) {
-                    Ok(_) => {}
+                    Ok(_) => {
+                        info!("Message successfully sent to on_message_tx");
+                    }
                     Err(e) => {
                         warn!("Failed to send message - rx closed or buffer full: {}", e)
                     }
@@ -239,9 +250,17 @@ impl PeerConnection {
 
             dc.on_message(Box::new(move |msg: DataChannelMessage| {
                 let on_message_tx = on_message_tx.lock().unwrap();
+                if dc_label2.contains("audio") {
+                    return Box::pin(async move {});
+                }
+                info!("Data channel {} received message: {:?}", dc_label2, msg);
                 match on_message_tx.try_send(msg) {
-                    Ok(_) => {}
-                    Err(e) => {}
+                    Ok(_) => {
+                        info!("Message successfully sent to on_message_tx");
+                    }
+                    Err(e) => {
+                        warn!("Failed to send message - rx closed or buffer full: {}", e);
+                    }
                 }
                 Box::pin(async move {})
             }));
