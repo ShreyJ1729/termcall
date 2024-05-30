@@ -181,7 +181,7 @@ impl PeerConnection {
             let on_amsg_tx = self.on_amsg_tx.clone();
             dc.on_message(Box::new(move |msg: DataChannelMessage| {
                 let msg = msg.clone();
-                info!("Data channel {} received message: {:?}", dc_label, msg);
+                info!("Data channel {} received message", dc_label);
                 if dc_label.contains("audio") {
                     let on_amsg_tx = on_amsg_tx.clone();
                     let on_amsg_tx = on_amsg_tx.lock().unwrap();

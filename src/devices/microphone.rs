@@ -20,7 +20,7 @@ impl Microphone {
             .expect("Failed to get default input config");
 
         let audio_send_dc = audio_send_dc.clone();
-        let (tx, mut rx) = tokio::sync::mpsc::channel(100);
+        let (tx, mut rx) = tokio::sync::mpsc::channel(1000);
 
         tokio::spawn(async move {
             while let Some(payload) = rx.recv().await {

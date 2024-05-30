@@ -256,9 +256,6 @@ async fn call_loop(
     let mut display_frame = Frame::new();
     terminal.clear()?;
 
-    // microphone.listen();
-    // speaker.play();
-
     let mut frame_times = vec![];
 
     let sending_bytes = Arc::new(atomic::AtomicUsize::new(0));

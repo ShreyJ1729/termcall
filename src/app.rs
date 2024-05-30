@@ -34,7 +34,7 @@ impl App {
         let mut begin = std::time::Instant::now();
         self.name = self_name.to_owned();
 
-        let (amsg_tx, amsg_rx) = tokio::sync::mpsc::channel(100);
+        let (amsg_tx, amsg_rx) = tokio::sync::mpsc::channel(1000);
         let mut rtc_connection = PeerConnection::new(amsg_tx).await?;
         let asend_dc_label = format!("{}-audio-send", rtc_connection.id);
         let asend_dc = rtc_connection
