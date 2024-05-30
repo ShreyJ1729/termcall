@@ -11,7 +11,7 @@ use anyhow::anyhow;
 use app::App;
 use bytes::BytesMut;
 use crossterm::event;
-use devices::{camera::Camera, microphone::Microphone};
+use devices::{camera::Camera, microphone::Microphone, speaker::Speaker};
 use frame::Frame;
 use peer_connection::PeerConnection;
 use rtdb::RTDB;
@@ -107,7 +107,9 @@ async fn handle_incoming_call(
     self_name: &str,
     caller_data: &User,
     rtdb: &RTDB,
-    rtc_connection: &PeerConnection,
+    rtc_connection: &mut PeerConnection,
+    microphone: &Microphone,
+    speaker: &Speaker,
 ) -> anyhow::Result<()> {
     let caller_name = caller_data.name.clone();
     println!("Answering call from {}...", caller_name);
@@ -165,7 +167,7 @@ async fn handle_incoming_call(
     )
     .await?;
 
-    call_loop(&rtc_connection).await?;
+    call_loop(rtc_connection, microphone, speaker).await?;
 
     Ok(())
 }
@@ -175,7 +177,9 @@ async fn handle_sending_call(
     self_name: &str,
     person_to_call: &str,
     rtdb: &RTDB,
-    rtc_connection: &PeerConnection,
+    rtc_connection: &mut PeerConnection,
+    microphone: &Microphone,
+    speaker: &Speaker,
 ) -> anyhow::Result<()> {
     println!("Calling {}...", person_to_call);
     let sdp = rtc_connection.create_offer().await?;
@@ -237,25 +241,23 @@ async fn handle_sending_call(
     )
     .await?;
 
-    call_loop(&rtc_connection).await?;
+    call_loop(rtc_connection, microphone, speaker).await?;
 
     Ok(())
 }
 
 // ---------- Call Loop ----------
-async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
+async fn call_loop(
+    rtc_connection: &mut PeerConnection,
+    microphone: &Microphone,
+    speaker: &Speaker,
+) -> anyhow::Result<()> {
     let mut terminal = tui::init()?;
     let mut display_frame = Frame::new();
     terminal.clear()?;
 
-    let asend_dc_label = format!("{}-video-send", rtc_connection.id);
-    let asend_dc = rtc_connection
-        .get_data_channel(&asend_dc_label)
-        .await
-        .expect("Data channel should exist");
-
-    let microphone = Microphone::new(asend_dc);
-    microphone.listen();
+    // microphone.listen();
+    // speaker.play();
 
     let mut frame_times = vec![];
 
@@ -334,7 +336,7 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
         }
 
         // Receive payload from data channel
-        let on_message_rx = rtc_connection.on_message_rx.clone();
+        let on_message_rx = rtc_connection.on_vmsg_rx.clone();
         let mut on_message_rx = on_message_rx.lock().unwrap();
         let payload = match on_message_rx.recv().await {
             Some(payload) => Some(payload),
@@ -349,7 +351,7 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
 
         let receiving_bytes = payload.len();
         let timestamp_ = u64::from_be_bytes(timestamp_bytes.try_into().unwrap());
-        let latency = timestamp_ - timestamp();
+        let latency = timestamp() - timestamp_;
 
         // Clear terminal if size changed (to avoid artifacts)
         if terminal.size()? != tsize {

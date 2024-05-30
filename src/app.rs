@@ -11,8 +11,12 @@ use ratatui::{
 };
 
 use crate::{
-    handle_incoming_call, handle_sending_call, peer_connection::PeerConnection, rtdb::RTDB,
-    schemas::user::User, tui,
+    devices::{microphone::Microphone, speaker::Speaker},
+    handle_incoming_call, handle_sending_call,
+    peer_connection::PeerConnection,
+    rtdb::RTDB,
+    schemas::user::User,
+    tui,
 };
 
 #[derive(Debug, Default)]
@@ -30,7 +34,17 @@ impl App {
         let mut begin = std::time::Instant::now();
         self.name = self_name.to_owned();
 
-        let rtc_connection = PeerConnection::new().await?;
+        let (amsg_tx, amsg_rx) = tokio::sync::mpsc::channel(100);
+        let mut rtc_connection = PeerConnection::new(amsg_tx).await?;
+        let asend_dc_label = format!("{}-audio-send", rtc_connection.id);
+        let asend_dc = rtc_connection
+            .get_data_channel(&asend_dc_label)
+            .await
+            .expect("Data channel should exist");
+
+        let microphone = Microphone::new(asend_dc);
+        let speaker = Speaker::new(amsg_rx);
+
         let rtdb = RTDB::new();
         self.update_contacts(&rtdb).await;
 
@@ -50,13 +64,29 @@ impl App {
                 .find(|(_k, v)| v.sending_call == self_name);
 
             if let Some((_, caller_data)) = potential_caller {
-                handle_incoming_call(&self_name, caller_data, &rtdb, &rtc_connection).await?;
+                handle_incoming_call(
+                    &self_name,
+                    caller_data,
+                    &rtdb,
+                    &mut rtc_connection,
+                    &microphone,
+                    &speaker,
+                )
+                .await?;
                 self.exit();
             }
 
             if self.send_call {
                 let selected_name = self.contact_names(false)[self.selected].clone();
-                handle_sending_call(&self_name, &selected_name, &rtdb, &rtc_connection).await?;
+                handle_sending_call(
+                    &self_name,
+                    &selected_name,
+                    &rtdb,
+                    &mut rtc_connection,
+                    &microphone,
+                    &speaker,
+                )
+                .await?;
                 self.exit();
             }
         }
