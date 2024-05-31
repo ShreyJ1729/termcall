@@ -11,8 +11,9 @@ use anyhow::anyhow;
 use app::App;
 use bytes::BytesMut;
 use crossterm::event;
-use devices::camera::Camera;
+use devices::camera::{self, Camera, CAMERA_HEIGHT, CAMERA_WIDTH};
 use frame::Frame;
+use nokhwa::camera_traits::CaptureBackendTrait;
 use peer_connection::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
@@ -22,11 +23,9 @@ use std::{
     sync::{atomic, Arc},
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
+use tokio::sync::Mutex;
 
 // Minimum settings for camera
-const CAMERA_WIDTH: f64 = 640 as f64;
-const CAMERA_HEIGHT: f64 = 480 as f64;
-const CAMERA_FPS: f64 = 30 as f64;
 const FRAME_COMPRESSION_FACTOR: f64 = 0.5;
 
 fn timestamp() -> u64 {
@@ -260,23 +259,17 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
         .expect("Data channel should exist");
 
     // ---------- Frame Sending Loop ----------
+    let camera = Arc::new(Mutex::new(Camera::new()));
+    let camera_clone = camera.clone();
     tokio::spawn(async move {
-        let mut camera = Camera::new();
         let mut frame = Frame::new();
-
-        match camera.init(CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, 0) {
-            Ok(_) => {}
-            Err(e) => {
-                error!("Failed initializing camera. Ending loop: {:?}", e);
-                return;
-            }
-        }
 
         loop {
             let start = std::time::Instant::now();
             let timestamp = timestamp();
 
-            match camera.read_frame(frame.get_mut_ref()) {
+            let mut cam_guard = camera_clone.lock().await;
+            match cam_guard.read_frame(frame.get_mut_ref()) {
                 Ok(_) => {}
                 Err(e) => {
                     error!("Failed reading camera frame. Ending loop: {:?}", e);
@@ -284,11 +277,13 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
                 }
             }
 
-            frame.resize_frame(
-                CAMERA_WIDTH * FRAME_COMPRESSION_FACTOR,
-                CAMERA_HEIGHT * FRAME_COMPRESSION_FACTOR,
-                false,
-            );
+            frame
+                .resize_frame(
+                    (640 as f64) * FRAME_COMPRESSION_FACTOR,
+                    (480 as f64) * FRAME_COMPRESSION_FACTOR,
+                    false,
+                )
+                .unwrap();
 
             let frame = frame.get_bytes();
             let timestamp_bytes = timestamp.to_be_bytes();
