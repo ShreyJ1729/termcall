@@ -13,7 +13,6 @@ use bytes::BytesMut;
 use crossterm::event;
 use devices::camera::{self, Camera, CAMERA_HEIGHT, CAMERA_WIDTH};
 use frame::Frame;
-use nokhwa::camera_traits::CaptureBackendTrait;
 use peer_connection::PeerConnection;
 use rtdb::RTDB;
 use schemas::user::User;
@@ -259,17 +258,16 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
         .expect("Data channel should exist");
 
     // ---------- Frame Sending Loop ----------
-    let camera = Arc::new(Mutex::new(Camera::new()));
-    let camera_clone = camera.clone();
     tokio::spawn(async move {
+        let mut cam = Camera::new();
+
         let mut frame = Frame::new();
 
         loop {
             let start = std::time::Instant::now();
             let timestamp = timestamp();
 
-            let mut cam_guard = camera_clone.lock().await;
-            match cam_guard.read_frame(frame.get_mut_ref()) {
+            match cam.read_frame(frame.get_mut_ref()) {
                 Ok(_) => {}
                 Err(e) => {
                     error!("Failed reading camera frame. Ending loop: {:?}", e);

@@ -36,5 +36,3 @@ impl Camera {
         Ok(())
     }
 }
-
-unsafe impl Send for Camera {}
