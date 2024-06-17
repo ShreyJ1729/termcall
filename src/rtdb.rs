@@ -4,7 +4,6 @@ use firebase_rs::Firebase;
 use simple_log::{error, warn};
 use std::collections::HashMap;
 
-// The .json at the end allows for receiving changes through a stream
 pub const DATABASE_URL: &str = "https://termcall-a14ab-default-rtdb.firebaseio.com/.json";
 
 pub struct RTDB {

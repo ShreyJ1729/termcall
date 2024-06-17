@@ -38,7 +38,7 @@ impl App {
             terminal.draw(|frame| self.render_frame(frame))?;
             self.handle_events()?;
 
-            if begin.elapsed().as_millis() > 500 {
+            if begin.elapsed().as_millis() > 1000 {
                 self.update_contacts(&rtdb).await;
                 begin = std::time::Instant::now();
             }

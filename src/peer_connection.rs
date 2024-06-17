@@ -1,9 +1,6 @@
-use std::{
-    fmt::Debug,
-    sync::{
-        atomic::{self, AtomicBool},
-        Arc, Mutex,
-    },
+use std::sync::{
+    atomic::{self, AtomicBool},
+    Arc, Mutex,
 };
 
 use anyhow::Result;

@@ -165,7 +165,7 @@ async fn handle_incoming_call(
     )
     .await?;
 
-    call_loop(&rtc_connection).await;
+    call_loop(&rtc_connection).await?;
 
     Ok(())
 }
@@ -237,7 +237,7 @@ async fn handle_sending_call(
     )
     .await?;
 
-    call_loop(&rtc_connection).await;
+    call_loop(&rtc_connection).await?;
 
     Ok(())
 }
@@ -246,7 +246,7 @@ async fn handle_sending_call(
 async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
     let mut terminal = tui::init()?;
     let mut display_frame = Frame::new();
-    terminal.clear();
+    terminal.clear()?;
 
     let mut frame_times = vec![];
 
@@ -345,7 +345,7 @@ async fn call_loop(rtc_connection: &PeerConnection) -> anyhow::Result<()> {
 
         // Clear terminal if size changed (to avoid artifacts)
         if terminal.size()? != tsize {
-            terminal.clear();
+            terminal.clear()?;
             tsize = terminal.size()?;
         }
 
