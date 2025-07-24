@@ -89,7 +89,10 @@ class TermCallPeerConnection:
                 ice_servers.append(RTCIceServer(**turn))
         self.pc = RTCPeerConnection(RTCConfiguration(iceServers=ice_servers))
         self.user_context = user_context or {}
+        self._frame_callback = None  # User-supplied callback for video frames
+        self._frame_tasks = []  # Track running frame receiver tasks
         self.pc.on("connectionstatechange", self._on_connection_state_change)
+        self.pc.on("track", self._on_track)
 
     def _on_connection_state_change(self):
         state = self.pc.connectionState
@@ -303,6 +306,33 @@ class TermCallPeerConnection:
         # if "typ host" in candidate.candidate:
         #     return False
         return True
+
+    def on_video_frame(self, callback):
+        """
+        Register a callback to be called with each received video frame.
+        Callback signature: async def callback(frame, track):
+        """
+        self._frame_callback = callback
+
+    def _on_track(self, track):
+        print(f"[WebRTC] Track received: kind={track.kind}")
+        if track.kind == "video":
+            # Start a background task to receive frames
+            task = asyncio.ensure_future(self._recv_video_frames(track))
+            self._frame_tasks.append(task)
+
+    async def _recv_video_frames(self, track):
+        print(f"[WebRTC] Starting frame reception for track: {track}")
+        try:
+            while True:
+                frame = await track.recv()
+                # Optionally, detect frame format here (I420, RGB, etc.)
+                if self._frame_callback:
+                    await self._frame_callback(frame, track)
+        except Exception as e:
+            print(f"[WebRTC] Frame reception error: {e}")
+        finally:
+            print(f"[WebRTC] Frame reception ended for track: {track}")
 
 
 def create_call_request(caller_uid, callee_uid, id_token):
