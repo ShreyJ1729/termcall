@@ -72,3 +72,14 @@ def filter_user_profiles(profiles, query):
         if query in p.get("email", "").lower()
         or query in p.get("full_name", "").lower()
     ]
+
+
+def paginate_profiles(profiles, page, page_size):
+    """Return a slice of user profiles for the given page and page size, and total number of pages."""
+    total = len(profiles)
+    if page_size <= 0:
+        return profiles, 1
+    total_pages = (total + page_size - 1) // page_size
+    start = (page - 1) * page_size
+    end = start + page_size
+    return profiles[start:end], total_pages
