@@ -1,0 +1,7 @@
+requests
+aiortc>=1.9.0
+prompt_toolkit>=3.0.47
+sixel>=0.1.2
+opencv-python>=4.10.0
+image-to-ascii>=0.2.2
+pynput>=1.7.7 

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "termcall"
+version = "0.1.0"
+description = "TermCall: Python CLI for terminal-based video calls with Firebase and WebRTC."
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "firebase-admin",
+    "aiortc",
+    "pyfiglet",
+    "libsixel-python",
+    "click",
+]
+
+[project.scripts]
+termcall = "termcall.main:main"
