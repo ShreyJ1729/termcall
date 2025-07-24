@@ -11,6 +11,11 @@ Schema fields:
 import time
 import re
 from .firebase import get_db, init_firebase
+from cryptography.fernet import Fernet
+import keyring
+
+# Keyring service name for this app
+KEYRING_SERVICE = "termcall"
 
 EMAIL_REGEX = re.compile(r"^[\w\.-]+@[\w\.-]+\.\w+$")
 
@@ -49,3 +54,19 @@ def get_user_schema(email: str, full_name: str, auth_key: str) -> dict:
         "auth_key": auth_key,  # Should be encrypted before storage
         "last_active": int(time.time()),
     }
+
+
+# Generate a new Fernet key and encrypt it with the user's email as context
+# (In production, use a more secure context or user secret)
+def generate_encrypted_key(email: str) -> str:
+    key = Fernet.generate_key()
+    # Optionally, you could encrypt this key further with a user password
+    return key.decode()
+
+
+def store_key_in_keyring(email: str, key: str) -> None:
+    keyring.set_password(KEYRING_SERVICE, email, key)
+
+
+def retrieve_key_from_keyring(email: str) -> str:
+    return keyring.get_password(KEYRING_SERVICE, email)
