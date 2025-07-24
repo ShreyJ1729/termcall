@@ -129,3 +129,58 @@ def resize_frame(frame, target_width, target_height):
         img_cropped, (target_width, target_height), interpolation=cv2.INTER_LINEAR
     )
     return img_resized
+
+
+def rgb_to_256color(img):
+    """
+    Convert an RGB numpy array (H, W, 3) to a 2D array of 256-color terminal palette indices.
+    Uses xterm 256-color quantization.
+    """
+
+    # Build xterm 256-color palette
+    def build_palette():
+        palette = []
+        # 16 basic colors
+        palette += [
+            (0, 0, 0),
+            (128, 0, 0),
+            (0, 128, 0),
+            (128, 128, 0),
+            (0, 0, 128),
+            (128, 0, 128),
+            (0, 128, 128),
+            (192, 192, 192),
+            (128, 128, 128),
+            (255, 0, 0),
+            (0, 255, 0),
+            (255, 255, 0),
+            (0, 0, 255),
+            (255, 0, 255),
+            (0, 255, 255),
+            (255, 255, 255),
+        ]
+        # 6x6x6 color cube
+        for r in range(6):
+            for g in range(6):
+                for b in range(6):
+                    palette.append((r * 51, g * 51, b * 51))
+        # 24 grayscale
+        for i in range(24):
+            v = 8 + i * 10
+            palette.append((v, v, v))
+        return np.array(palette, dtype=np.uint8)
+
+    palette = build_palette()
+    # Flatten image for vectorized distance computation
+    flat = img.reshape(-1, 3).astype(np.int16)
+    # Compute squared distance to each palette color
+    dists = np.sum((flat[:, None, :] - palette[None, :, :]) ** 2, axis=2)
+    idx = np.argmin(dists, axis=1)
+    return idx.reshape(img.shape[0], img.shape[1])
+
+
+def rgb_to_truecolor(img):
+    """
+    Pass-through for truecolor terminals. Returns the RGB numpy array as-is.
+    """
+    return img
