@@ -13,11 +13,15 @@ import re
 from .firebase import get_firebase
 from cryptography.fernet import Fernet
 import keyring
+import json
+import os
 
 # Keyring service name for this app
 KEYRING_SERVICE = "termcall"
 
 EMAIL_REGEX = re.compile(r"^[\w\.-]+@[\w\.-]+\.\w+$")
+
+SESSION_FILE = os.path.expanduser("~/.termcall_session")
 
 
 def is_valid_email(email: str) -> bool:
@@ -80,3 +84,30 @@ def login_user(email: str, password: str):
         return user["idToken"], user["localId"]
     except Exception as e:
         return None, f"Login failed: {e}"
+
+
+def save_session(id_token: str, refresh_token: str, local_id: str):
+    data = {"idToken": id_token, "refreshToken": refresh_token, "localId": local_id}
+    with open(SESSION_FILE, "w") as f:
+        json.dump(data, f)
+
+
+def load_session():
+    if not os.path.exists(SESSION_FILE):
+        return None
+    with open(SESSION_FILE, "r") as f:
+        return json.load(f)
+
+
+def validate_session():
+    session = load_session()
+    if not session:
+        return False, None
+    _, auth, _ = get_firebase()
+    try:
+        # Try to refresh the idToken
+        user = auth.refresh(session["refreshToken"])
+        save_session(user["idToken"], user["refreshToken"], user["userId"])
+        return True, user
+    except Exception:
+        return False, None
