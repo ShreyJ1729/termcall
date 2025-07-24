@@ -59,3 +59,16 @@ def cache_clear(key):
         del cache[key]
         with open(CACHE_FILE, "w") as f:
             json.dump(cache, f)
+
+
+def filter_user_profiles(profiles, query):
+    """Return user profiles matching the query (case-insensitive substring match on email or full_name)."""
+    if not query:
+        return profiles
+    query = query.lower()
+    return [
+        p
+        for p in profiles
+        if query in p.get("email", "").lower()
+        or query in p.get("full_name", "").lower()
+    ]
