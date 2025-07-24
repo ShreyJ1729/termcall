@@ -9,6 +9,36 @@ Schema fields:
 """
 
 import time
+import re
+from .firebase import get_db, init_firebase
+
+EMAIL_REGEX = re.compile(r"^[\w\.-]+@[\w\.-]+\.\w+$")
+
+
+def is_valid_email(email: str) -> bool:
+    return EMAIL_REGEX.match(email) is not None
+
+
+def user_exists(email: str) -> bool:
+    init_firebase()
+    ref = get_db().reference("users")
+    users = ref.order_by_child("email").equal_to(email).get()
+    return bool(users)
+
+
+def register_user(email: str, full_name: str, auth_key: str) -> str:
+    """Register a new user if email is valid and not already registered."""
+    if not is_valid_email(email):
+        return "Invalid email format."
+    if user_exists(email):
+        return "User already exists."
+    user_data = get_user_schema(email, full_name, auth_key)
+    try:
+        ref = get_db().reference("users")
+        new_ref = ref.push(user_data)
+        return f"User registered successfully with id: {new_ref.key}"
+    except Exception as e:
+        return f"Registration failed: {e}"
 
 
 def get_user_schema(email: str, full_name: str, auth_key: str) -> dict:
