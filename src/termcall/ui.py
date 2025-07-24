@@ -69,3 +69,21 @@ def display_user_list(users, selected_index=0, window_size=10):
         prefix = "> " if i == selected_index else "  "
         print(f"{prefix}{users[i]}")
     print(f"\nShowing {start+1}-{end} of {total} users. Use arrow keys to scroll.")
+
+
+def filter_users(users, query):
+    """Return users matching the query (case-insensitive substring match)."""
+    if not query:
+        return users
+    query = query.lower()
+    return [u for u in users if query in u.lower()]
+
+
+def show_error(message):
+    """Print an error message in red."""
+    print(f"\033[91m[ERROR]\033[0m {message}")
+
+
+def show_status(message):
+    """Print a status/info message in green."""
+    print(f"\033[92m[INFO]\033[0m {message}")
