@@ -70,9 +70,31 @@ def logout():
 
 
 @main.command()
+def me():
+    """Ensure your profile is present in the user directory (RTDB)."""
+    from .auth import load_session, get_user_schema
+    from .firebase import get_firebase
+    from .ui import show_status, show_error
+
+    session = load_session()
+    if not session:
+        show_error("Not logged in.")
+        return
+    email = session.get("email")
+    full_name = session.get("full_name", "")
+    local_id = session["localId"]
+    id_token = session["idToken"]
+    user_data = get_user_schema(email, full_name, "")
+    _, _, db = get_firebase()
+    db.child("users").child(local_id).set(user_data, id_token)
+    show_status(f"Your profile is now present in the user directory as {email}.")
+
+
+@main.command()
 def list():
     """List all users (from Firebase profile directory, with cache)."""
-    from .auth import load_session
+    from .auth import load_session, get_user_schema
+    from .firebase import get_firebase
     from .utils import get_profiles_offline_first
     from .ui import show_status, show_error
 
@@ -82,6 +104,14 @@ def list():
         return
     id_token = session["idToken"]
     local_id = session["localId"]
+    email = session.get("email")
+    full_name = session.get("full_name", "")
+    # Ensure current user's profile is present in RTDB
+    _, _, db = get_firebase()
+    user_profile = db.child("users").child(local_id).get(id_token).val()
+    if not user_profile:
+        user_data = get_user_schema(email, full_name, "")
+        db.child("users").child(local_id).set(user_data, id_token)
     try:
         profiles = get_profiles_offline_first(
             id_token, "user_profiles", 300
@@ -93,9 +123,7 @@ def list():
         show_status("No users found.")
         return
     for p in profiles:
-        marker = (
-            "*" if p.get("email") and p.get("email") == session.get("email") else " "
-        )
+        marker = "*" if p.get("email") and p.get("email") == email else " "
         print(f"{marker} {p.get('email', ''):30} {p.get('full_name', '')}")
     print("\n* = you")
 
