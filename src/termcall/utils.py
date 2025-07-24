@@ -4,6 +4,7 @@ import time
 import numpy as np
 import cv2
 import asyncio
+import threading
 
 CACHE_FILE = os.path.expanduser("~/.termcall/cache.json")
 
@@ -210,6 +211,50 @@ class FrameRateLimiter:
             if sleep_time > 0:
                 await asyncio.sleep(sleep_time)
         self._last_time = asyncio.get_event_loop().time()
+
+
+class CircularFrameBuffer:
+    """
+    Circular buffer for video frames with synchronization.
+    Usage:
+        buf = CircularFrameBuffer(size=8)
+        buf.put(frame)
+        frame = buf.get()
+    """
+
+    def __init__(self, size):
+        self.size = size
+        self.buffer = [None] * size
+        self.start = 0
+        self.end = 0
+        self.count = 0
+        self.lock = threading.Lock()
+
+    def put(self, frame):
+        with self.lock:
+            self.buffer[self.end] = frame
+            self.end = (self.end + 1) % self.size
+            if self.count == self.size:
+                # Overwrite oldest
+                self.start = (self.start + 1) % self.size
+            else:
+                self.count += 1
+
+    def get(self):
+        with self.lock:
+            if self.count == 0:
+                return None
+            frame = self.buffer[self.start]
+            self.start = (self.start + 1) % self.size
+            self.count -= 1
+            return frame
+
+    def clear(self):
+        with self.lock:
+            self.start = 0
+            self.end = 0
+            self.count = 0
+            self.buffer = [None] * self.size
 
 
 def process_video_pipeline(img, mode, **kwargs):
