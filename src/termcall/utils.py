@@ -357,3 +357,25 @@ def ascii_img_to_ansi(ascii_img, color_img, color_mode="256"):
         line += "\033[0m"  # Reset at end of line
         lines.append(line)
     return "\n".join(lines)
+
+
+_ascii_density = "high"
+
+
+def get_ascii_density_config():
+    """
+    Get the current ASCII density setting ('high', 'medium', 'low').
+    """
+    global _ascii_density
+    return _ascii_density
+
+
+def set_ascii_density_config(density):
+    """
+    Set the ASCII density setting ('high', 'medium', 'low').
+    """
+    global _ascii_density
+    if density in ("high", "medium", "low"):
+        _ascii_density = density
+    else:
+        raise ValueError("Density must be 'high', 'medium', or 'low'")
