@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import asyncio
 import threading
+import shutil
 
 CACHE_FILE = os.path.expanduser("~/.termcall/cache.json")
 
@@ -379,3 +380,23 @@ def set_ascii_density_config(density):
         _ascii_density = density
     else:
         raise ValueError("Density must be 'high', 'medium', or 'low'")
+
+
+def get_terminal_size():
+    """
+    Return (columns, rows) of the terminal window.
+    """
+    size = shutil.get_terminal_size(fallback=(80, 24))
+    return size.columns, size.lines
+
+
+def calculate_ascii_frame_size(term_cols, term_rows, char_aspect=0.5):
+    """
+    Calculate optimal frame size for ASCII rendering given terminal size and character aspect ratio.
+    char_aspect: width/height ratio of a terminal character (default 0.5 for most fonts)
+    Returns: (frame_width, frame_height)
+    """
+    # Adjust width to account for character aspect ratio
+    frame_width = term_cols
+    frame_height = int(term_rows / char_aspect)
+    return frame_width, frame_height
