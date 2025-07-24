@@ -276,6 +276,22 @@ class TermCallPeerConnection:
         """
         print("[WebRTC] Connection quality monitoring not yet implemented.")
 
+    async def terminate_call(self):
+        """
+        Gracefully terminate the call, close all tracks and connections, and cleanup resources.
+        """
+        print("[WebRTC] Terminating call and cleaning up resources...")
+        # Stop all tracks
+        for sender in self.pc.getSenders():
+            track = sender.track
+            if track:
+                await track.stop()
+        # Close peer connection
+        await self.pc.close()
+        print("[WebRTC] Peer connection closed.")
+        # Additional cleanup for Firebase Auth session can be added here if needed
+        # (e.g., sign out, clear tokens, etc.)
+
     @staticmethod
     def filter_and_validate_candidate(candidate):
         """
