@@ -32,6 +32,7 @@ from dataclasses import dataclass
 from typing import Optional
 import time
 import uuid
+import random
 
 from aiortc import (
     RTCPeerConnection,
@@ -238,6 +239,42 @@ class TermCallPeerConnection:
         Restart ICE for connection recovery.
         """
         await self.pc.restartIce()
+
+    def set_connection_state_handler(self, on_state_change):
+        """
+        Register a callback for connection state changes.
+        """
+        self._external_state_handler = on_state_change
+
+        @self.pc.on("connectionstatechange")
+        def _on_state():
+            state = self.pc.connectionState
+            if hasattr(self, "_external_state_handler"):
+                self._external_state_handler(state)
+            if state == "failed":
+                asyncio.ensure_future(self._auto_reconnect())
+
+    async def _auto_reconnect(self, max_attempts=5):
+        """
+        Attempt to reconnect with exponential backoff.
+        """
+        for attempt in range(1, max_attempts + 1):
+            wait = min(2**attempt, 30) + random.uniform(0, 1)
+            print(f"[WebRTC] Reconnection attempt {attempt}, waiting {wait:.1f}s...")
+            await asyncio.sleep(wait)
+            try:
+                await self.restart_ice()
+                print("[WebRTC] ICE restart triggered.")
+                return
+            except Exception as e:
+                print(f"[WebRTC] ICE restart failed: {e}")
+        print("[WebRTC] Max reconnection attempts reached. Giving up.")
+
+    def monitor_connection_quality(self):
+        """
+        Stub for connection quality monitoring (to be implemented).
+        """
+        print("[WebRTC] Connection quality monitoring not yet implemented.")
 
     @staticmethod
     def filter_and_validate_candidate(candidate):
