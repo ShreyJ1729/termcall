@@ -41,6 +41,7 @@ from aiortc import (
     RTCIceServer,
 )
 import asyncio
+from aiortc.contrib.media import MediaPlayer
 
 
 @dataclass
@@ -114,6 +115,31 @@ class TermCallPeerConnection:
             sdpMLineIndex=sdpMLineIndex,
         )
         await self.pc.addIceCandidate(ice)
+
+    async def add_video_track(self, device=None, width=640, height=480, framerate=30):
+        """
+        Add a video track from the local camera to the peer connection.
+        device: camera device path or None for default
+        width, height: resolution (default 480p)
+        framerate: target frame rate
+        """
+        options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
+        try:
+            player = MediaPlayer(device or 0, format="v4l2", options=options)
+        except Exception:
+            # Fallback to ffmpeg if v4l2 fails (e.g., on macOS/Windows)
+            try:
+                player = MediaPlayer(device or None, options=options)
+            except Exception as e:
+                print(f"[WebRTC] Failed to open video device: {e}")
+                return None
+        video_track = player.video
+        if video_track:
+            self.pc.addTrack(video_track)
+            print(f"[WebRTC] Added video track at {width}x{height}")
+        else:
+            print("[WebRTC] No video track available from device.")
+        return video_track
 
     def close(self):
         return self.pc.close()
