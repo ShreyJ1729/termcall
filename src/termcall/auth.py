@@ -28,28 +28,6 @@ def is_valid_email(email: str) -> bool:
     return EMAIL_REGEX.match(email) is not None
 
 
-def user_exists(email: str) -> bool:
-    _, _, db = get_firebase()
-    users = db.child("users").order_by_child("email").equal_to(email).get()
-    return bool(users.each())
-
-
-def register_user(email: str, password: str, full_name: str) -> str:
-    """Register a new user with email/password and store profile in RTDB."""
-    if not is_valid_email(email):
-        return "Invalid email format."
-    if user_exists(email):
-        return "User already exists."
-    try:
-        firebase, auth, db = get_firebase()
-        user = auth.create_user_with_email_and_password(email, password)
-        user_data = get_user_schema(email, full_name, "")  # auth_key handled separately
-        db.child("users").child(user["localId"]).set(user_data, user["idToken"])
-        return f"User registered successfully with id: {user['localId']}"
-    except Exception as e:
-        return f"Registration failed: {e}"
-
-
 def get_user_schema(email: str, full_name: str, auth_key: str) -> dict:
     """Return a user dict matching the Firebase RTDB schema."""
     return {
@@ -60,11 +38,25 @@ def get_user_schema(email: str, full_name: str, auth_key: str) -> dict:
     }
 
 
+def register_user(email: str, password: str, full_name: str) -> str:
+    """Register a new user with Firebase Auth. Always store profile in RTDB."""
+    if not is_valid_email(email):
+        return "Invalid email format."
+    try:
+        firebase, auth, db = get_firebase()
+        user = auth.create_user_with_email_and_password(email, password)
+        # Always store profile data in RTDB after registration
+        user_data = get_user_schema(email, full_name, "")
+        db.child("users").child(user["localId"]).set(user_data, user["idToken"])
+        return f"User registered successfully with id: {user['localId']}"
+    except Exception as e:
+        return f"Registration failed: {e}"
+
+
 # Generate a new Fernet key and encrypt it with the user's email as context
 # (In production, use a more secure context or user secret)
 def generate_encrypted_key(email: str) -> str:
     key = Fernet.generate_key()
-    # Optionally, you could encrypt this key further with a user password
     return key.decode()
 
 
@@ -77,11 +69,11 @@ def retrieve_key_from_keyring(email: str) -> str:
 
 
 def login_user(email: str, password: str):
-    """Authenticate user with email and password using Pyrebase4. Returns (idToken, localId) on success, or error message on failure."""
+    """Authenticate user with Firebase Auth. Returns user dict (idToken, refreshToken, localId, etc.) or (None, error)."""
     try:
         _, auth, _ = get_firebase()
         user = auth.sign_in_with_email_and_password(email, password)
-        return user["idToken"], user["localId"]
+        return user  # Return the full user dict
     except Exception as e:
         return None, f"Login failed: {e}"
 
@@ -105,7 +97,6 @@ def validate_session():
         return False, None
     _, auth, _ = get_firebase()
     try:
-        # Try to refresh the idToken
         user = auth.refresh(session["refreshToken"])
         save_session(user["idToken"], user["refreshToken"], user["userId"])
         return True, user
