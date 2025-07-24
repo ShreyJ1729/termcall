@@ -70,27 +70,6 @@ def logout():
 
 
 @main.command()
-def me():
-    """Ensure your profile is present in the user directory (RTDB)."""
-    from .auth import load_session, get_user_schema
-    from .firebase import get_firebase
-    from .ui import show_status, show_error
-
-    session = load_session()
-    if not session:
-        show_error("Not logged in.")
-        return
-    email = session.get("email")
-    full_name = session.get("full_name", "")
-    local_id = session["localId"]
-    id_token = session["idToken"]
-    user_data = get_user_schema(email, full_name, "")
-    _, _, db = get_firebase()
-    db.child("users").child(local_id).set(user_data, id_token)
-    show_status(f"Your profile is now present in the user directory as {email}.")
-
-
-@main.command()
 def list():
     """List all users (from Firebase profile directory, with cache)."""
     from .auth import load_session, get_user_schema
