@@ -111,7 +111,30 @@ def list():
 @click.argument("query", required=False)
 def search(query):
     """Search for users by email or name."""
-    click.echo(f"Searching for: {query} (stub)")
+    from .auth import load_session
+    from .utils import get_profiles_offline_first, filter_user_profiles
+    from .ui import show_status, show_error
+
+    session = load_session()
+    if not session:
+        show_error("Not logged in.")
+        return
+    id_token = session["idToken"]
+    try:
+        profiles = get_profiles_offline_first(id_token, "user_profiles", 300)
+    except Exception as e:
+        show_error(f"Failed to load user profiles: {e}")
+        return
+    if not profiles:
+        show_status("No users found.")
+        return
+    results = filter_user_profiles(profiles, query)
+    if not results:
+        show_status(f"No users found matching '{query}'.")
+        return
+    print(f"Found {len(results)} user(s) matching '{query}':\n")
+    for p in results:
+        print(f"{p.get('email','') :30} {p.get('full_name','')}")
 
 
 @main.command()
