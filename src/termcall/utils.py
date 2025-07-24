@@ -1,6 +1,8 @@
 import os
 import json
 import time
+import numpy as np
+import cv2
 
 CACHE_FILE = os.path.expanduser("~/.termcall/cache.json")
 
@@ -95,3 +97,35 @@ def get_profiles_offline_first(id_token, cache_key, ttl):
     profiles = get_all_user_profiles(id_token)
     cache_set(cache_key, profiles, ttl)
     return profiles
+
+
+def resize_frame(frame, target_width, target_height):
+    """
+    Resize an aiortc VideoFrame to (target_width, target_height) using OpenCV.
+    Preserves aspect ratio by center-cropping if needed.
+    Returns the resized numpy array (RGB).
+    """
+    # Convert VideoFrame to numpy array (RGB)
+    img = frame.to_ndarray(format="rgb24")
+    h, w, _ = img.shape
+    # Compute aspect ratios
+    src_ar = w / h
+    tgt_ar = target_width / target_height
+    # Center-crop to match target aspect ratio
+    if src_ar > tgt_ar:
+        # Source is wider: crop width
+        new_w = int(h * tgt_ar)
+        x0 = (w - new_w) // 2
+        img_cropped = img[:, x0 : x0 + new_w, :]
+    elif src_ar < tgt_ar:
+        # Source is taller: crop height
+        new_h = int(w / tgt_ar)
+        y0 = (h - new_h) // 2
+        img_cropped = img[y0 : y0 + new_h, :, :]
+    else:
+        img_cropped = img
+    # Resize to target size
+    img_resized = cv2.resize(
+        img_cropped, (target_width, target_height), interpolation=cv2.INTER_LINEAR
+    )
+    return img_resized
