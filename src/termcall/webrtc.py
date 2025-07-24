@@ -33,6 +33,15 @@ from typing import Optional
 import time
 import uuid
 
+from aiortc import (
+    RTCPeerConnection,
+    RTCSessionDescription,
+    RTCIceCandidate,
+    RTCConfiguration,
+    RTCIceServer,
+)
+import asyncio
+
 
 @dataclass
 class Call:
@@ -59,6 +68,55 @@ class ICECandidate:
     sdpMLineIndex: Optional[int]
     sender_uid: str
     timestamp: int
+
+
+class TermCallPeerConnection:
+    def __init__(self, stun_servers=None, turn_servers=None, user_context=None):
+        """
+        stun_servers: list of STUN server URLs
+        turn_servers: list of dicts with keys: urls, username, credential
+        user_context: dict with Firebase Auth user/session info
+        """
+        ice_servers = []
+        if stun_servers:
+            for url in stun_servers:
+                ice_servers.append(RTCIceServer(urls=url))
+        if turn_servers:
+            for turn in turn_servers:
+                ice_servers.append(RTCIceServer(**turn))
+        self.pc = RTCPeerConnection(RTCConfiguration(iceServers=ice_servers))
+        self.user_context = user_context or {}
+        self.pc.on("connectionstatechange", self._on_connection_state_change)
+
+    def _on_connection_state_change(self):
+        state = self.pc.connectionState
+        user = self.user_context.get("email") or self.user_context.get("uid")
+        print(f"[WebRTC] Connection state for {user}: {state}")
+
+    async def create_offer(self):
+        offer = await self.pc.createOffer()
+        await self.pc.setLocalDescription(offer)
+        return self.pc.localDescription
+
+    async def create_answer(self):
+        answer = await self.pc.createAnswer()
+        await self.pc.setLocalDescription(answer)
+        return self.pc.localDescription
+
+    async def set_remote_description(self, sdp, type_):
+        desc = RTCSessionDescription(sdp=sdp, type=type_)
+        await self.pc.setRemoteDescription(desc)
+
+    async def add_ice_candidate(self, candidate, sdpMid, sdpMLineIndex):
+        ice = RTCIceCandidate(
+            candidate=candidate,
+            sdpMid=sdpMid,
+            sdpMLineIndex=sdpMLineIndex,
+        )
+        await self.pc.addIceCandidate(ice)
+
+    def close(self):
+        return self.pc.close()
 
 
 def create_call_request(caller_uid, callee_uid, id_token):
