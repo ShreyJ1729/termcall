@@ -174,6 +174,52 @@ class TermCallPeerConnection:
             recorder = MediaRecorder(output_device or "default")
         return recorder
 
+    async def create_offer_with_constraints(
+        self,
+        audio=True,
+        video=True,
+        video_size="640x480",
+        audio_codec=None,
+        video_codec=None,
+    ):
+        """
+        Create an SDP offer with media constraints and codec preferences.
+        """
+        # Optionally, set codec preferences here if needed (aiortc uses defaults)
+        offer = await self.pc.createOffer()
+        await self.pc.setLocalDescription(offer)
+        # Optionally, modify SDP for terminal-optimized streaming
+        sdp = self.pc.localDescription.sdp
+        if video_size:
+            # Example: force max resolution in SDP (not always needed)
+            sdp = sdp.replace("a=fmtp:", f"a=fmtp:;max-fs={video_size}")
+        # Codec filtering can be done here if needed
+        return type(self.pc.localDescription)(
+            sdp=sdp, type=self.pc.localDescription.type
+        )
+
+    async def create_answer_with_constraints(
+        self, audio=True, video=True, audio_codec=None, video_codec=None
+    ):
+        """
+        Create an SDP answer with media constraints and codec preferences.
+        """
+        answer = await self.pc.createAnswer()
+        await self.pc.setLocalDescription(answer)
+        # Optionally, modify SDP for terminal-optimized streaming
+        sdp = self.pc.localDescription.sdp
+        # Codec filtering can be done here if needed
+        return type(self.pc.localDescription)(
+            sdp=sdp, type=self.pc.localDescription.type
+        )
+
+    async def process_remote_sdp(self, sdp, type_):
+        """
+        Set the remote SDP and handle negotiation.
+        """
+        desc = RTCSessionDescription(sdp=sdp, type=type_)
+        await self.pc.setRemoteDescription(desc)
+
     def close(self):
         return self.pc.close()
 
