@@ -42,6 +42,7 @@ from aiortc import (
 )
 import asyncio
 from aiortc.contrib.media import MediaPlayer
+from aiortc.contrib.media import MediaRecorder
 
 
 @dataclass
@@ -140,6 +141,38 @@ class TermCallPeerConnection:
         else:
             print("[WebRTC] No video track available from device.")
         return video_track
+
+    async def add_audio_track(self, device=None, sample_rate=48000):
+        """
+        Add an audio track from the microphone to the peer connection.
+        device: audio device path or None for default
+        sample_rate: audio sample rate (default 48000)
+        """
+        options = {"sample_rate": str(sample_rate)}
+        try:
+            player = MediaPlayer(device or None, format=None, options=options)
+        except Exception as e:
+            print(f"[WebRTC] Failed to open audio device: {e}")
+            return None
+        audio_track = player.audio
+        if audio_track:
+            self.pc.addTrack(audio_track)
+            print(f"[WebRTC] Added audio track at {sample_rate} Hz")
+        else:
+            print("[WebRTC] No audio track available from device.")
+        return audio_track
+
+    async def setup_audio_output(self, output_device=None, filename=None):
+        """
+        Optionally setup audio output (playback or recording).
+        output_device: device path or None for default
+        filename: if set, record to file instead of playback
+        """
+        if filename:
+            recorder = MediaRecorder(filename)
+        else:
+            recorder = MediaRecorder(output_device or "default")
+        return recorder
 
     def close(self):
         return self.pc.close()
