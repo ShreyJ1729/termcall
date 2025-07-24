@@ -3,6 +3,7 @@ import json
 import time
 import numpy as np
 import cv2
+import asyncio
 
 CACHE_FILE = os.path.expanduser("~/.termcall/cache.json")
 
@@ -184,3 +185,28 @@ def rgb_to_truecolor(img):
     Pass-through for truecolor terminals. Returns the RGB numpy array as-is.
     """
     return img
+
+
+class FrameRateLimiter:
+    """
+    Frame rate limiter for async frame processing.
+    Usage:
+        limiter = FrameRateLimiter(target_fps=8)
+        while True:
+            await limiter.wait()
+            ... # process frame
+    """
+
+    def __init__(self, target_fps):
+        self.target_fps = target_fps
+        self.min_interval = 1.0 / target_fps
+        self._last_time = None
+
+    async def wait(self):
+        now = asyncio.get_event_loop().time()
+        if self._last_time is not None:
+            elapsed = now - self._last_time
+            sleep_time = self.min_interval - elapsed
+            if sleep_time > 0:
+                await asyncio.sleep(sleep_time)
+        self._last_time = asyncio.get_event_loop().time()
