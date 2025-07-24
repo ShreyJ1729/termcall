@@ -223,6 +223,34 @@ class TermCallPeerConnection:
     def close(self):
         return self.pc.close()
 
+    def on_ice_candidate(self, callback):
+        """
+        Register a callback to be called with each new local ICE candidate.
+        """
+
+        @self.pc.on("icecandidate")
+        def _on_icecandidate(event):
+            if event.candidate:
+                callback(event.candidate)
+
+    async def restart_ice(self):
+        """
+        Restart ICE for connection recovery.
+        """
+        await self.pc.restartIce()
+
+    @staticmethod
+    def filter_and_validate_candidate(candidate):
+        """
+        Filter and validate an ICE candidate (basic checks).
+        """
+        if not candidate or not candidate.candidate:
+            return False
+        # Example: filter out host candidates if needed
+        # if "typ host" in candidate.candidate:
+        #     return False
+        return True
+
 
 def create_call_request(caller_uid, callee_uid, id_token):
     """Create a call request in RTDB with state 'pending'. Returns callId."""
