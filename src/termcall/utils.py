@@ -210,3 +210,39 @@ class FrameRateLimiter:
             if sleep_time > 0:
                 await asyncio.sleep(sleep_time)
         self._last_time = asyncio.get_event_loop().time()
+
+
+def process_video_pipeline(img, mode, **kwargs):
+    """
+    Dispatch video frame to the appropriate processing pipeline.
+    mode: 'ascii' or 'sixel'
+    kwargs: additional parameters for each pipeline
+    """
+    if mode == "ascii":
+        return process_ascii_pipeline(img, **kwargs)
+    elif mode == "sixel":
+        return process_sixel_pipeline(img, **kwargs)
+    else:
+        raise ValueError(f"Unknown pipeline mode: {mode}")
+
+
+def process_ascii_pipeline(img, **kwargs):
+    """
+    Stub: Process a video frame for ASCII rendering.
+    img: RGB numpy array
+    kwargs: density, color_mode, etc.
+    Returns: ASCII-rendered string or buffer
+    """
+    # TODO: Implement ASCII rendering logic
+    pass
+
+
+def process_sixel_pipeline(img, **kwargs):
+    """
+    Stub: Process a video frame for Sixel rendering.
+    img: RGB numpy array
+    kwargs: scaling, palette, etc.
+    Returns: Sixel-rendered byte buffer or string
+    """
+    # TODO: Implement Sixel rendering logic
+    pass
