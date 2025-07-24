@@ -57,3 +57,15 @@ def keyboard_event_loop():
             print("Enter pressed")
         else:
             print(f"Key: {repr(key)}")
+
+
+def display_user_list(users, selected_index=0, window_size=10):
+    """Display a scrollable user list with selection highlighting."""
+    total = len(users)
+    start = max(0, selected_index - window_size // 2)
+    end = min(total, start + window_size)
+    start = max(0, end - window_size)  # Adjust if near end
+    for i in range(start, end):
+        prefix = "> " if i == selected_index else "  "
+        print(f"{prefix}{users[i]}")
+    print(f"\nShowing {start+1}-{end} of {total} users. Use arrow keys to scroll.")
