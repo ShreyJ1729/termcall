@@ -188,6 +188,29 @@ def rgb_to_truecolor(img):
     return img
 
 
+def brightness_to_ascii(img, density="high"):
+    """
+    Map pixel brightness to ASCII characters.
+    img: 2D grayscale or 3D RGB numpy array
+    density: 'high', 'medium', or 'low' (controls character set)
+    Returns: 2D array of ASCII characters (same shape as input)
+    """
+    ramps = {"high": "@%#*+=-:. ", "medium": "@#S%=*+:-. ", "low": "@#- "}
+    ramp = ramps.get(density, ramps["high"])
+    n = len(ramp)
+    # Convert to grayscale if needed
+    if img.ndim == 3:
+        # Use standard luminance formula
+        gray = 0.2126 * img[:, :, 0] + 0.7152 * img[:, :, 1] + 0.0722 * img[:, :, 2]
+    else:
+        gray = img
+    # Normalize to 0-1
+    norm = (gray - gray.min()) / (gray.ptp() + 1e-6)
+    idx = (norm * (n - 1)).astype(int)
+    ascii_img = np.array([ramp[i] for i in idx.flat]).reshape(idx.shape)
+    return ascii_img
+
+
 class FrameRateLimiter:
     """
     Frame rate limiter for async frame processing.
