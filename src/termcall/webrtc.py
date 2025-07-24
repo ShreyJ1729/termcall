@@ -96,3 +96,26 @@ def get_call(call_id, id_token):
 
     _, _, db = get_firebase()
     return db.child("calls").child(call_id).get(id_token).val()
+
+
+def send_sdp(call_id, sdp_type, sdp, sender_uid, id_token):
+    """Send SDP offer or answer to /signaling/{callId}/sdp."""
+    from .firebase import get_firebase
+
+    _, _, db = get_firebase()
+    now = int(time.time())
+    sdp_data = {
+        "type": sdp_type,  # 'offer' or 'answer'
+        "sdp": sdp,
+        "sender_uid": sender_uid,
+        "timestamp": now,
+    }
+    db.child("signaling").child(call_id).child("sdp").set(sdp_data, id_token)
+
+
+def get_sdp(call_id, id_token):
+    """Fetch SDP offer/answer from /signaling/{callId}/sdp."""
+    from .firebase import get_firebase
+
+    _, _, db = get_firebase()
+    return db.child("signaling").child(call_id).child("sdp").get(id_token).val()
