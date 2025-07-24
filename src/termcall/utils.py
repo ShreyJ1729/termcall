@@ -314,3 +314,46 @@ def process_sixel_pipeline(img, **kwargs):
     """
     # TODO: Implement Sixel rendering logic
     pass
+
+
+def ansi_fg_256(idx):
+    """
+    Return ANSI escape code for 256-color foreground.
+    idx: 0-255
+    """
+    return f"\033[38;5;{idx}m"
+
+
+def ansi_fg_truecolor(r, g, b):
+    """
+    Return ANSI escape code for truecolor foreground.
+    r, g, b: 0-255
+    """
+    return f"\033[38;2;{r};{g};{b}m"
+
+
+def ascii_img_to_ansi(ascii_img, color_img, color_mode="256"):
+    """
+    Convert a 2D ASCII array and color image to a string with ANSI color codes.
+    ascii_img: 2D array of ASCII characters
+    color_img: 2D array (H, W) of 256-color indices or (H, W, 3) RGB
+    color_mode: '256' or 'truecolor'
+    Returns: string for terminal output
+    """
+    lines = []
+    h, w = ascii_img.shape
+    for y in range(h):
+        line = ""
+        for x in range(w):
+            ch = ascii_img[y, x]
+            if color_mode == "256":
+                idx = color_img[y, x]
+                line += ansi_fg_256(idx) + ch
+            elif color_mode == "truecolor":
+                r, g, b = color_img[y, x]
+                line += ansi_fg_truecolor(r, g, b) + ch
+            else:
+                line += ch
+        line += "\033[0m"  # Reset at end of line
+        lines.append(line)
+    return "\n".join(lines)
