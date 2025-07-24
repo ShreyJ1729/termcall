@@ -83,3 +83,15 @@ def paginate_profiles(profiles, page, page_size):
     start = (page - 1) * page_size
     end = start + page_size
     return profiles[start:end], total_pages
+
+
+def get_profiles_offline_first(id_token, cache_key, ttl):
+    """Try to load user profiles from cache, else fetch from RTDB and update cache. Enables offline browsing."""
+    profiles = cache_get(cache_key)
+    if profiles is not None:
+        return profiles
+    from .firebase import get_all_user_profiles
+
+    profiles = get_all_user_profiles(id_token)
+    cache_set(cache_key, profiles, ttl)
+    return profiles
