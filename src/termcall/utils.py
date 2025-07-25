@@ -590,52 +590,51 @@ class ConnectionQualityMonitor:
 def list_audio_devices():
     """
     List available audio input devices using sounddevice.
-    Returns a list of device indices as strings on macOS, or device names on other platforms.
+    Returns a list of (index, name) tuples for all input devices.
     """
     sys_platform = platform.system().lower()
     devices = sd.query_devices()
-    if sys_platform == "darwin":
-        # Return indices for input devices
-        input_indices = [
-            str(i) for i, d in enumerate(devices) if d["max_input_channels"] > 0
-        ]
-        return input_indices if input_indices else ["0"]
-    else:
-        input_devices = [d["name"] for d in devices if d["max_input_channels"] > 0]
-        return input_devices if input_devices else ["Default Microphone"]
+    input_devices = [
+        (str(i), d["name"])
+        for i, d in enumerate(devices)
+        if d["max_input_channels"] > 0
+    ]
+    return input_devices if input_devices else [("0", "Default Microphone")]
 
 
 def list_video_devices():
     """
-    List available video input devices using OpenCV.
-    Returns a list of device indices as strings ("0", "1", ...) on macOS, or as before on other platforms.
+    List available video input devices.
+    On macOS, return (index, name) tuples for indices 0-2 with generic names.
+    On other platforms, use OpenCV to get index and name if possible.
     """
     sys_platform = platform.system().lower()
     if sys_platform == "darwin":
-        # On macOS, just return indices 0-2 (OpenCV is unreliable for camera enumeration)
-        return [str(i) for i in range(2)]
+        # On macOS, just return indices 0-2 with generic names
+        return [(str(i), f"Camera {i}") for i in range(2)]
     else:
         devices = []
         for i in range(5):  # Try first 5 indices
             cap = cv2.VideoCapture(i)
             if cap is not None and cap.isOpened():
-                devices.append(str(i))
+                devices.append((str(i), f"Camera {i}"))
                 cap.release()
-        return devices if devices else ["0"]
+        return devices if devices else [("0", "Default Camera")]
 
 
 def select_device(devices, prompt="Select device:"):
     """
     Auto-select if only one device, otherwise prompt user.
-    Returns the selected device index or name.
+    devices: list of (index, name) tuples
+    Returns the selected index as a string.
     """
     if len(devices) == 1:
-        return devices[0]
+        return devices[0][0]
     print(prompt)
-    for i, d in enumerate(devices):
-        print(f"  {i+1}. {d}")
-    idx = int(input("Enter number: ")) - 1
-    return devices[idx]
+    for i, (idx, name) in enumerate(devices):
+        print(f"  {i+1}. [{idx}] {name}")
+    sel = int(input("Enter number: ")) - 1
+    return devices[sel][0]
 
 
 def build_device_string(device, kind):
