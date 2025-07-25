@@ -39,7 +39,9 @@ def login(email):
             password = f.read().strip()
         user = login_user(email, password)
         if user and isinstance(user, dict):
-            save_session(user["idToken"], user["refreshToken"], user["localId"])
+            save_session(
+                user["idToken"], user["refreshToken"], user["localId"], email=email
+            )
             show_status(f"Logged in as {email}.")
             return
         else:
@@ -55,7 +57,13 @@ def login(email):
             f.write(password)
         user = login_user(email, password)
         if user and isinstance(user, dict):
-            save_session(user["idToken"], user["refreshToken"], user["localId"])
+            save_session(
+                user["idToken"],
+                user["refreshToken"],
+                user["localId"],
+                email=email,
+                full_name=full_name,
+            )
             show_status(f"Registered and logged in as {email}.")
         else:
             show_error("Registration succeeded but login failed. Try again.")

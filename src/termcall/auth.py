@@ -78,8 +78,22 @@ def login_user(email: str, password: str):
         return None, f"Login failed: {e}"
 
 
-def save_session(id_token: str, refresh_token: str, local_id: str):
-    data = {"idToken": id_token, "refreshToken": refresh_token, "localId": local_id}
+def save_session(
+    id_token: str,
+    refresh_token: str,
+    local_id: str,
+    email: str = None,
+    full_name: str = None,
+):
+    data = {
+        "idToken": id_token,
+        "refreshToken": refresh_token,
+        "localId": local_id,
+    }
+    if email:
+        data["email"] = email
+    if full_name:
+        data["full_name"] = full_name
     with open(SESSION_FILE, "w") as f:
         json.dump(data, f)
 
