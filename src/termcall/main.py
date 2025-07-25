@@ -278,5 +278,156 @@ def videocall(email):
         show_error("A problem occurred during the call. See logs for details.")
 
 
+@main.command()
+def listen():
+    """
+    Run a persistent listener that automatically answers incoming calls for the authenticated user.
+    Usage: termcall listen
+    """
+    import asyncio
+    from .auth import validate_session
+    from .ui import show_status, show_error
+    from .utils import Logger, sixel_supported
+    from .errors import handle_error, NetworkError, DeviceError, WebRTCError
+    from .webrtc import (
+        listen_for_incoming_calls,
+        get_call,
+        get_sdp,
+        send_sdp,
+        get_ice_candidates,
+        send_ice_candidate,
+        TermCallPeerConnection,
+        cleanup_signaling_data,
+    )
+    from time import time
+
+    logger = Logger()
+    try:
+        show_status("Checking authentication...")
+        valid, session = validate_session()
+        if not valid or not session:
+            raise NetworkError(
+                "Not authenticated. Please run 'termcall login <email>' first."
+            )
+        user_email = session.get("email", "[unknown]")
+        user_uid = session.get("localId") or session.get("userId")
+        id_token = session.get("idToken")
+        if not user_uid or not id_token:
+            raise NetworkError("Session missing UID or idToken.")
+        logger.info(f"Authenticated as {user_email} (uid={user_uid})")
+        show_status(f"Listening for incoming calls as {user_email}...")
+
+        async def answer_call(call_id, caller_uid):
+            logger.info(f"Incoming call from {caller_uid}, call_id={call_id}")
+            show_status(f"Answering call from {caller_uid}...")
+            pc = TermCallPeerConnection(
+                user_context={"email": user_email, "uid": user_uid}
+            )
+            await pc.add_video_track()
+            await pc.add_audio_track()
+            # Wait for offer
+            offer = None
+            for _ in range(30):
+                sdp = get_sdp(call_id, id_token)
+                if sdp and sdp.get("type") == "offer":
+                    offer = sdp
+                    break
+                await asyncio.sleep(1)
+            if not offer:
+                logger.error("Timed out waiting for SDP offer.")
+                return
+            await pc.set_remote_description(offer["sdp"], offer["type"])
+            logger.info("SDP offer received and set.")
+            # Create and send answer
+            answer = await pc.create_answer()
+            send_sdp(call_id, "answer", answer.sdp, user_uid, id_token)
+            logger.info("SDP answer sent.")
+            # ICE candidate exchange (basic polling)
+            show_status("Exchanging ICE candidates...")
+            for _ in range(10):
+                candidates = get_ice_candidates(call_id, id_token)
+                for c in candidates:
+                    if c.sender_uid != user_uid:
+                        await pc.add_ice_candidate(
+                            c.candidate, c.sdpMid, c.sdpMLineIndex
+                        )
+                await asyncio.sleep(1)
+            # Video frame callback (real rendering)
+            from .utils import (
+                process_ascii_pipeline,
+                process_sixel_pipeline,
+                FrameRateLimiter,
+            )
+
+            mode = "sixel" if sixel_supported() else "ascii"
+            limiter = FrameRateLimiter(target_fps=8)
+            import sys
+
+            def on_frame(frame, track):
+                img = frame.to_ndarray(format="rgb24")
+                if mode == "sixel":
+                    rendered = process_sixel_pipeline(img)
+                else:
+                    rendered = process_ascii_pipeline(img)
+                print("\033[H", end="")  # Move cursor to top left
+                print(rendered, end="\r", flush=True)
+
+            pc.on_video_frame(on_frame)
+            show_status("Call established! (stub: will end in 30s)")
+            await asyncio.sleep(30)
+            await pc.terminate_call()
+            cleanup_signaling_data(call_id, id_token)
+            show_status("Call ended and cleaned up.")
+
+        def on_call_event(event):
+            # event['data'] is the call object, event['path'] is the RTDB path
+            if event["event"] not in ("put", "patch"):
+                return
+            data = event["data"]
+            if not data:
+                return
+            # If this is a new call or update, check if we're the callee and state is pending
+            if isinstance(data, dict):
+                # If this is a full call object
+                call = data
+                call_id = event["path"].strip("/")
+                if (
+                    call.get("callee_uid") == user_uid
+                    and call.get("state") == "pending"
+                ):
+                    # Run answer_call in the event loop
+                    asyncio.get_event_loop().create_task(
+                        answer_call(call_id, call.get("caller_uid"))
+                    )
+            # If this is a patch, event['path'] may be /<call_id>/field
+            elif event["path"] and event["path"].count("/") == 2:
+                # /<call_id>/field
+                call_id = event["path"].split("/")[1]
+                call = get_call(call_id, id_token)
+                if (
+                    call
+                    and call.get("callee_uid") == user_uid
+                    and call.get("state") == "pending"
+                ):
+                    asyncio.get_event_loop().create_task(
+                        answer_call(call_id, call.get("caller_uid"))
+                    )
+
+        def run_listener():
+            # This runs in the main thread and never exits
+            stream = listen_for_incoming_calls(user_uid, id_token, on_call_event)
+            try:
+                asyncio.get_event_loop().run_forever()
+            except KeyboardInterrupt:
+                show_status("Listener stopped by user.")
+                stream.close()
+
+        run_listener()
+    except Exception as e:
+        handle_error(e)
+        logger.error(f"Exception in listen: {e}")
+        show_error("A problem occurred in the listener. See logs for details.")
+
+
 if __name__ == "__main__":
     main()
