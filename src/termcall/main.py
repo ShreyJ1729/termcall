@@ -317,7 +317,7 @@ def listen():
             raise NetworkError(
                 "Not authenticated. Please run 'termcall login <email>' first."
             )
-        user_email = session.get("email", "[unknown]")
+        user_email = session.get("email") or "[unknown]"
         user_uid = session.get("localId") or session.get("userId")
         id_token = session.get("idToken")
         if not user_uid or not id_token:
@@ -387,45 +387,47 @@ def listen():
             cleanup_signaling_data(call_id, id_token)
             show_status("Call ended and cleaned up.")
 
-        def on_call_event(event):
-            # event['data'] is the call object, event['path'] is the RTDB path
-            if event["event"] not in ("put", "patch"):
-                return
-            data = event["data"]
-            if not data:
-                return
-            # If this is a new call or update, check if we're the callee and state is pending
-            if isinstance(data, dict):
-                # If this is a full call object
-                call = data
-                call_id = event["path"].strip("/")
-                if (
-                    call.get("callee_uid") == user_uid
-                    and call.get("state") == "pending"
-                ):
-                    # Run answer_call in the event loop
-                    asyncio.get_event_loop().create_task(
-                        answer_call(call_id, call.get("caller_uid"))
-                    )
-            # If this is a patch, event['path'] may be /<call_id>/field
-            elif event["path"] and event["path"].count("/") == 2:
-                # /<call_id>/field
-                call_id = event["path"].split("/")[1]
-                call = get_call(call_id, id_token)
-                if (
-                    call
-                    and call.get("callee_uid") == user_uid
-                    and call.get("state") == "pending"
-                ):
-                    asyncio.get_event_loop().create_task(
-                        answer_call(call_id, call.get("caller_uid"))
-                    )
-
         def run_listener():
-            # This runs in the main thread and never exits
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            main_loop = loop
+
+            def on_call_event(event):
+                # event['data'] is the call object, event['path'] is the RTDB path
+                if event["event"] not in ("put", "patch"):
+                    return
+                data = event["data"]
+                if not data:
+                    return
+                # If this is a new call or update, check if we're the callee and state is pending
+                if isinstance(data, dict):
+                    # If this is a full call object
+                    call = data
+                    call_id = event["path"].strip("/")
+                    if (
+                        call.get("callee_uid") == user_uid
+                        and call.get("state") == "pending"
+                    ):
+                        asyncio.run_coroutine_threadsafe(
+                            answer_call(call_id, call.get("caller_uid")), main_loop
+                        )
+                # If this is a patch, event['path'] may be /<call_id>/field
+                elif event["path"] and event["path"].count("/") == 2:
+                    # /<call_id>/field
+                    call_id = event["path"].split("/")[1]
+                    call = get_call(call_id, id_token)
+                    if (
+                        call
+                        and call.get("callee_uid") == user_uid
+                        and call.get("state") == "pending"
+                    ):
+                        asyncio.run_coroutine_threadsafe(
+                            answer_call(call_id, call.get("caller_uid")), main_loop
+                        )
+
             stream = listen_for_incoming_calls(user_uid, id_token, on_call_event)
             try:
-                asyncio.get_event_loop().run_forever()
+                main_loop.run_forever()
             except KeyboardInterrupt:
                 show_status("Listener stopped by user.")
                 stream.close()
