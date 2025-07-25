@@ -136,36 +136,12 @@ class TermCallPeerConnection:
         width, height: resolution (default 480p)
         framerate: target frame rate
         """
-        config = load_device_config()
         import platform
 
         sys_platform = platform.system().lower()
         if sys_platform == "darwin":
-            # On macOS, prompt for both video and audio indices
-            video_devices = list_video_devices()
-            audio_devices = list_audio_devices()
-            video_index = (
-                config.get("video_device")
-                if config.get("video_device") in [v[0] for v in video_devices]
-                else None
-            )
-            audio_index = (
-                config.get("audio_device")
-                if config.get("audio_device") in [a[0] for a in audio_devices]
-                else None
-            )
-            if not video_index:
-                video_index = select_device(
-                    video_devices, prompt="Select video device:"
-                )
-                config["video_device"] = video_index
-            if not audio_index:
-                audio_index = select_device(
-                    audio_devices, prompt="Select audio device:"
-                )
-                config["audio_device"] = audio_index
-            save_device_config(config)
-            devstr = f"avfoundation:{video_index}:{audio_index}"
+            # Always use FaceTime HD Camera (0) and MacBook Pro Microphone (1)
+            devstr = "avfoundation:0:1"
             options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
             try:
                 player = MediaPlayer(devstr, format="avfoundation", options=options)
@@ -181,6 +157,7 @@ class TermCallPeerConnection:
             return video_track
         else:
             # Non-macOS: previous logic
+            config = load_device_config()
             if not device:
                 devices = list_video_devices()
                 device = (
@@ -189,7 +166,7 @@ class TermCallPeerConnection:
                     else None
                 )
                 if not device:
-                    device = select_device(devices, prompt="Select video device:")
+                    device = devices[0][0]
                     config["video_device"] = device
                     save_device_config(config)
             options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
@@ -221,21 +198,12 @@ class TermCallPeerConnection:
         device: audio device path or None for default
         sample_rate: audio sample rate (default 48000)
         """
-        config = load_device_config()
         import platform
 
         sys_platform = platform.system().lower()
         if sys_platform == "darwin":
-            # On macOS, use the same avfoundation:<video_index>:<audio_index> string as video
-            video_index = config.get("video_device")
-            audio_index = config.get("audio_device")
-            if not video_index or not audio_index:
-                # If not set, call add_video_track first to prompt and store
-                await self.add_video_track()
-                config = load_device_config()
-                video_index = config.get("video_device")
-                audio_index = config.get("audio_device")
-            devstr = f"avfoundation:{video_index}:{audio_index}"
+            # Always use FaceTime HD Camera (0) and MacBook Pro Microphone (1)
+            devstr = "avfoundation:0:1"
             options = {"sample_rate": str(sample_rate)}
             try:
                 player = MediaPlayer(devstr, format="avfoundation", options=options)
@@ -251,6 +219,7 @@ class TermCallPeerConnection:
             return audio_track
         else:
             # Non-macOS: previous logic
+            config = load_device_config()
             if not device:
                 devices = list_audio_devices()
                 device = (
@@ -259,7 +228,7 @@ class TermCallPeerConnection:
                     else None
                 )
                 if not device:
-                    device = select_device(devices, prompt="Select audio device:")
+                    device = devices[0][0]
                     config["audio_device"] = device
                     save_device_config(config)
             options = {"sample_rate": str(sample_rate)}
