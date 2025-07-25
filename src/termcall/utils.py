@@ -6,6 +6,15 @@ import cv2
 import asyncio
 import threading
 import shutil
+import sys
+import datetime
+
+try:
+    import sixel
+
+    _sixel_available = True
+except ImportError:
+    _sixel_available = False
 
 CACHE_FILE = os.path.expanduser("~/.termcall/cache.json")
 
@@ -297,24 +306,52 @@ def process_video_pipeline(img, mode, **kwargs):
 
 def process_ascii_pipeline(img, **kwargs):
     """
-    Stub: Process a video frame for ASCII rendering.
+    Process a video frame for ASCII rendering.
     img: RGB numpy array
     kwargs: density, color_mode, etc.
-    Returns: ASCII-rendered string or buffer
+    Returns: ANSI-colored ASCII string for terminal output
     """
-    # TODO: Implement ASCII rendering logic
-    pass
+    density = kwargs.get("density", get_ascii_density_config())
+    color_mode = kwargs.get("color_mode", "256")
+    # Get terminal size and calculate frame size
+    term_cols, term_rows = get_terminal_size()
+    frame_width, frame_height = calculate_ascii_frame_size(term_cols, term_rows)
+    # Resize frame
+    img_resized = resize_frame(img, frame_width, frame_height)
+    # ASCII mapping
+    ascii_img = brightness_to_ascii(img_resized, density)
+    # Color mapping
+    if color_mode == "256":
+        color_img = rgb_to_256color(img_resized)
+    elif color_mode == "truecolor":
+        color_img = img_resized
+    else:
+        color_img = None
+    # Combine ASCII and color
+    return ascii_img_to_ansi(ascii_img, color_img, color_mode=color_mode)
 
 
 def process_sixel_pipeline(img, **kwargs):
     """
-    Stub: Process a video frame for Sixel rendering.
+    Process a video frame for Sixel rendering.
     img: RGB numpy array
     kwargs: scaling, palette, etc.
-    Returns: Sixel-rendered byte buffer or string
+    Returns: Sixel-encoded string for terminal output
     """
-    # TODO: Implement Sixel rendering logic
-    pass
+    # Get terminal size and calculate frame size
+    term_cols, term_rows = get_terminal_size()
+    # Sixel pixels are square, so use terminal cols/rows directly
+    width = kwargs.get("width", term_cols * 6)  # Sixel: 1 col ~ 6px
+    height = kwargs.get("height", term_rows * 12)  # Sixel: 1 row ~ 12px
+    img_resized = cv2.resize(img, (width, height), interpolation=cv2.INTER_LINEAR)
+    if _sixel_available:
+        # Encode as Sixel
+        buf = sixel.SixelBuffer()
+        buf.draw(img_resized)
+        return buf.data
+    else:
+        # Fallback to ASCII
+        return process_ascii_pipeline(img, **kwargs)
 
 
 def ansi_fg_256(idx):
@@ -416,3 +453,185 @@ def monitor_ascii_performance():
     Implement performance tracking and dynamic adjustment here.
     """
     pass
+
+
+def sixel_supported():
+    """
+    Stub: Return True if terminal supports Sixel graphics.
+    To be implemented with actual detection logic.
+    """
+    # TODO: Implement Sixel support detection
+    return False
+
+
+def render_sixel(img):
+    """
+    Stub: Render an RGB numpy array as Sixel graphics.
+    To be implemented with libsixel-python.
+    """
+    # TODO: Implement Sixel rendering
+    pass
+
+
+def render_sixel_scaled(img, width, height):
+    """
+    Stub: Render an RGB numpy array as Sixel graphics, scaled to (width, height).
+    To be implemented with libsixel-python.
+    """
+    # TODO: Implement Sixel rendering with scaling
+    pass
+
+
+def position_sixel_preview(img, term_cols, term_rows, corner="bottom-right"):
+    """
+    Stub: Position Sixel preview in the terminal (e.g., bottom-right corner).
+    To be implemented with terminal cursor control and Sixel output.
+    """
+    # TODO: Implement Sixel preview positioning
+    pass
+
+
+def sixel_fallback(img):
+    """
+    Stub: Fallback to ASCII rendering if Sixel is not supported.
+    To be implemented: call ASCII rendering pipeline.
+    """
+    # TODO: Implement Sixel fallback to ASCII
+    pass
+
+
+class Logger:
+    """
+    Structured logger with log levels, file and stdout output, and optional user context.
+    Usage:
+        logger = Logger(user_context)
+        logger.info('message')
+    """
+
+    LEVELS = {"DEBUG": 10, "INFO": 20, "WARNING": 30, "ERROR": 40}
+
+    def __init__(self, user_context=None, log_file="termcall.log", level="INFO"):
+        self.user_context = user_context or {}
+        self.log_file = log_file
+        self.level = self.LEVELS.get(level.upper(), 20)
+
+    def _format(self, level, msg):
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        user = self.user_context.get("email") or self.user_context.get("uid") or "-"
+        return f"[{now}] [{level}] [user:{user}] {msg}"
+
+    def _write(self, line):
+        print(line, file=sys.stdout)
+        with open(self.log_file, "a") as f:
+            f.write(line + "\n")
+
+    def log(self, level, msg):
+        if self.LEVELS[level] >= self.level:
+            line = self._format(level, msg)
+            self._write(line)
+
+    def debug(self, msg):
+        self.log("DEBUG", msg)
+
+    def info(self, msg):
+        self.log("INFO", msg)
+
+    def warning(self, msg):
+        self.log("WARNING", msg)
+
+    def error(self, msg):
+        self.log("ERROR", msg)
+
+
+class ConnectionQualityMonitor:
+    """
+    Monitors and logs connection quality metrics (RTT, packet loss, bitrate).
+    Usage:
+        monitor = ConnectionQualityMonitor(logger)
+        monitor.update(rtt=..., packet_loss=..., bitrate=...)
+        print(monitor.indicator())
+    """
+
+    def __init__(self, logger=None):
+        self.logger = logger
+        self.rtt = None
+        self.packet_loss = None
+        self.bitrate = None
+
+    def update(self, rtt=None, packet_loss=None, bitrate=None):
+        if rtt is not None:
+            self.rtt = rtt
+        if packet_loss is not None:
+            self.packet_loss = packet_loss
+        if bitrate is not None:
+            self.bitrate = bitrate
+        if self.logger:
+            self.logger.info(
+                f"Quality update: RTT={self.rtt}ms, PacketLoss={self.packet_loss}%, Bitrate={self.bitrate}kbps"
+            )
+
+    def indicator(self):
+        # Simple quality indicator string
+        if self.rtt is None or self.packet_loss is None or self.bitrate is None:
+            return "[Quality: N/A]"
+        score = 100 - (self.packet_loss or 0) - (self.rtt or 0) / 10
+        if score > 80:
+            return "[Quality: Excellent]"
+        elif score > 60:
+            return "[Quality: Good]"
+        elif score > 40:
+            return "[Quality: Fair]"
+        else:
+            return "[Quality: Poor]"
+
+
+def list_audio_devices():
+    """
+    Stub: List available audio input devices.
+    Returns a list of device names/IDs.
+    """
+    # TODO: Integrate with real device enumeration (e.g., sounddevice, pyaudio)
+    return ["Default Microphone", "External USB Mic"]
+
+
+def list_video_devices():
+    """
+    Stub: List available video input devices.
+    Returns a list of device names/IDs.
+    """
+    # TODO: Integrate with real device enumeration (e.g., OpenCV, ffmpeg)
+    return ["Default Camera", "USB Webcam"]
+
+
+def select_device(devices, prompt="Select device:"):
+    """
+    CLI prompt to select a device from a list.
+    Returns the selected device name/ID.
+    """
+    print(prompt)
+    for i, d in enumerate(devices):
+        print(f"  {i+1}. {d}")
+    idx = int(input("Enter number: ")) - 1
+    return devices[idx]
+
+
+DEVICE_CONFIG_FILE = os.path.expanduser("~/.termcall_device_config.json")
+
+
+def load_device_config():
+    """
+    Load device configuration from JSON file.
+    Returns a dict or empty dict if not found.
+    """
+    if os.path.exists(DEVICE_CONFIG_FILE):
+        with open(DEVICE_CONFIG_FILE, "r") as f:
+            return json.load(f)
+    return {}
+
+
+def save_device_config(config):
+    """
+    Save device configuration to JSON file.
+    """
+    with open(DEVICE_CONFIG_FILE, "w") as f:
+        json.dump(config, f, indent=2)

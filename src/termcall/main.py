@@ -243,10 +243,25 @@ def videocall(email):
                             c.candidate, c.sdpMid, c.sdpMLineIndex
                         )
                 await asyncio.sleep(1)
+            # Video frame callback (real rendering)
+            from .utils import (
+                process_ascii_pipeline,
+                process_sixel_pipeline,
+                FrameRateLimiter,
+            )
 
-            # Video frame callback (stub: just print frame info)
+            mode = "sixel" if sixel_supported() else "ascii"
+            limiter = FrameRateLimiter(target_fps=8)
+            import sys
+
             def on_frame(frame, track):
-                print(f"[VideoFrame] Received frame: {frame}")
+                img = frame.to_ndarray(format="rgb24")
+                if mode == "sixel":
+                    rendered = process_sixel_pipeline(img)
+                else:
+                    rendered = process_ascii_pipeline(img)
+                print("\033[H", end="")  # Move cursor to top left
+                print(rendered, end="\r", flush=True)
 
             pc.on_video_frame(on_frame)
             # Wait for call to end (stub: 30 seconds)
