@@ -27,4 +27,4 @@ def get_all_user_profiles(id_token):
     users = db.child("users").get(id_token)
     if not users.each():
         return []
-    return [user.val() for user in users.each()]
+    return [dict(uid=user.key(), **user.val()) for user in users.each()]
