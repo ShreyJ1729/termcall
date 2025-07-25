@@ -9,6 +9,7 @@ import shutil
 import sys
 import datetime
 import sounddevice as sd
+import platform
 
 try:
     import sixel
@@ -589,31 +590,44 @@ class ConnectionQualityMonitor:
 def list_audio_devices():
     """
     List available audio input devices using sounddevice.
-    Returns a list of device names/IDs.
+    Returns a list of device indices as strings on macOS, or device names on other platforms.
     """
+    sys_platform = platform.system().lower()
     devices = sd.query_devices()
-    input_devices = [d["name"] for d in devices if d["max_input_channels"] > 0]
-    return input_devices if input_devices else ["Default Microphone"]
+    if sys_platform == "darwin":
+        # Return indices for input devices
+        input_indices = [
+            str(i) for i, d in enumerate(devices) if d["max_input_channels"] > 0
+        ]
+        return input_indices if input_indices else ["0"]
+    else:
+        input_devices = [d["name"] for d in devices if d["max_input_channels"] > 0]
+        return input_devices if input_devices else ["Default Microphone"]
 
 
 def list_video_devices():
     """
     List available video input devices using OpenCV.
-    Returns a list of device indices as strings ("0", "1", ...).
+    Returns a list of device indices as strings ("0", "1", ...) on macOS, or as before on other platforms.
     """
-    devices = []
-    for i in range(5):  # Try first 5 indices
-        cap = cv2.VideoCapture(i)
-        if cap is not None and cap.isOpened():
-            devices.append(str(i))
-            cap.release()
-    return devices if devices else ["0"]
+    sys_platform = platform.system().lower()
+    if sys_platform == "darwin":
+        # On macOS, just return indices 0-2 (OpenCV is unreliable for camera enumeration)
+        return [str(i) for i in range(2)]
+    else:
+        devices = []
+        for i in range(5):  # Try first 5 indices
+            cap = cv2.VideoCapture(i)
+            if cap is not None and cap.isOpened():
+                devices.append(str(i))
+                cap.release()
+        return devices if devices else ["0"]
 
 
 def select_device(devices, prompt="Select device:"):
     """
     Auto-select if only one device, otherwise prompt user.
-    Returns the selected device name/ID.
+    Returns the selected device index or name.
     """
     if len(devices) == 1:
         return devices[0]
@@ -622,6 +636,20 @@ def select_device(devices, prompt="Select device:"):
         print(f"  {i+1}. {d}")
     idx = int(input("Enter number: ")) - 1
     return devices[idx]
+
+
+def build_device_string(device, kind):
+    """
+    Build the correct device string for aiortc MediaPlayer on macOS.
+    kind: 'video' or 'audio'
+    """
+    sys_platform = platform.system().lower()
+    if sys_platform == "darwin":
+        if kind == "video":
+            return f"avfoundation:{device}"
+        elif kind == "audio":
+            return f"avfoundation:{device}"
+    return device
 
 
 DEVICE_CONFIG_FILE = os.path.expanduser("~/.termcall_device_config.json")

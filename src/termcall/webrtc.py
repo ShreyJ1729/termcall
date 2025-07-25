@@ -50,6 +50,7 @@ from .utils import (
     select_device,
     load_device_config,
     save_device_config,
+    build_device_string,
 )
 
 
@@ -149,14 +150,12 @@ class TermCallPeerConnection:
                 save_device_config(config)
         options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
         try:
-            # On macOS, use avfoundation; on Linux, use v4l2; on Windows, use dshow
             import platform
 
             sys_platform = platform.system().lower()
+            devstr = build_device_string(device, "video")
             if sys_platform == "darwin":
-                player = MediaPlayer(
-                    f"avfoundation:{device}", format="avfoundation", options=options
-                )
+                player = MediaPlayer(devstr, format="avfoundation", options=options)
             elif sys_platform == "windows":
                 player = MediaPlayer(f"video={device}", format="dshow", options=options)
             else:
@@ -199,10 +198,9 @@ class TermCallPeerConnection:
             import platform
 
             sys_platform = platform.system().lower()
+            devstr = build_device_string(device, "audio")
             if sys_platform == "darwin":
-                player = MediaPlayer(
-                    f"avfoundation:{device}", format="avfoundation", options=options
-                )
+                player = MediaPlayer(devstr, format="avfoundation", options=options)
             elif sys_platform == "windows":
                 player = MediaPlayer(f"audio={device}", format="dshow", options=options)
             else:
