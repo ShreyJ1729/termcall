@@ -8,6 +8,7 @@ import threading
 import shutil
 import sys
 import datetime
+import sounddevice as sd
 
 try:
     import sixel
@@ -587,27 +588,35 @@ class ConnectionQualityMonitor:
 
 def list_audio_devices():
     """
-    Stub: List available audio input devices.
+    List available audio input devices using sounddevice.
     Returns a list of device names/IDs.
     """
-    # TODO: Integrate with real device enumeration (e.g., sounddevice, pyaudio)
-    return ["Default Microphone", "External USB Mic"]
+    devices = sd.query_devices()
+    input_devices = [d["name"] for d in devices if d["max_input_channels"] > 0]
+    return input_devices if input_devices else ["Default Microphone"]
 
 
 def list_video_devices():
     """
-    Stub: List available video input devices.
-    Returns a list of device names/IDs.
+    List available video input devices using OpenCV.
+    Returns a list of device indices as strings ("0", "1", ...).
     """
-    # TODO: Integrate with real device enumeration (e.g., OpenCV, ffmpeg)
-    return ["Default Camera", "USB Webcam"]
+    devices = []
+    for i in range(5):  # Try first 5 indices
+        cap = cv2.VideoCapture(i)
+        if cap is not None and cap.isOpened():
+            devices.append(str(i))
+            cap.release()
+    return devices if devices else ["0"]
 
 
 def select_device(devices, prompt="Select device:"):
     """
-    CLI prompt to select a device from a list.
+    Auto-select if only one device, otherwise prompt user.
     Returns the selected device name/ID.
     """
+    if len(devices) == 1:
+        return devices[0]
     print(prompt)
     for i, d in enumerate(devices):
         print(f"  {i+1}. {d}")
@@ -634,4 +643,4 @@ def save_device_config(config):
     Save device configuration to JSON file.
     """
     with open(DEVICE_CONFIG_FILE, "w") as f:
-        json.dump(config, f, indent=2)
+        json.dump(config, f)

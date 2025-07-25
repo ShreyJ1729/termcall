@@ -44,6 +44,13 @@ from aiortc import (
 import asyncio
 from aiortc.contrib.media import MediaPlayer
 from aiortc.contrib.media import MediaRecorder
+from .utils import (
+    list_video_devices,
+    list_audio_devices,
+    select_device,
+    load_device_config,
+    save_device_config,
+)
 
 
 @dataclass
@@ -128,9 +135,32 @@ class TermCallPeerConnection:
         width, height: resolution (default 480p)
         framerate: target frame rate
         """
+        config = load_device_config()
+        if not device:
+            devices = list_video_devices()
+            device = (
+                config.get("video_device")
+                if config.get("video_device") in devices
+                else None
+            )
+            if not device:
+                device = select_device(devices, prompt="Select video device:")
+                config["video_device"] = device
+                save_device_config(config)
         options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
         try:
-            player = MediaPlayer(device or 0, format="v4l2", options=options)
+            # On macOS, use avfoundation; on Linux, use v4l2; on Windows, use dshow
+            import platform
+
+            sys_platform = platform.system().lower()
+            if sys_platform == "darwin":
+                player = MediaPlayer(
+                    f"avfoundation:{device}", format="avfoundation", options=options
+                )
+            elif sys_platform == "windows":
+                player = MediaPlayer(f"video={device}", format="dshow", options=options)
+            else:
+                player = MediaPlayer(int(device), format="v4l2", options=options)
         except Exception:
             # Fallback to ffmpeg if v4l2 fails (e.g., on macOS/Windows)
             try:
@@ -152,9 +182,31 @@ class TermCallPeerConnection:
         device: audio device path or None for default
         sample_rate: audio sample rate (default 48000)
         """
+        config = load_device_config()
+        if not device:
+            devices = list_audio_devices()
+            device = (
+                config.get("audio_device")
+                if config.get("audio_device") in devices
+                else None
+            )
+            if not device:
+                device = select_device(devices, prompt="Select audio device:")
+                config["audio_device"] = device
+                save_device_config(config)
         options = {"sample_rate": str(sample_rate)}
         try:
-            player = MediaPlayer(device or None, format=None, options=options)
+            import platform
+
+            sys_platform = platform.system().lower()
+            if sys_platform == "darwin":
+                player = MediaPlayer(
+                    f"avfoundation:{device}", format="avfoundation", options=options
+                )
+            elif sys_platform == "windows":
+                player = MediaPlayer(f"audio={device}", format="dshow", options=options)
+            else:
+                player = MediaPlayer(device or None, format=None, options=options)
         except Exception as e:
             print(f"[WebRTC] Failed to open audio device: {e}")
             return None
