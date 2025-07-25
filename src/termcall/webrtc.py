@@ -137,43 +137,83 @@ class TermCallPeerConnection:
         framerate: target frame rate
         """
         config = load_device_config()
-        if not device:
-            devices = list_video_devices()
-            device = (
+        import platform
+
+        sys_platform = platform.system().lower()
+        if sys_platform == "darwin":
+            # On macOS, prompt for both video and audio indices
+            video_devices = list_video_devices()
+            audio_devices = list_audio_devices()
+            video_index = (
                 config.get("video_device")
-                if config.get("video_device") in devices
+                if config.get("video_device") in [v[0] for v in video_devices]
                 else None
             )
-            if not device:
-                device = select_device(devices, prompt="Select video device:")
-                config["video_device"] = device
-                save_device_config(config)
-        options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
-        try:
-            import platform
-
-            sys_platform = platform.system().lower()
-            devstr = build_device_string(device, "video")
-            if sys_platform == "darwin":
-                player = MediaPlayer(devstr, format="avfoundation", options=options)
-            elif sys_platform == "windows":
-                player = MediaPlayer(f"video={device}", format="dshow", options=options)
-            else:
-                player = MediaPlayer(int(device), format="v4l2", options=options)
-        except Exception:
-            # Fallback to ffmpeg if v4l2 fails (e.g., on macOS/Windows)
+            audio_index = (
+                config.get("audio_device")
+                if config.get("audio_device") in [a[0] for a in audio_devices]
+                else None
+            )
+            if not video_index:
+                video_index = select_device(
+                    video_devices, prompt="Select video device:"
+                )
+                config["video_device"] = video_index
+            if not audio_index:
+                audio_index = select_device(
+                    audio_devices, prompt="Select audio device:"
+                )
+                config["audio_device"] = audio_index
+            save_device_config(config)
+            devstr = f"avfoundation:{video_index}:{audio_index}"
+            options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
             try:
-                player = MediaPlayer(device or None, options=options)
+                player = MediaPlayer(devstr, format="avfoundation", options=options)
             except Exception as e:
                 print(f"[WebRTC] Failed to open video device: {e}")
                 return None
-        video_track = player.video
-        if video_track:
-            self.pc.addTrack(video_track)
-            print(f"[WebRTC] Added video track at {width}x{height}")
+            video_track = player.video
+            if video_track:
+                self.pc.addTrack(video_track)
+                print(f"[WebRTC] Added video track at {width}x{height}")
+            else:
+                print("[WebRTC] No video track available from device.")
+            return video_track
         else:
-            print("[WebRTC] No video track available from device.")
-        return video_track
+            # Non-macOS: previous logic
+            if not device:
+                devices = list_video_devices()
+                device = (
+                    config.get("video_device")
+                    if config.get("video_device") in [v[0] for v in devices]
+                    else None
+                )
+                if not device:
+                    device = select_device(devices, prompt="Select video device:")
+                    config["video_device"] = device
+                    save_device_config(config)
+            options = {"framerate": str(framerate), "video_size": f"{width}x{height}"}
+            try:
+                devstr = build_device_string(device, "video")
+                if sys_platform == "windows":
+                    player = MediaPlayer(
+                        f"video={device}", format="dshow", options=options
+                    )
+                else:
+                    player = MediaPlayer(int(device), format="v4l2", options=options)
+            except Exception:
+                try:
+                    player = MediaPlayer(device or None, options=options)
+                except Exception as e:
+                    print(f"[WebRTC] Failed to open video device: {e}")
+                    return None
+            video_track = player.video
+            if video_track:
+                self.pc.addTrack(video_track)
+                print(f"[WebRTC] Added video track at {width}x{height}")
+            else:
+                print("[WebRTC] No video track available from device.")
+            return video_track
 
     async def add_audio_track(self, device=None, sample_rate=48000):
         """
@@ -182,39 +222,65 @@ class TermCallPeerConnection:
         sample_rate: audio sample rate (default 48000)
         """
         config = load_device_config()
-        if not device:
-            devices = list_audio_devices()
-            device = (
-                config.get("audio_device")
-                if config.get("audio_device") in devices
-                else None
-            )
-            if not device:
-                device = select_device(devices, prompt="Select audio device:")
-                config["audio_device"] = device
-                save_device_config(config)
-        options = {"sample_rate": str(sample_rate)}
-        try:
-            import platform
+        import platform
 
-            sys_platform = platform.system().lower()
-            devstr = build_device_string(device, "audio")
-            if sys_platform == "darwin":
+        sys_platform = platform.system().lower()
+        if sys_platform == "darwin":
+            # On macOS, use the same avfoundation:<video_index>:<audio_index> string as video
+            video_index = config.get("video_device")
+            audio_index = config.get("audio_device")
+            if not video_index or not audio_index:
+                # If not set, call add_video_track first to prompt and store
+                await self.add_video_track()
+                config = load_device_config()
+                video_index = config.get("video_device")
+                audio_index = config.get("audio_device")
+            devstr = f"avfoundation:{video_index}:{audio_index}"
+            options = {"sample_rate": str(sample_rate)}
+            try:
                 player = MediaPlayer(devstr, format="avfoundation", options=options)
-            elif sys_platform == "windows":
-                player = MediaPlayer(f"audio={device}", format="dshow", options=options)
+            except Exception as e:
+                print(f"[WebRTC] Failed to open audio device: {e}")
+                return None
+            audio_track = player.audio
+            if audio_track:
+                self.pc.addTrack(audio_track)
+                print(f"[WebRTC] Added audio track at {sample_rate} Hz")
             else:
-                player = MediaPlayer(device or None, format=None, options=options)
-        except Exception as e:
-            print(f"[WebRTC] Failed to open audio device: {e}")
-            return None
-        audio_track = player.audio
-        if audio_track:
-            self.pc.addTrack(audio_track)
-            print(f"[WebRTC] Added audio track at {sample_rate} Hz")
+                print("[WebRTC] No audio track available from device.")
+            return audio_track
         else:
-            print("[WebRTC] No audio track available from device.")
-        return audio_track
+            # Non-macOS: previous logic
+            if not device:
+                devices = list_audio_devices()
+                device = (
+                    config.get("audio_device")
+                    if config.get("audio_device") in [a[0] for a in devices]
+                    else None
+                )
+                if not device:
+                    device = select_device(devices, prompt="Select audio device:")
+                    config["audio_device"] = device
+                    save_device_config(config)
+            options = {"sample_rate": str(sample_rate)}
+            try:
+                devstr = build_device_string(device, "audio")
+                if sys_platform == "windows":
+                    player = MediaPlayer(
+                        f"audio={device}", format="dshow", options=options
+                    )
+                else:
+                    player = MediaPlayer(device or None, format=None, options=options)
+            except Exception as e:
+                print(f"[WebRTC] Failed to open audio device: {e}")
+                return None
+            audio_track = player.audio
+            if audio_track:
+                self.pc.addTrack(audio_track)
+                print(f"[WebRTC] Added audio track at {sample_rate} Hz")
+            else:
+                print("[WebRTC] No audio track available from device.")
+            return audio_track
 
     async def setup_audio_output(self, output_device=None, filename=None):
         """
